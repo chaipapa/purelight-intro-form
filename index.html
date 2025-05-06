@@ -39,15 +39,21 @@
     .buttons {
       margin-top: 1.5em;
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
+      gap: 1em;
     }
     button {
-      padding: 0.5em 1em;
+      padding: 1em;
+      font-size: 1.2em;
       border: none;
-      border-radius: 5px;
+      border-radius: 8px;
       background-color: #a67c52;
       color: white;
       font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #8b643e;
     }
     .output {
       margin-top: 2em;
@@ -63,6 +69,10 @@
     .error {
       color: #d00;
       font-size: 0.9em;
+    }
+    #copyBtn {
+      width: 100%;
+      margin-top: 1em;
     }
   </style>
 </head>
