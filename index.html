@@ -4,10 +4,282 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PureLightの自己紹介作成ツール</title>
-  <!-- 以下、すべてのCSS/JS/HTMLをCanvasの状態と完全一致で埋め込み -->
-  （Canvasの完全内容をここに貼り付ける処理）
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", sans-serif;
+      padding: 4vw;
+      max-width: 800px;
+      margin: auto;
+      background: #fffaf5;
+      color: #333;
+      font-size: 4.5vw;
+    }
+    @media (min-width: 600px) {
+      body { font-size: 16px; padding: 20px; }
+    }
+    h1 {
+      background: #f9e3d3;
+      padding: 4vw;
+      border-radius: 10px;
+      text-align: center;
+      color: #6b4c3b;
+      font-size: 5.5vw;
+    }
+    label {
+      display: block;
+      margin-top: 5vw;
+      font-weight: bold;
+    }
+    .note {
+      font-size: 0.85em;
+      color: #a25f36;
+      font-weight: normal;
+      margin-left: 5px;
+    }
+    textarea, input[type="text"], button {
+      width: 100%;
+      padding: 3.5vw;
+      font-size: 4.5vw;
+      margin-top: 2vw;
+      border: 1px solid #d8cfc4;
+      border-radius: 6px;
+      background: #fff;
+      box-sizing: border-box;
+    }
+    input[type="radio"] { margin-right: 10px; }
+    @media (min-width: 600px) {
+      textarea, input[type="text"], button { font-size: 16px; padding: 10px; margin-top: 5px; }
+    }
+    textarea { height: 90px; }
+    #output {
+      white-space: pre-wrap;
+      background: #f0eee9;
+      padding: 4vw;
+      margin-top: 5vw;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+    .error {
+      color: red;
+      margin-top: 2vw;
+      white-space: pre-wrap;
+    }
+    .button-group {
+      display: flex;
+      justify-content: space-between;
+      gap: 5vw;
+    }
+    button {
+      flex: 1;
+      background-color: #f2c29d;
+      color: #432c1e;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background-color: #f7b78e;
+    }
+    #copyButton[disabled] {
+      background-color: #ccc;
+      color: #666;
+      cursor: not-allowed;
+    }
+  </style>
 </head>
 <body>
-  PureLight フォーム最終版（省略）
+  <h1>PureLightの自己紹介作成ツール</h1>
+  <form id="introForm">
+    <div id="formFields">
+  <label>①ライン名（LINEのアカウント名と同じお名前でお願いします）<span class="note">※必須</span>
+  <input type="text" id="lineName" />
+</label>
+<label>②ご家族（ケアラー）自身のお住まいの都道府県（海外の方は国名）<span class="note">※必須</span>".replace("／
+  <input type="text" id="location" />
+</label>
+<label>③当事者からみた立場<span class="note">※必須</span></label>
+<div>
+  <label><input type="radio" name="relationship" value="父親">父親</label>
+  <label><input type="radio" name="relationship" value="母親">母親</label>
+  <label><input type="radio" name="relationship" value="こども">こども</label>
+  <label><input type="radio" name="relationship" value="兄">兄</label>
+  <label><input type="radio" name="relationship" value="姉">姉</label>
+  <label><input type="radio" name="relationship" value="弟">弟</label>
+  <label><input type="radio" name="relationship" value="妹">妹</label>
+  <label><input type="radio" name="relationship" value="夫">夫</label>
+  <label><input type="radio" name="relationship" value="妻">妻</label>
+  <label><input type="radio" name="relationship" value="その他" onclick="toggleOther('relationshipOther', true)">その他</label>
+  <input type="text" id="relationshipOther" placeholder="続柄を記入してください" style="display:none;" />
+</div>
+<label>④当事者の性別<span class="note">※必須</span></label>
+<div>
+  <label><input type="radio" name="gender" value="男性">男性</label>
+  <label><input type="radio" name="gender" value="女性">女性</label>
+  <label><input type="radio" name="gender" value="その他" onclick="toggleOther('genderOther', true)">その他</label>
+  <input type="text" id="genderOther" placeholder="性別を記入してください" style="display:none;" />
+</div>
+<label>⑤当事者の年齢（20代前半などでもOK）<span class="note">※必須</span>
+  <input type="text" id="age" />
+</label>
+<label>⑥発症年齢、再発回数等<span class="note">※必須</span>
+  <input type="text" id="onset" />
+</label>
+<label>⑦発症から現在の状況（ざっくりでも盛り沢山でもOK）悩み、相談、気になっていることなど<span class="note">※必須</span>
+  <textarea id="situation"></textarea>
+</label>
+<label>⑧現在、過去のお薬歴、サプリ、漢方、栄養療法など<span class="note">※必須</span>
+  <input type="text" id="medication" />
+</label>
+<label>⑨PureLight内の所属グループ
+  <input type="text" id="groups" />
+</label>
+<label>⑩地域の家族会（任意）
+  <input type="text" id="regionGroup" />
+</label>
+</div>
+<div class="error" id="errorMessage"></div>
+<div class="button-group">
+  <button type="button" onclick="generateIntro()">確認する</button>
+  <button type="button" onclick="resetForm()">やり直す</button>
+</div>
+  </form>
+  <div id="output"></div>
+  <button id="copyButton" onclick="copyToClipboard()" disabled>LINEに貼り付けるためにコピー</button>
+  <script>
+    function toggleOther(id, show) {
+  document.getElementById(id).style.display = show ? 'block' : 'none';
+}
+
+function toHalfWidth(str) {
+  return str.replace(/[０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xFEE0));
+}
+
+function getSelectedValue(name, otherId) {
+  const radios = document.getElementsByName(name);
+  for (const radio of radios) {
+    if (radio.checked) {
+      if (radio.value === "その他") {
+        const otherText = document.getElementById(otherId).value.trim();
+        return otherText || null;
+      }
+      return radio.value;
+    }
+  }
+  return "";
+}
+
+function generateIntro() {
+  const requiredFields = [
+    { id: "lineName", label: "①ライン名" },
+    { id: "location", label: "②お住まいの都道府県/国名" },
+    { id: "relationship", label: "③当事者からみた立場" },
+    { id: "gender", label: "④当事者の性別" },
+    { id: "age", label: "⑤当事者の年齢" },
+    { id: "onset", label: "⑥発症年齢、再発回数等" },
+    { id: "situation", label: "⑦現在の状況・悩みなど" },
+    { id: "medication", label: "⑧お薬歴など" }
+  ];
+  let missing = [];
+
+  const values = {
+    lineName: document.getElementById("lineName")?.value.trim(),
+    location: document.getElementById("location")?.value.trim(),
+    relationship: getSelectedValue("relationship", "relationshipOther"),
+    gender: getSelectedValue("gender", "genderOther"),
+    age: toHalfWidth(document.getElementById("age")?.value.trim()),
+    onset: toHalfWidth(document.getElementById("onset")?.value.trim()),
+    situation: document.getElementById("situation")?.value.trim(),
+    medication: document.getElementById("medication")?.value.trim(),
+    groups: document.getElementById("groups")?.value.trim(),
+    regionGroup: document.getElementById("regionGroup")?.value.trim()
+  };
+
+  requiredFields.forEach(field => {
+    if (!values[field.id]) missing.push(field.label);
+  });
+
+  if (missing.length > 0) {
+    document.getElementById("errorMessage").innerText = "以下の必須の項目が入力されていません：
+" + missing.join("
+");
+    document.getElementById("output").innerText = "";
+    document.getElementById("copyButton").disabled = true;
+    return;
+  }
+
+  localStorage.setItem("purelightForm", JSON.stringify(values));
+
+  const intro =
+    `①ライン名
+【${values.lineName}】
+
+` +
+    `②お住まいの都道府県/国名
+【${values.location}】
+
+` +
+    `③当事者からみた立場
+【${values.relationship}】
+
+` +
+    `④当事者の性別
+【${values.gender}】
+
+` +
+    `⑤当事者の年齢
+【${values.age}】
+
+` +
+    `⑥発症年齢、再発回数等
+【${values.onset}】
+
+` +
+    `⑦現在の状況・悩みなど
+【${values.situation}】
+
+` +
+    `⑧お薬歴など
+【${values.medication}】
+
+` +
+    `⑨PureLight内の所属グループ
+【${values.groups}】
+
+` +
+    `⑩地域の家族会（任意）
+【${values.regionGroup}】
+
+` +
+    `❗ご注意❗
+完全退会時は家族グループ内のノート削除をお忘れなく（本人のみ削除可）`;
+
+  document.getElementById("output").innerText = intro;
+  document.getElementById("errorMessage").innerText = "";
+  document.getElementById("copyButton").disabled = false;
+}
+
+function resetForm() {
+  if (confirm("入力内容をすべて消去して最初からやり直しますか？")) {
+    localStorage.removeItem("purelightForm");
+    location.reload();
+  }
+}
+
+function copyToClipboard() {
+  navigator.clipboard.writeText(document.getElementById("output").innerText).then(() => {
+    alert("コピーしました！");
+  });
+}
+
+function restoreForm() {
+  const data = JSON.parse(localStorage.getItem("purelightForm") || "{}");
+  if (!data.lineName) return;
+  for (const key in data) {
+    if (document.getElementById(key)) document.getElementById(key).value = data[key];
+  }
+}
+
+window.onload = restoreForm;
+  </script>
 </body>
 </html>
