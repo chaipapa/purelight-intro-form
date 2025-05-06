@@ -7,185 +7,191 @@
   <style>
     body {
       font-family: sans-serif;
-      background-color: #fff8f0;
-      padding: 20px;
+      background-color: #fefcf9;
       color: #333;
+      padding: 1em;
+      max-width: 600px;
+      margin: auto;
     }
     h1 {
       text-align: center;
-      color: #d2691e;
-    }
-    .form-group {
-      margin-bottom: 20px;
+      color: #704214;
     }
     label {
       display: block;
+      margin-top: 1em;
       font-weight: bold;
-      margin-bottom: 5px;
     }
     small {
       font-size: 0.8em;
-      color: #d2691e;
+      color: #d00;
     }
     textarea, input[type="text"] {
       width: 100%;
-      padding: 10px;
-      font-size: 1em;
+      padding: 0.5em;
+      margin-top: 0.3em;
       border: 1px solid #ccc;
       border-radius: 5px;
     }
     textarea {
       resize: vertical;
-      min-height: 60px;
+    }
+    .buttons {
+      margin-top: 1.5em;
+      display: flex;
+      justify-content: space-between;
     }
     button {
-      margin-top: 10px;
-      padding: 10px 20px;
-      font-size: 1em;
+      padding: 0.5em 1em;
       border: none;
       border-radius: 5px;
-      cursor: pointer;
+      background-color: #a67c52;
+      color: white;
+      font-weight: bold;
     }
-    .confirm { background-color: #ffa07a; color: white; }
-    .reset { background-color: #f08080; color: white; margin-left: 10px; }
-    .copy { background-color: #90ee90; color: black; display: none; }
-    .error { color: red; font-size: 0.9em; }
-    #output {
+    .output {
+      margin-top: 2em;
+      background: #fff8e1;
+      border: 1px solid #d3b88c;
+      padding: 1em;
+      border-radius: 10px;
       white-space: pre-wrap;
-      background: #fff;
-      padding: 15px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      margin-top: 20px;
+    }
+    .hidden {
+      display: none;
+    }
+    .error {
+      color: #d00;
+      font-size: 0.9em;
     }
   </style>
 </head>
 <body>
   <h1>PureLightの自己紹介作成ツール</h1>
 
-  <div id="form">
-    <div class="form-group">
-      <label>①ライン名 <small>（※必須）</small></label>
+  <form id="introForm">
+    <label>①ライン名 <small>（※必須）</small>
       <input type="text" id="lineName">
-      <div class="error" id="err-lineName"></div>
-    </div>
+      <div class="error" id="error-lineName"></div>
+    </label>
 
-    <div class="form-group">
-      <label>②ご家族（ケアラー）自身のお住まいの都道府県（海外の方は国名） <small>（※必須）</small></label>
+    <label>②ご家族（ケアラー）自身のお住まいの都道府県（海外の方は国名） <small>（※必須）</small>
       <input type="text" id="location">
-      <div class="error" id="err-location"></div>
-    </div>
+      <div class="error" id="error-location"></div>
+    </label>
 
-    <div class="form-group">
-      <label>③当事者からみたあなたの立場 <small>（※必須）</small></label>
-      <input type="text" id="position">
-      <div class="error" id="err-position"></div>
-    </div>
+    <label>③当事者からみたあなたの立場 <small>（※必須）</small>
+      <input type="text" id="relation">
+      <div class="error" id="error-relation"></div>
+    </label>
 
-    <div class="form-group">
-      <label>④当事者の性別 <small>（※必須）</small></label>
+    <label>④当事者の性別 <small>（※必須）</small>
       <input type="text" id="gender">
-      <div class="error" id="err-gender"></div>
-    </div>
+      <div class="error" id="error-gender"></div>
+    </label>
 
-    <div class="form-group">
-      <label>⑤当事者の年齢 <small>（※必須）</small></label>
+    <label>⑤当事者の年齢 <small>（※必須）</small>
       <input type="text" id="age">
-      <div class="error" id="err-age"></div>
-    </div>
+      <div class="error" id="error-age"></div>
+    </label>
 
-    <div class="form-group">
-      <label>⑥発症年齢、再発回数等 <small>（※必須）</small></label>
+    <label>⑥発症年齢、再発回数等 <small>（※必須）</small>
       <input type="text" id="onset">
-      <div class="error" id="err-onset"></div>
-    </div>
+      <div class="error" id="error-onset"></div>
+    </label>
 
-    <div class="form-group">
-      <label>⑦発症から現在の状況（ざっくりでも盛り沢山でもOK）悩み、相談、気になっていることなど <small>（※必須）</small></label>
-      <textarea id="status"></textarea>
-      <div class="error" id="err-status"></div>
-    </div>
+    <label>⑦発症から現在の状況（ざっくりでも盛り沢山でもOK）悩み、相談、気になっていることなど <small>（※必須）</small>
+      <textarea id="situation" rows="5"></textarea>
+      <div class="error" id="error-situation"></div>
+    </label>
 
-    <div class="form-group">
-      <label>⑧現在、過去のお薬歴、サプリ、漢方、栄養療法など <small>（※必須）</small></label>
-      <input type="text" id="medication">
-      <div class="error" id="err-medication"></div>
-    </div>
+    <label>⑧現在、過去のお薬歴、サプリ、漢方、栄養療法など <small>（※必須）</small>
+      <input type="text" id="meds">
+      <div class="error" id="error-meds"></div>
+    </label>
 
-    <div class="form-group">
-      <label>⑨PureLight内の所属グループ</label>
+    <label>⑨PureLight内の所属グループ（基本の家族グループ以外）サブグループ、混合グループ
       <input type="text" id="group">
+    </label>
+
+    <label>⑩所属している地域の家族会（任意）
+      <input type="text" id="localGroup">
+    </label>
+
+    <div class="buttons">
+      <button type="button" onclick="handleConfirm()">確認する</button>
+      <button type="button" onclick="handleReset()">やりなおす</button>
     </div>
+  </form>
 
-    <div class="form-group">
-      <label>⑩所属している地域の家族会（任意）</label>
-      <input type="text" id="familyGroup">
-    </div>
-
-    <button class="confirm" onclick="handleConfirm()">確認する</button>
-    <button class="reset" onclick="handleReset()">やりなおす</button>
-    <button class="copy" id="copyBtn" onclick="handleCopy()">LINEに貼り付けるためにコピーする</button>
-
-    <div id="output"></div>
-  </div>
+  <div id="output" class="output hidden"></div>
+  <button id="copyBtn" class="hidden" onclick="copyOutput()">LINEに貼り付けるためにコピーする</button>
 
   <script>
-    const fields = ["lineName", "location", "position", "gender", "age", "onset", "status", "medication"];
-    const shortNames = ["①ライン名", "②お住まいの都道府県/国名", "③当事者からみた立場", "④当事者の性別", "⑤当事者の年齢", "⑥発症年齢、再発回数等", "⑦現在の状況・悩みなど", "⑧お薬歴など"];
-
-    window.onload = () => {
-      fields.concat(["group", "familyGroup"]).forEach(id => {
-        const saved = localStorage.getItem(id);
-        if (saved) document.getElementById(id).value = saved;
-      });
+    const required = ["lineName", "location", "relation", "gender", "age", "onset", "situation", "meds"];
+    const fieldNames = {
+      lineName: "①ライン名",
+      location: "②お住まいの都道府県/国名",
+      relation: "③当事者からみた立場",
+      gender: "④当事者の性別",
+      age: "⑤当事者の年齢",
+      onset: "⑥発症年齢、再発回数等",
+      situation: "⑦現在の状況・悩みなど",
+      meds: "⑧お薬歴など",
+      group: "⑨PureLight内の所属グループ",
+      localGroup: "⑩地域の家族会（任意）"
     };
 
-    function handleConfirm() {
-      let ok = true;
-      let data = {};
-      fields.concat(["group", "familyGroup"]).forEach(id => {
-        const value = document.getElementById(id).value.trim();
-        document.getElementById(id).value = id === "age" || id === "onset" || id === "group" ? toHalfWidth(value) : value;
-        localStorage.setItem(id, value);
-        if (fields.includes(id)) {
-          if (!value) {
-            ok = false;
-            const index = fields.indexOf(id);
-            document.getElementById("err-" + id).innerText = shortNames[index] + "を入力してください";
-          } else {
-            document.getElementById("err-" + id).innerText = "";
-          }
-        }
-        data[id] = value;
-      });
-      if (!ok) return;
+    window.addEventListener('DOMContentLoaded', () => {
+      for (const id in fieldNames) {
+        const saved = localStorage.getItem(id);
+        if (saved) document.getElementById(id).value = saved;
+      }
+    });
 
-      const output = `①ライン名\n【${data.lineName}】\n\n②お住まいの都道府県/国名\n【${data.location}】\n\n③当事者からみた立場\n【${data.position}】\n\n④当事者の性別\n【${data.gender}】\n\n⑤当事者の年齢\n【${data.age}】\n\n⑥発症年齢、再発回数等\n【${data.onset}】\n\n⑦現在の状況・悩みなど\n【${data.status}】\n\n⑧お薬歴など\n【${data.medication}】\n\n⑨PureLight内の所属グループ\n【${data.group}】\n\n⑩地域の家族会（任意）\n【${data.familyGroup}】\n\n❗ご注意❗\n完全退会される際はくれぐれも、家族グループ内のノートの削除を忘れないようにしてください。\nノートはご本人でないと削除できません❗`;
-      document.getElementById("output").innerText = output;
-      document.getElementById("copyBtn").style.display = "inline-block";
+    function handleConfirm() {
+      let valid = true;
+      let output = "";
+      for (const id of Object.keys(fieldNames)) {
+        const el = document.getElementById(id);
+        let value = el.value.trim();
+        if (["age", "onset", "group"].includes(id)) {
+          value = value.replace(/[０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 65248));
+        }
+        localStorage.setItem(id, value);
+        el.value = value;
+        document.getElementById("error-" + id)?.classList.add("hidden");
+        if (required.includes(id) && !value) {
+          document.getElementById("error-" + id).textContent = fieldNames[id] + "を入力してください";
+          document.getElementById("error-" + id).classList.remove("hidden");
+          valid = false;
+        }
+        output += `${fieldNames[id]}\n【${value}】\n\n`;
+      }
+      output += "❗ご注意❗\n完全退会される際はくれぐれも、家族グループ内のノートの削除を忘れないようにしてください。\nノートはご本人でないと削除できません❗";
+      if (valid) {
+        document.getElementById("output").textContent = output;
+        document.getElementById("output").classList.remove("hidden");
+        document.getElementById("copyBtn").classList.remove("hidden");
+      }
     }
 
     function handleReset() {
-      if (!confirm("入力内容を消しても良いですか？")) return;
-      fields.concat(["group", "familyGroup"]).forEach(id => {
-        document.getElementById(id).value = "";
-        localStorage.removeItem(id);
-        const err = document.getElementById("err-" + id);
-        if (err) err.innerText = "";
-      });
-      document.getElementById("output").innerText = "";
-      document.getElementById("copyBtn").style.display = "none";
+      if (confirm("入力内容を消しても良いですか？")) {
+        for (const id in fieldNames) {
+          document.getElementById(id).value = "";
+          localStorage.removeItem(id);
+        }
+        document.getElementById("output").classList.add("hidden");
+        document.getElementById("copyBtn").classList.add("hidden");
+      }
     }
 
-    function handleCopy() {
-      const text = document.getElementById("output").innerText;
+    function copyOutput() {
+      const text = document.getElementById("output").textContent;
       navigator.clipboard.writeText(text).then(() => {
         alert("コピーしました");
       });
-    }
-
-    function toHalfWidth(str) {
-      return str.replace(/[０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xFEE0));
     }
   </script>
 </body>
