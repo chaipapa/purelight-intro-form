@@ -2,26 +2,41 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PureLightの自己紹介作成ツール</title>
   <style>
     body {
-      font-family: "Hiragino Kaku Gothic ProN", sans-serif;
-      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", sans-serif;
+      padding: 4vw;
       max-width: 800px;
       margin: auto;
       background: #fffaf5;
       color: #333;
+      font-size: 4.5vw;
+    }
+    @media (min-width: 600px) {
+      body {
+        font-size: 16px;
+        padding: 20px;
+      }
     }
     h1 {
       background: #f9e3d3;
-      padding: 15px;
+      padding: 4vw;
       border-radius: 10px;
       text-align: center;
       color: #6b4c3b;
+      font-size: 5.5vw;
+    }
+    @media (min-width: 600px) {
+      h1 {
+        font-size: 24px;
+        padding: 15px;
+      }
     }
     label {
       display: block;
-      margin-top: 15px;
+      margin-top: 5vw;
       font-weight: bold;
     }
     .note {
@@ -32,33 +47,41 @@
     }
     textarea, input, select, button {
       width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      margin-top: 5px;
+      padding: 3.5vw;
+      font-size: 4.5vw;
+      margin-top: 2vw;
       border: 1px solid #d8cfc4;
       border-radius: 6px;
       background: #fff;
+      box-sizing: border-box;
+    }
+    @media (min-width: 600px) {
+      textarea, input, select, button {
+        font-size: 16px;
+        padding: 10px;
+        margin-top: 5px;
+      }
     }
     textarea {
-      height: 80px;
+      height: 90px;
     }
     #output {
       white-space: pre-wrap;
       background: #f0eee9;
-      padding: 15px;
-      margin-top: 20px;
+      padding: 4vw;
+      margin-top: 5vw;
       border-radius: 10px;
       border: 1px solid #ccc;
     }
     .error {
       color: red;
-      margin-top: 10px;
+      margin-top: 2vw;
     }
     button {
       background-color: #f2c29d;
       color: #432c1e;
       border: none;
-      margin-top: 20px;
+      margin-top: 5vw;
       cursor: pointer;
       font-weight: bold;
     }
@@ -106,7 +129,7 @@
     <label>⑥発症年齢、再発回数等<span class="note">※必須</span>
       <input type="text" id="onset">
     </label>
-    <label>⑦発症から現在の状況（ざっくりでも盛り沢山でもＯＫ）悩み、相談、気になっていることなど（改行可）<span class="note">※必須</span>
+    <label>⑦発症から現在の状況（ざっくりでも盛り沢山でもＯＫ）悩み、相談、気になっていることなど<span class="note">※必須</span>
       <textarea id="situation"></textarea>
     </label>
     <label>⑧現在、過去のお薬歴、サプリ、漢方、栄養療法など<span class="note">※必須</span>
@@ -127,32 +150,28 @@
 
   <script>
     function generateIntro() {
-      const requiredFields = [
-        { id: 'lineName', label: '①ライン名（LINEのアカウント名と同じお名前でお願いします）' },
-        { id: 'location', label: '②ご家族（ケアラー）自身のお住まいの都道府県（海外の方は国名）' },
-        { id: 'relationship', label: '③当事者からみたあなたの立場' },
-        { id: 'gender', label: '④当事者の性別' },
-        { id: 'age', label: '⑤当事者の年齢（20代前半などでもＯＫ）' },
-        { id: 'onset', label: '⑥発症年齢、再発回数等' },
-        { id: 'situation', label: '⑦発症から現在の状況（ざっくりでも盛り沢山でもＯＫ）悩み、相談、気になっていることなど' },
-        { id: 'medication', label: '⑧現在、過去のお薬歴、サプリ、漢方、栄養療法など' },
-      ];
-
-      const missing = requiredFields.filter(field => {
-        const el = document.getElementById(field.id);
-        return !el.value.trim();
-      });
+      const fields = ['lineName', 'location', 'relationship', 'gender', 'age', 'onset', 'situation', 'medication'];
+      const missing = fields.filter(id => !document.getElementById(id).value.trim());
 
       if (missing.length > 0) {
-        const message = '以下の必須の項目が入力されていません：\n' + missing.map(m => m.label).join('\n');
+        const labels = {
+          lineName: '①ライン名',
+          location: '②お住まいの都道府県／国名',
+          relationship: '③当事者からみた立場',
+          gender: '④当事者の性別',
+          age: '⑤当事者の年齢',
+          onset: '⑥発症年齢、再発回数等',
+          situation: '⑦現在の状況・悩みなど',
+          medication: '⑧お薬歴など'
+        };
+        const message = '以下の必須の項目が入力されていません：\n' + missing.map(id => labels[id]).join('\n');
         document.getElementById("errorMessage").innerText = message;
         document.getElementById("output").innerText = '';
         return;
-      } else {
-        document.getElementById("errorMessage").innerText = '';
       }
 
-      const intro = `①ライン名（LINEのアカウント名と同じお名前でお願いします）\n【${lineName.value}】\n\n` +
+      const intro =
+        `①ライン名（LINEのアカウント名と同じお名前でお願いします）\n【${lineName.value}】\n\n` +
         `②ご家族（ケアラー）自身のお住まいの都道府県（海外の方は国名）\n【${location.value}】\n\n` +
         `③当事者からみたあなたの立場\n【${relationship.value}】\n\n` +
         `④当事者の性別\n【${gender.value}】\n\n` +
@@ -165,6 +184,7 @@
         `❗ご注意❗\n完全退会される際はくれぐれも、家族グループ内のノートの削除を忘れないようにしてください。\nノートはご本人でないと削除できません❗`;
 
       document.getElementById("output").innerText = intro;
+      document.getElementById("errorMessage").innerText = '';
     }
 
     function copyToClipboard() {
