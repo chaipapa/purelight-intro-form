@@ -54,6 +54,12 @@
     button:hover {
       background-color: #ffaa44;
     }
+    #copyButton {
+      background-color: #00c300;
+    }
+    #copyButton:hover {
+      background-color: #00b300;
+    }
     .output {
       white-space: pre-wrap;
       background: #fff;
@@ -65,6 +71,7 @@
     .error {
       color: red;
       font-size: 0.9em;
+      white-space: pre-line;
     }
     @media (max-width: 600px) {
       button {
@@ -134,15 +141,15 @@
     const toHalfWidth = str => str.replace(/[０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xFEE0));
 
     const handleConfirm = () => {
-      let error = "";
+      let error = [];
       const data = {};
       requiredFields.forEach(id => {
         const val = document.getElementById(id).value.trim();
-        if (!val) error += `${fieldLabels[id]}を入力してください\n`;
+        if (!val) error.push(`${fieldLabels[id]}を入力してください`);
         data[id] = val;
       });
-      if (error) {
-        document.getElementById("errorMsg").textContent = error;
+      if (error.length > 0) {
+        document.getElementById("errorMsg").textContent = error.join("\n");
         return;
       }
 
