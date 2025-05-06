@@ -6,46 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PureLightの自己紹介作成ツール</title>
   <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", sans-serif;
-      padding: 4vw;
-      max-width: 800px;
-      margin: auto;
-      background: #fffaf5;
-      color: #333;
-      font-size: 4.5vw;
-    }
-    @media (min-width: 600px) {
-      body {
-        font-size: 16px;
-        padding: 20px;
-      }
-    }
-    h1 {
-      background: #f9e3d3;
-      padding: 4vw;
-      border-radius: 10px;
-      text-align: center;
-      color: #6b4c3b;
-      font-size: 5.5vw;
-    }
-    @media (min-width: 600px) {
-      h1 {
-        font-size: 24px;
-        padding: 15px;
-      }
-    }
-    label {
-      display: block;
-      margin-top: 5vw;
-      font-weight: bold;
-    }
-    .note {
-      font-size: 0.85em;
-      color: #a25f36;
-      font-weight: normal;
-      margin-left: 5px;
-    }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", sans-serif; padding: 4vw; max-width: 800px; margin: auto; background: #fffaf5; color: #333; font-size: 4.5vw; }
+    @media (min-width: 600px) { body { font-size: 16px; padding: 20px; } }
+    h1 { background: #f9e3d3; padding: 4vw; border-radius: 10px; text-align: center; color: #6b4c3b; font-size: 5.5vw; }
+    @media (min-width: 600px) { h1 { font-size: 24px; padding: 15px; } }
+    label { display: block; margin-top: 5vw; font-weight: bold; }
+    .note { font-size: 0.85em; color: #a25f36; font-weight: normal; margin-left: 5px; }
     textarea, input[type="text"], button {
       width: 100%;
       padding: 3.5vw;
@@ -56,42 +22,15 @@
       background: #fff;
       box-sizing: border-box;
     }
-    input[type="radio"] {
-      margin-right: 10px;
-    }
+    input[type="radio"] { margin-right: 10px; }
     @media (min-width: 600px) {
-      textarea, input[type="text"], button {
-        font-size: 16px;
-        padding: 10px;
-        margin-top: 5px;
-      }
+      textarea, input[type="text"], button { font-size: 16px; padding: 10px; margin-top: 5px; }
     }
-    textarea {
-      height: 90px;
-    }
-    #output {
-      white-space: pre-wrap;
-      background: #f0eee9;
-      padding: 4vw;
-      margin-top: 5vw;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-    }
-    .error {
-      color: red;
-      margin-top: 2vw;
-    }
-    button {
-      background-color: #f2c29d;
-      color: #432c1e;
-      border: none;
-      margin-top: 5vw;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    button:hover {
-      background-color: #f7b78e;
-    }
+    textarea { height: 90px; }
+    #output { white-space: pre-wrap; background: #f0eee9; padding: 4vw; margin-top: 5vw; border-radius: 10px; border: 1px solid #ccc; }
+    .error { color: red; margin-top: 2vw; }
+    button { background-color: #f2c29d; color: #432c1e; border: none; margin-top: 5vw; cursor: pointer; font-weight: bold; }
+    button:hover { background-color: #f7b78e; }
   </style>
 </head>
 <body>
@@ -147,7 +86,6 @@
     <div class="error" id="errorMessage"></div>
     <button type="button" onclick="generateIntro()">確認</button>
   </form>
-
   <div id="output"></div>
   <button onclick="copyToClipboard()">クリップボードにコピー</button>
 
@@ -160,7 +98,11 @@
       const radios = document.getElementsByName(name);
       for (const radio of radios) {
         if (radio.checked) {
-          return radio.value === "その他" ? document.getElementById(otherId).value.trim() || "その他" : radio.value;
+          if (radio.value === "その他") {
+            const otherText = document.getElementById(otherId).value.trim();
+            return otherText || null;
+          }
+          return radio.value;
         }
       }
       return "";
@@ -184,6 +126,7 @@
           gender: '④性別', age: '⑤年齢', onset: '⑥発症', situation: '⑦状況', medication: '⑧薬歴'
         };
         document.getElementById("errorMessage").innerText = '以下の必須の項目が入力されていません：\n' + missing.map(m => labels[m] || m).join('\n');
+        document.getElementById("output").innerText = '';
         return;
       }
 
@@ -201,7 +144,7 @@
         `❗ご注意❗\n完全退会時は家族グループ内のノート削除をお忘れなく（本人のみ削除可）`;
 
       document.getElementById("output").innerText = intro;
-      document.getElementById("errorMessage").innerText = "";
+      document.getElementById("errorMessage").innerText = '';
     }
 
     function copyToClipboard() {
