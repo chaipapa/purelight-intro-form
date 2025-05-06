@@ -7,160 +7,205 @@
   <style>
     body {
       font-family: sans-serif;
-      background-color: #fdf6f0;
       padding: 1em;
+      background: #fdf6f0;
       color: #333;
       max-width: 600px;
       margin: auto;
     }
     h1 {
-      color: #a55f4d;
       text-align: center;
+      color: #6b4226;
     }
     label {
       display: block;
       margin-top: 1em;
-      font-weight: bold;
     }
     small {
       font-size: 0.8em;
-      color: #888;
+      color: #c00;
     }
     textarea, input, select {
       width: 100%;
       padding: 0.5em;
-      margin-top: 0.3em;
-      border-radius: 4px;
+      margin-top: 0.2em;
+      border-radius: 5px;
       border: 1px solid #ccc;
-      box-sizing: border-box;
       font-size: 1em;
-    }
-    textarea {
-      resize: vertical;
-    }
-    .button-group {
-      margin-top: 2em;
-      display: flex;
-      justify-content: space-between;
     }
     button {
-      padding: 0.7em 1.2em;
+      margin: 1em 0.5em 0;
+      padding: 0.7em 1em;
       font-size: 1em;
       border: none;
-      border-radius: 5px;
-      background-color: #a55f4d;
-      color: white;
+      border-radius: 10px;
+      background-color: #f4b183;
+      color: #fff;
       cursor: pointer;
     }
-    button:disabled {
-      background-color: #ccc;
-    }
-    .output {
-      white-space: pre-wrap;
-      background-color: #fff3e0;
-      padding: 1em;
-      border-radius: 5px;
-      margin-top: 1em;
+    button:hover {
+      background-color: #e68a2e;
     }
     .error {
-      color: red;
+      color: #d00;
       font-size: 0.9em;
     }
+    #output {
+      white-space: pre-wrap;
+      margin-top: 2em;
+      background: #fff8ee;
+      border: 1px solid #ddd;
+      padding: 1em;
+      border-radius: 10px;
+    }
   </style>
-  <script defer>
-    const fields = ["name", "location", "relation", "gender", "age", "onset", "situation", "medication"];
-
-    window.addEventListener('DOMContentLoaded', () => {
-      fields.concat(["group", "familyGroup"]).forEach(id => {
-        const saved = localStorage.getItem(id);
-        if (saved) document.getElementById(id).value = saved;
-      });
-
-      document.getElementById("confirmButton").addEventListener("click", handleConfirm);
-      document.getElementById("resetButton").addEventListener("click", handleReset);
-      document.getElementById("copyButton").addEventListener("click", handleCopy);
-    });
-
-    function normalizeNumbers(str) {
-      return str.replace(/[０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 65248));
-    }
-
-    function handleConfirm() {
-      let hasError = false;
-      fields.forEach(id => {
-        const input = document.getElementById(id);
-        input.value = normalizeNumbers(input.value);
-        localStorage.setItem(id, input.value);
-        const error = document.getElementById(`error-${id}`);
-        if (!input.value.trim()) {
-          error.textContent = `${getShortName(id)}を入力してください`;
-          hasError = true;
-        } else {
-          error.textContent = "";
-        }
-      });
-      if (hasError) return;
-
-      const output = `①ライン名\n【${document.getElementById("name").value}】\n\n②お住まいの都道府県/国名\n【${document.getElementById("location").value}】\n\n③当事者からみた立場\n【${document.getElementById("relation").value}】\n\n④当事者の性別\n【${document.getElementById("gender").value}】\n\n⑤当事者の年齢\n【${document.getElementById("age").value}】\n\n⑥発症年齢、再発回数等\n【${document.getElementById("onset").value}】\n\n⑦現在の状況・悩みなど\n【${document.getElementById("situation").value}】\n\n⑧お薬歴など\n【${document.getElementById("medication").value}】\n\n⑨PureLight内の所属グループ\n【${document.getElementById("group").value}】\n\n⑩地域の家族会（任意）\n【${document.getElementById("familyGroup").value}】\n\n❗ご注意❗\n完全退会される際はくれぐれも、家族グループ内のノートの削除を忘れないようにしてください。\nノートはご本人でないと削除できません❗`;
-
-      document.getElementById("output").style.display = "block";
-      document.getElementById("output").textContent = output;
-      document.getElementById("copyButton").style.display = "inline-block";
-    }
-
-    function handleReset() {
-      fields.concat(["group", "familyGroup"]).forEach(id => {
-        document.getElementById(id).value = "";
-        localStorage.removeItem(id);
-        const error = document.getElementById(`error-${id}`);
-        if (error) error.textContent = "";
-      });
-      document.getElementById("output").style.display = "none";
-      document.getElementById("copyButton").style.display = "none";
-    }
-
-    function handleCopy() {
-      const text = document.getElementById("output").textContent;
-      navigator.clipboard.writeText(text).then(() => {
-        alert("コピーしました");
-      });
-    }
-
-    function getShortName(id) {
-      const map = {
-        name: "ライン名",
-        location: "お住まいの都道府県/国名",
-        relation: "当事者からみた立場",
-        gender: "当事者の性別",
-        age: "当事者の年齢",
-        onset: "発症年齢、再発回数等",
-        situation: "現在の状況・悩みなど",
-        medication: "お薬歴など"
-      };
-      return map[id] || id;
-    }
-  </script>
 </head>
 <body>
   <h1>PureLightの自己紹介作成ツール</h1>
-
-  <form id="introForm">
-    <!-- 省略されず既存のフォーム要素はそのまま -->
-    <label>①ライン名 <small>（※必須）</small>
+  <form id="form">
+    <label>①ライン名（LINEのアカウント名と同じお名前でお願いします） <small>（※必須）</small>
       <input type="text" id="name" required>
-      <div class="error" id="error-name"></div>
+      <div class="error" id="err_name"></div>
     </label>
-    <!-- 以下、同様に全フォームの構成は維持 -->
-
-    <div class="button-group">
-      <button type="button" id="confirmButton">確認する</button>
-      <button type="button" id="resetButton">やりなおす</button>
-    </div>
+    <label>②ご家族（ケアラー）自身のお住まいの都道府県（海外の方は国名） <small>（※必須）</small>
+      <input type="text" id="location" required>
+      <div class="error" id="err_location"></div>
+    </label>
+    <label>③当事者からみたあなたの立場 <small>（※必須）</small>
+      <input type="text" id="relation" required>
+      <div class="error" id="err_relation"></div>
+    </label>
+    <label>④当事者の性別 <small>（※必須）</small>
+      <select id="gender" required>
+        <option value="">選んでください</option>
+        <option value="男性">男性</option>
+        <option value="女性">女性</option>
+      </select>
+      <div class="error" id="err_gender"></div>
+    </label>
+    <label>⑤当事者の年齢 <small>（※必須）</small>
+      <input type="text" id="age" required>
+      <div class="error" id="err_age"></div>
+    </label>
+    <label>⑥発症年齢、再発回数等 <small>（※必須）</small>
+      <input type="text" id="onset" required>
+      <div class="error" id="err_onset"></div>
+    </label>
+    <label>⑦発症から現在の状況（ざっくりでも盛り沢山でもOK）悩み、相談、気になっていることなど <small>（※必須）</small>
+      <textarea id="situation" rows="4" required></textarea>
+      <div class="error" id="err_situation"></div>
+    </label>
+    <label>⑧現在、過去のお薬歴、サプリ、漢方、栄養療法など <small>（※必須）</small>
+      <input type="text" id="medicine" required>
+      <div class="error" id="err_medicine"></div>
+    </label>
+    <label>⑨PureLight内の所属グループ（基本の家族グループ以外）サブグループ、混合グループ
+      <input type="text" id="group">
+    </label>
+    <label>⑩所属している地域の家族会（任意）
+      <input type="text" id="community">
+    </label>
+    <button type="button" onclick="confirmInput()">確認する</button>
+    <button type="button" onclick="resetForm()">やりなおす</button>
   </form>
+  <div id="output"></div>
+  <script>
+    const fields = ["name", "location", "relation", "gender", "age", "onset", "situation", "medicine"];
 
-  <div class="output" id="output" style="display: none;"></div>
-  <div class="button-group" style="justify-content: center;">
-    <button id="copyButton" style="display: none;">LINEに貼り付けるためにコピーする</button>
-  </div>
+    window.onload = () => {
+      fields.concat(["group", "community"]).forEach(id => {
+        document.getElementById(id).value = localStorage.getItem(id) || "";
+      });
+    };
+
+    function sanitizeNum(str) {
+      return str.replace(/[０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xFEE0));
+    }
+
+    function confirmInput() {
+      let valid = true;
+      fields.forEach(id => {
+        const el = document.getElementById(id);
+        let value = el.value.trim();
+        if (id === "age" || id === "onset") value = sanitizeNum(value);
+        el.value = value;
+        document.getElementById("err_" + id).textContent = value ? "" : `${getShortName(id)}を入力してください`;
+        if (!value) valid = false;
+      });
+      if (!valid) return;
+
+      fields.concat(["group", "community"]).forEach(id => {
+        localStorage.setItem(id, document.getElementById(id).value.trim());
+      });
+
+      const out =
+`①ライン名
+【${document.getElementById("name").value}】
+
+②お住まいの都道府県/国名
+【${document.getElementById("location").value}】
+
+③当事者からみた立場
+【${document.getElementById("relation").value}】
+
+④当事者の性別
+【${document.getElementById("gender").value}】
+
+⑤当事者の年齢
+【${document.getElementById("age").value}】
+
+⑥発症年齢、再発回数等
+【${document.getElementById("onset").value}】
+
+⑦現在の状況・悩みなど
+【${document.getElementById("situation").value}】
+
+⑧お薬歴など
+【${document.getElementById("medicine").value}】
+
+⑨PureLight内の所属グループ
+【${document.getElementById("group").value}】
+
+⑩地域の家族会（任意）
+【${document.getElementById("community").value}】
+
+❗ご注意❗
+完全退会される際はくれぐれも、家族グループ内のノートの削除を忘れないようにしてください。
+ノートはご本人でないと削除できません❗`;
+
+      const output = document.getElementById("output");
+      output.textContent = out;
+      const btn = document.createElement("button");
+      btn.textContent = "LINEに貼り付けるためにコピーする";
+      btn.onclick = () => {
+        navigator.clipboard.writeText(out).then(() => alert("コピーしました"));
+      };
+      output.appendChild(btn);
+    }
+
+    function resetForm() {
+      fields.concat(["group", "community"]).forEach(id => {
+        localStorage.removeItem(id);
+        document.getElementById(id).value = "";
+        const errEl = document.getElementById("err_" + id);
+        if (errEl) errEl.textContent = "";
+      });
+      document.getElementById("output").innerHTML = "";
+    }
+
+    function getShortName(id) {
+      const names = {
+        name: "①ライン名",
+        location: "②お住まいの都道府県/国名",
+        relation: "③当事者からみた立場",
+        gender: "④当事者の性別",
+        age: "⑤当事者の年齢",
+        onset: "⑥発症年齢、再発回数等",
+        situation: "⑦現在の状況・悩みなど",
+        medicine: "⑧お薬歴など"
+      };
+      return names[id] || id;
+    }
+  </script>
 </body>
 </html>
