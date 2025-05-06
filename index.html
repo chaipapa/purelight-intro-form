@@ -2,26 +2,41 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PureLightの自己紹介作成ツール</title>
   <style>
     body {
       font-family: "Hiragino Kaku Gothic ProN", sans-serif;
-      padding: 20px;
+      padding: 4vw;
       max-width: 800px;
       margin: auto;
       background: #fffaf5;
       color: #333;
+      font-size: 4vw;
+    }
+    @media (min-width: 600px) {
+      body {
+        font-size: 16px;
+        padding: 20px;
+      }
     }
     h1 {
       background: #f9e3d3;
-      padding: 15px;
+      padding: 4vw;
       border-radius: 10px;
       text-align: center;
       color: #6b4c3b;
+      font-size: 5vw;
+    }
+    @media (min-width: 600px) {
+      h1 {
+        font-size: 24px;
+        padding: 15px;
+      }
     }
     label {
       display: block;
-      margin-top: 15px;
+      margin-top: 5vw;
       font-weight: bold;
     }
     .note {
@@ -32,12 +47,20 @@
     }
     textarea, input, select, button {
       width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      margin-top: 5px;
+      padding: 3vw;
+      font-size: 4vw;
+      margin-top: 2vw;
       border: 1px solid #d8cfc4;
       border-radius: 6px;
       background: #fff;
+      box-sizing: border-box;
+    }
+    @media (min-width: 600px) {
+      textarea, input, select, button {
+        font-size: 16px;
+        padding: 10px;
+        margin-top: 5px;
+      }
     }
     textarea {
       height: 80px;
@@ -45,20 +68,20 @@
     #output {
       white-space: pre-wrap;
       background: #f0eee9;
-      padding: 15px;
-      margin-top: 20px;
+      padding: 4vw;
+      margin-top: 5vw;
       border-radius: 10px;
       border: 1px solid #ccc;
     }
     .error {
       color: red;
-      margin-top: 10px;
+      margin-top: 2vw;
     }
     button {
       background-color: #f2c29d;
       color: #432c1e;
       border: none;
-      margin-top: 20px;
+      margin-top: 5vw;
       cursor: pointer;
       font-weight: bold;
     }
