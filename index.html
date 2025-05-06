@@ -10,168 +10,182 @@
       background-color: #fff8f0;
       padding: 20px;
       color: #333;
-      max-width: 600px;
-      margin: auto;
     }
     h1 {
-      color: #b36b00;
+      text-align: center;
+      color: #d2691e;
+    }
+    .form-group {
+      margin-bottom: 20px;
     }
     label {
       display: block;
-      margin-top: 20px;
       font-weight: bold;
+      margin-bottom: 5px;
     }
     small {
       font-size: 0.8em;
-      color: #b00;
+      color: #d2691e;
     }
     textarea, input[type="text"] {
       width: 100%;
       padding: 10px;
-      margin-top: 5px;
+      font-size: 1em;
       border: 1px solid #ccc;
       border-radius: 5px;
     }
-    .buttons {
-      margin-top: 30px;
+    textarea {
+      resize: vertical;
+      min-height: 60px;
     }
     button {
-      background-color: #ffa726;
-      color: white;
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 1em;
       border: none;
-      padding: 10px 15px;
-      margin-right: 10px;
       border-radius: 5px;
       cursor: pointer;
     }
-    button:hover {
-      background-color: #fb8c00;
-    }
-    #result {
-      white-space: pre-line;
-      background-color: #fff;
-      border: 1px solid #ccc;
+    .confirm { background-color: #ffa07a; color: white; }
+    .reset { background-color: #f08080; color: white; margin-left: 10px; }
+    .copy { background-color: #90ee90; color: black; display: none; }
+    .error { color: red; font-size: 0.9em; }
+    #output {
+      white-space: pre-wrap;
+      background: #fff;
       padding: 15px;
-      margin-top: 20px;
+      border: 1px solid #ccc;
       border-radius: 5px;
-    }
-    .error {
-      color: red;
-      font-size: 0.9em;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
   <h1>PureLightの自己紹介作成ツール</h1>
 
-  <form id="introForm">
-    <label>①ライン名（LINEのアカウント名と同じお名前でお願いします）<br><small>（※必須）</small></label>
-    <input type="text" id="lineName" required>
-    <div class="error" id="error-lineName"></div>
-
-    <label>②ご家族（ケアラー）自身のお住まいの都道府県（海外の方は国名）<br><small>（※必須）</small></label>
-    <input type="text" id="prefecture" required>
-    <div class="error" id="error-prefecture"></div>
-
-    <label>③当事者からみたあなたの立場<br><small>（※必須）</small></label>
-    <input type="text" id="relation" required>
-    <div class="error" id="error-relation"></div>
-
-    <label>④当事者の性別<br><small>（※必須）</small></label>
-    <input type="text" id="gender" required>
-    <div class="error" id="error-gender"></div>
-
-    <label>⑤当事者の年齢（20代前半などでもOK）<br><small>（※必須）</small></label>
-    <input type="text" id="age" required>
-    <div class="error" id="error-age"></div>
-
-    <label>⑥発症年齢、再発回数等<br><small>（※必須）</small></label>
-    <input type="text" id="onset" required>
-    <div class="error" id="error-onset"></div>
-
-    <label>⑦発症から現在の状況（ざっくりでも盛り沢山でもOK）悩み、相談、気になっていることなど<br><small>（※必須）</small></label>
-    <textarea id="status" rows="4" required></textarea>
-    <div class="error" id="error-status"></div>
-
-    <label>⑧現在、過去のお薬歴、サプリ、漢方、栄養療法など<br><small>（※必須）</small></label>
-    <input type="text" id="meds" required>
-    <div class="error" id="error-meds"></div>
-
-    <label>⑨PureLight内の所属グループ（基本の家族グループ以外）サブグループ、混合グループ</label>
-    <input type="text" id="group">
-
-    <label>⑩所属している地域の家族会（任意）</label>
-    <input type="text" id="localgroup">
-
-    <div class="buttons">
-      <button type="button" onclick="checkAndPreview()">確認する</button>
-      <button type="button" onclick="confirmReset()">やりなおす</button>
+  <div id="form">
+    <div class="form-group">
+      <label>①ライン名 <small>（※必須）</small></label>
+      <input type="text" id="lineName">
+      <div class="error" id="err-lineName"></div>
     </div>
-  </form>
 
-  <div id="result"></div>
-  <div class="buttons" id="copyArea" style="display:none;">
-    <button onclick="copyToClipboard()">LINEに貼り付けるためにコピーする</button>
+    <div class="form-group">
+      <label>②ご家族（ケアラー）自身のお住まいの都道府県（海外の方は国名） <small>（※必須）</small></label>
+      <input type="text" id="location">
+      <div class="error" id="err-location"></div>
+    </div>
+
+    <div class="form-group">
+      <label>③当事者からみたあなたの立場 <small>（※必須）</small></label>
+      <input type="text" id="position">
+      <div class="error" id="err-position"></div>
+    </div>
+
+    <div class="form-group">
+      <label>④当事者の性別 <small>（※必須）</small></label>
+      <input type="text" id="gender">
+      <div class="error" id="err-gender"></div>
+    </div>
+
+    <div class="form-group">
+      <label>⑤当事者の年齢 <small>（※必須）</small></label>
+      <input type="text" id="age">
+      <div class="error" id="err-age"></div>
+    </div>
+
+    <div class="form-group">
+      <label>⑥発症年齢、再発回数等 <small>（※必須）</small></label>
+      <input type="text" id="onset">
+      <div class="error" id="err-onset"></div>
+    </div>
+
+    <div class="form-group">
+      <label>⑦発症から現在の状況（ざっくりでも盛り沢山でもOK）悩み、相談、気になっていることなど <small>（※必須）</small></label>
+      <textarea id="status"></textarea>
+      <div class="error" id="err-status"></div>
+    </div>
+
+    <div class="form-group">
+      <label>⑧現在、過去のお薬歴、サプリ、漢方、栄養療法など <small>（※必須）</small></label>
+      <input type="text" id="medication">
+      <div class="error" id="err-medication"></div>
+    </div>
+
+    <div class="form-group">
+      <label>⑨PureLight内の所属グループ</label>
+      <input type="text" id="group">
+    </div>
+
+    <div class="form-group">
+      <label>⑩所属している地域の家族会（任意）</label>
+      <input type="text" id="familyGroup">
+    </div>
+
+    <button class="confirm" onclick="handleConfirm()">確認する</button>
+    <button class="reset" onclick="handleReset()">やりなおす</button>
+    <button class="copy" id="copyBtn" onclick="handleCopy()">LINEに貼り付けるためにコピーする</button>
+
+    <div id="output"></div>
   </div>
 
   <script>
-    const fields = [
-      { id: 'lineName', label: '①ライン名' },
-      { id: 'prefecture', label: '②お住まいの都道府県/国名' },
-      { id: 'relation', label: '③当事者からみた立場' },
-      { id: 'gender', label: '④当事者の性別' },
-      { id: 'age', label: '⑤当事者の年齢' },
-      { id: 'onset', label: '⑥発症年齢、再発回数等' },
-      { id: 'status', label: '⑦現在の状況・悩みなど' },
-      { id: 'meds', label: '⑧お薬歴など' },
-      { id: 'group', label: '⑨PureLight内の所属グループ' },
-      { id: 'localgroup', label: '⑩地域の家族会（任意）' }
-    ];
+    const fields = ["lineName", "location", "position", "gender", "age", "onset", "status", "medication"];
+    const shortNames = ["①ライン名", "②お住まいの都道府県/国名", "③当事者からみた立場", "④当事者の性別", "⑤当事者の年齢", "⑥発症年齢、再発回数等", "⑦現在の状況・悩みなど", "⑧お薬歴など"];
 
     window.onload = () => {
-      fields.forEach(field => {
-        const saved = localStorage.getItem(field.id);
-        if (saved) document.getElementById(field.id).value = saved;
+      fields.concat(["group", "familyGroup"]).forEach(id => {
+        const saved = localStorage.getItem(id);
+        if (saved) document.getElementById(id).value = saved;
       });
     };
 
-    function checkAndPreview() {
+    function handleConfirm() {
       let ok = true;
-      fields.forEach(({id, label}, index) => {
-        const el = document.getElementById(id);
-        const error = document.getElementById(`error-${id}`);
-        error.textContent = '';
-        let value = el.value.trim();
-        if ([4,5,8].includes(index)) value = value.replace(/[０-９]/g, s => String.fromCharCode(s.charCodeAt(0)-65248));
-        el.value = value;
+      let data = {};
+      fields.concat(["group", "familyGroup"]).forEach(id => {
+        const value = document.getElementById(id).value.trim();
+        document.getElementById(id).value = id === "age" || id === "onset" || id === "group" ? toHalfWidth(value) : value;
         localStorage.setItem(id, value);
-        if (index < 8 && !value) {
-          error.textContent = `${label}を入力してください`;
-          ok = false;
+        if (fields.includes(id)) {
+          if (!value) {
+            ok = false;
+            const index = fields.indexOf(id);
+            document.getElementById("err-" + id).innerText = shortNames[index] + "を入力してください";
+          } else {
+            document.getElementById("err-" + id).innerText = "";
+          }
         }
+        data[id] = value;
       });
       if (!ok) return;
-      const r = fields.map(f => `${f.label}\n【${document.getElementById(f.id).value}】\n`).join('\n');
-      document.getElementById('result').textContent = r + '\n❗ご注意❗\n完全退会される際はくれぐれも、家族グループ内のノートの削除を忘れないようにしてください。\nノートはご本人でないと削除できません❗';
-      document.getElementById('copyArea').style.display = 'block';
+
+      const output = `①ライン名\n【${data.lineName}】\n\n②お住まいの都道府県/国名\n【${data.location}】\n\n③当事者からみた立場\n【${data.position}】\n\n④当事者の性別\n【${data.gender}】\n\n⑤当事者の年齢\n【${data.age}】\n\n⑥発症年齢、再発回数等\n【${data.onset}】\n\n⑦現在の状況・悩みなど\n【${data.status}】\n\n⑧お薬歴など\n【${data.medication}】\n\n⑨PureLight内の所属グループ\n【${data.group}】\n\n⑩地域の家族会（任意）\n【${data.familyGroup}】\n\n❗ご注意❗\n完全退会される際はくれぐれも、家族グループ内のノートの削除を忘れないようにしてください。\nノートはご本人でないと削除できません❗`;
+      document.getElementById("output").innerText = output;
+      document.getElementById("copyBtn").style.display = "inline-block";
     }
 
-    function confirmReset() {
-      if (confirm('入力内容を消しても良いですか？')) {
-        fields.forEach(f => {
-          document.getElementById(f.id).value = '';
-          localStorage.removeItem(f.id);
-        });
-        document.getElementById('result').textContent = '';
-        document.getElementById('copyArea').style.display = 'none';
-      }
-    }
-
-    function copyToClipboard() {
-      const text = document.getElementById('result').textContent;
-      navigator.clipboard.writeText(text).then(() => {
-        alert('コピーしました');
+    function handleReset() {
+      if (!confirm("入力内容を消しても良いですか？")) return;
+      fields.concat(["group", "familyGroup"]).forEach(id => {
+        document.getElementById(id).value = "";
+        localStorage.removeItem(id);
+        const err = document.getElementById("err-" + id);
+        if (err) err.innerText = "";
       });
+      document.getElementById("output").innerText = "";
+      document.getElementById("copyBtn").style.display = "none";
+    }
+
+    function handleCopy() {
+      const text = document.getElementById("output").innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        alert("コピーしました");
+      });
+    }
+
+    function toHalfWidth(str) {
+      return str.replace(/[０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xFEE0));
     }
   </script>
 </body>
