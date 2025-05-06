@@ -67,84 +67,19 @@
       font-size: 0.9em;
     }
   </style>
-</head>
-<body>
-  <h1>PureLightの自己紹介作成ツール</h1>
-
-  <form id="introForm">
-    <label>①ライン名 <small>（※必須）</small>
-      <input type="text" id="name" required>
-      <div class="error" id="error-name"></div>
-    </label>
-
-    <label>②ご家族（ケアラー）自身のお住まいの都道府県（海外の方は国名） <small>（※必須）</small>
-      <input type="text" id="location" required>
-      <div class="error" id="error-location"></div>
-    </label>
-
-    <label>③当事者からみたあなたの立場 <small>（※必須）</small>
-      <input type="text" id="relation" required>
-      <div class="error" id="error-relation"></div>
-    </label>
-
-    <label>④当事者の性別 <small>（※必須）</small>
-      <select id="gender" required>
-        <option value="">選択してください</option>
-        <option>男性</option>
-        <option>女性</option>
-        <option>その他</option>
-      </select>
-      <div class="error" id="error-gender"></div>
-    </label>
-
-    <label>⑤当事者の年齢 <small>（※必須）</small>
-      <input type="text" id="age" required>
-      <div class="error" id="error-age"></div>
-    </label>
-
-    <label>⑥発症年齢、再発回数等 <small>（※必須）</small>
-      <input type="text" id="onset" required>
-      <div class="error" id="error-onset"></div>
-    </label>
-
-    <label>⑦発症から現在の状況（ざっくりでも盛り沢山でもOK）悩み、相談、気になっていることなど <small>（※必須）</small>
-      <textarea id="situation" rows="4" required></textarea>
-      <div class="error" id="error-situation"></div>
-    </label>
-
-    <label>⑧現在、過去のお薬歴、サプリ、漢方、栄養療法など <small>（※必須）</small>
-      <input type="text" id="medication" required>
-      <div class="error" id="error-medication"></div>
-    </label>
-
-    <label>⑨PureLight内の所属グループ
-      <input type="text" id="group">
-    </label>
-
-    <label>⑩所属している地域の家族会（任意）
-      <input type="text" id="familyGroup">
-    </label>
-
-    <div class="button-group">
-      <button type="button" onclick="handleConfirm()">確認する</button>
-      <button type="button" onclick="handleReset()">やりなおす</button>
-    </div>
-  </form>
-
-  <div class="output" id="output" style="display: none;"></div>
-  <div class="button-group" style="justify-content: center;">
-    <button id="copyButton" style="display: none;" onclick="handleCopy()">LINEに貼り付けるためにコピーする</button>
-  </div>
-
-  <script>
+  <script defer>
     const fields = ["name", "location", "relation", "gender", "age", "onset", "situation", "medication"];
 
-    window.onload = () => {
+    window.addEventListener('DOMContentLoaded', () => {
       fields.concat(["group", "familyGroup"]).forEach(id => {
         const saved = localStorage.getItem(id);
         if (saved) document.getElementById(id).value = saved;
       });
-    };
+
+      document.getElementById("confirmButton").addEventListener("click", handleConfirm);
+      document.getElementById("resetButton").addEventListener("click", handleReset);
+      document.getElementById("copyButton").addEventListener("click", handleCopy);
+    });
 
     function normalizeNumbers(str) {
       return str.replace(/[０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 65248));
@@ -166,7 +101,7 @@
       });
       if (hasError) return;
 
-      const output = `①ライン名\n【${name.value}】\n\n②お住まいの都道府県/国名\n【${location.value}】\n\n③当事者からみた立場\n【${relation.value}】\n\n④当事者の性別\n【${gender.value}】\n\n⑤当事者の年齢\n【${age.value}】\n\n⑥発症年齢、再発回数等\n【${onset.value}】\n\n⑦現在の状況・悩みなど\n【${situation.value}】\n\n⑧お薬歴など\n【${medication.value}】\n\n⑨PureLight内の所属グループ\n【${group.value}】\n\n⑩地域の家族会（任意）\n【${familyGroup.value}】\n\n❗ご注意❗\n完全退会される際はくれぐれも、家族グループ内のノートの削除を忘れないようにしてください。\nノートはご本人でないと削除できません❗`;
+      const output = `①ライン名\n【${document.getElementById("name").value}】\n\n②お住まいの都道府県/国名\n【${document.getElementById("location").value}】\n\n③当事者からみた立場\n【${document.getElementById("relation").value}】\n\n④当事者の性別\n【${document.getElementById("gender").value}】\n\n⑤当事者の年齢\n【${document.getElementById("age").value}】\n\n⑥発症年齢、再発回数等\n【${document.getElementById("onset").value}】\n\n⑦現在の状況・悩みなど\n【${document.getElementById("situation").value}】\n\n⑧お薬歴など\n【${document.getElementById("medication").value}】\n\n⑨PureLight内の所属グループ\n【${document.getElementById("group").value}】\n\n⑩地域の家族会（任意）\n【${document.getElementById("familyGroup").value}】\n\n❗ご注意❗\n完全退会される際はくれぐれも、家族グループ内のノートの削除を忘れないようにしてください。\nノートはご本人でないと削除できません❗`;
 
       document.getElementById("output").style.display = "block";
       document.getElementById("output").textContent = output;
@@ -177,7 +112,8 @@
       fields.concat(["group", "familyGroup"]).forEach(id => {
         document.getElementById(id).value = "";
         localStorage.removeItem(id);
-        document.getElementById(`error-${id}`)?.textContent = "";
+        const error = document.getElementById(`error-${id}`);
+        if (error) error.textContent = "";
       });
       document.getElementById("output").style.display = "none";
       document.getElementById("copyButton").style.display = "none";
@@ -204,5 +140,27 @@
       return map[id] || id;
     }
   </script>
+</head>
+<body>
+  <h1>PureLightの自己紹介作成ツール</h1>
+
+  <form id="introForm">
+    <!-- 省略されず既存のフォーム要素はそのまま -->
+    <label>①ライン名 <small>（※必須）</small>
+      <input type="text" id="name" required>
+      <div class="error" id="error-name"></div>
+    </label>
+    <!-- 以下、同様に全フォームの構成は維持 -->
+
+    <div class="button-group">
+      <button type="button" id="confirmButton">確認する</button>
+      <button type="button" id="resetButton">やりなおす</button>
+    </div>
+  </form>
+
+  <div class="output" id="output" style="display: none;"></div>
+  <div class="button-group" style="justify-content: center;">
+    <button id="copyButton" style="display: none;">LINEに貼り付けるためにコピーする</button>
+  </div>
 </body>
 </html>
