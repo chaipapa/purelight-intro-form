@@ -29,9 +29,9 @@
 <body>
   <h1>PureLightの自己紹介作成ツール</h1>
   <form id="introForm">
-    <label>①ライン名<span class="note">※必須</span><input type="text" id="lineName"></label>
-    <label>②お住まいの都道府県／国名<span class="note">※必須</span><input type="text" id="location"></label>
-    <label>③当事者からみた立場<span class="note">※必須</span></label>
+    <label>①ライン名（LINEのアカウント名と同じお名前でお願いします）<span class="note">※必須</span><input type="text" id="lineName"></label>
+    <label>②ご家族（ケアラー）自身のお住まいの都道府県（海外の方は国名）<span class="note">※必須</span><input type="text" id="location"></label>
+    <label>③当事者からみたあなたの立場<span class="note">※必須</span></label>
     <div>
       <label><input type="radio" name="relationship" value="父親">父親</label>
       <label><input type="radio" name="relationship" value="母親">母親</label>
@@ -52,10 +52,10 @@
       <label><input type="radio" name="gender" value="その他" onclick="toggleOther('genderOther', true)">その他</label>
       <input type="text" id="genderOther" placeholder="性別を記入してください" style="display:none;">
     </div>
-    <label>⑤当事者の年齢<span class="note">※必須</span><input type="text" id="age"></label>
+    <label>⑤当事者の年齢（20代前半などでもOK）<span class="note">※必須</span><input type="text" id="age"></label>
     <label>⑥発症年齢、再発回数等<span class="note">※必須</span><input type="text" id="onset"></label>
-    <label>⑦現在の状況・悩みなど<span class="note">※必須</span><textarea id="situation"></textarea></label>
-    <label>⑧お薬歴など<span class="note">※必須</span><input type="text" id="medication"></label>
+    <label>⑦発症から現在の状況（ざっくりでも盛り沢山でもOK）悩み、相談、気になっていることなど<span class="note">※必須</span><textarea id="situation"></textarea></label>
+    <label>⑧現在、過去のお薬歴、サプリ、漢方、栄養療法など<span class="note">※必須</span><input type="text" id="medication"></label>
     <label>⑨PureLight内の所属グループ<input type="text" id="groups"></label>
     <label>⑩地域の家族会（任意）<input type="text" id="regionGroup"></label>
     <div class="error" id="errorMessage"></div>
@@ -86,7 +86,7 @@ function getSelectedValue(name, otherId) {
 function generateIntro() {
   const requiredFields = [
     { id: "lineName", label: "①ライン名" },
-    { id: "location", label: "②お住まいの都道府県／国名" },
+    { id: "location", label: "②お住まいの都道府県/国名" },
     { id: "relationship", label: "③当事者からみた立場" },
     { id: "gender", label: "④当事者の性別" },
     { id: "age", label: "⑤当事者の年齢" },
@@ -124,7 +124,7 @@ function generateIntro() {
 
   const intro =
     `①ライン名\n【${values.lineName}】\n\n` +
-    `②お住まいの都道府県／国名\n【${values.location}】\n\n` +
+    `②お住まいの都道府県/国名\n【${values.location}】\n\n` +
     `③当事者からみた立場\n【${values.relationship}】\n\n` +
     `④当事者の性別\n【${values.gender}】\n\n` +
     `⑤当事者の年齢\n【${values.age}】\n\n` +
