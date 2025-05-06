@@ -171,16 +171,16 @@
       }
 
       const intro =
-        `①ライン名（LINEのアカウント名と同じお名前でお願いします）\n【${lineName.value}】\n\n` +
-        `②ご家族（ケアラー）自身のお住まいの都道府県（海外の方は国名）\n【${location.value}】\n\n` +
-        `③当事者からみたあなたの立場\n【${relationship.value}】\n\n` +
-        `④当事者の性別\n【${gender.value}】\n\n` +
-        `⑤当事者の年齢（20代前半などでもＯＫ）\n【${age.value}】\n\n` +
-        `⑥発症年齢、再発回数等\n【${onset.value}】\n\n` +
-        `⑦発症から現在の状況（ざっくりでも盛り沢山でもＯＫ）悩み、相談、気になっていることなど\n【${situation.value}】\n\n` +
-        `⑧現在、過去のお薬歴、サプリ、漢方、栄養療法など\n【${medication.value}】\n\n` +
-        `⑨PureLight内の所属グループ\n【${groups.value}】\n\n` +
-        `⑩所属している地域の家族会（任意）\n【${regionGroup.value}】\n\n` +
+        `①ライン名（LINEのアカウント名と同じお名前でお願いします）\n【${document.getElementById("lineName").value}】\n\n` +
+        `②ご家族（ケアラー）自身のお住まいの都道府県（海外の方は国名）\n【${document.getElementById("location").value}】\n\n` +
+        `③当事者からみたあなたの立場\n【${document.getElementById("relationship").value}】\n\n` +
+        `④当事者の性別\n【${document.getElementById("gender").value}】\n\n` +
+        `⑤当事者の年齢（20代前半などでもＯＫ）\n【${document.getElementById("age").value}】\n\n` +
+        `⑥発症年齢、再発回数等\n【${document.getElementById("onset").value}】\n\n` +
+        `⑦発症から現在の状況（ざっくりでも盛り沢山でもＯＫ）悩み、相談、気になっていることなど\n【${document.getElementById("situation").value}】\n\n` +
+        `⑧現在、過去のお薬歴、サプリ、漢方、栄養療法など\n【${document.getElementById("medication").value}】\n\n` +
+        `⑨PureLight内の所属グループ\n【${document.getElementById("groups").value}】\n\n` +
+        `⑩所属している地域の家族会（任意）\n【${document.getElementById("regionGroup").value}】\n\n` +
         `❗ご注意❗\n完全退会される際はくれぐれも、家族グループ内のノートの削除を忘れないようにしてください。\nノートはご本人でないと削除できません❗`;
 
       document.getElementById("output").innerText = intro;
