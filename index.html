@@ -152,18 +152,27 @@
     };
 
     const formatOutput = data => {
-      const relapseCountNum = parseInt(toHalfWidth(data.relapseCount));
-      const onsetSummary = `発症${toHalfWidth(data.onsetAge)}歳、` + (relapseCountNum === 0 ? "再発なし" : `再発${relapseCountNum}回`);
-      data.age = toHalfWidth(data.age) + "歳";
+      const relapseCountNum = data.relapseCount.trim() === "" ? null : parseInt(toHalfWidth(data.relapseCount));
+      const onsetAge = data.onsetAge.trim() === "" ? null : toHalfWidth(data.onsetAge);
+      const onsetSummary = onsetAge === null || relapseCountNum === null
+        ? ""
+        : `発症${onsetAge}歳、` + (relapseCountNum === 0 ? "再発なし" : `再発${relapseCountNum}回`);
+
+      data.age = data.age.trim() === "" ? "" : toHalfWidth(data.age) + "歳";
       data.onset = onsetSummary;
       data.group = toHalfWidth(data.group);
       data.local = data.local;
 
       let output = "";
       Object.keys(fieldLabels).forEach(id => {
-        output += `${fieldLabels[id]}\n【${data[id] || ""}】\n\n`;
+        output += `${fieldLabels[id]}
+【${data[id] || ""}】
+
+`;
       });
-      output += "❗ご注意❗\n完全退会される際はくれぐれも、家族グループ内のノートの削除を忘れないようにしてください。\nノートはご本人でないと削除できません❗";
+      output += "❗ご注意❗
+完全退会される際はくれぐれも、家族グループ内のノートの削除を忘れないようにしてください。
+ノートはご本人でないと削除できません❗";
       return output;
     };
 
