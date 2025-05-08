@@ -180,8 +180,10 @@
       let error = [];
       const data = gatherFormData();
 
+      // 初期化：未入力項目は空にしておく
       requiredFields.forEach(id => {
         if (!data[id]) {
+          data[id] = "";
           if (id === "onsetAge") {
             error.push("⑥-①発症年齢を入力してください。");
           } else if (id === "relapseCount") {
