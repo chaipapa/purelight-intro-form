@@ -1,208 +1,262 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PureLightの自己紹介作成ツール</title>
   <style>
     body {
       font-family: sans-serif;
-      background-color: #fef9f4;
-      padding: 1em;
-      max-width: 800px;
+      background-color: #f5fff8;
+      color: #333;
+      padding: 20px;
+      max-width: 600px;
       margin: auto;
     }
     h1 {
-      text-align: center;
-      color: #3e3e3e;
+      color: #00c300;
+      font-size: 1.5em;
     }
     label {
       display: block;
       margin-top: 1em;
       font-weight: bold;
     }
-    label span {
+    label span.required {
       font-size: 0.8em;
-      color: #d00;
+      color: red;
       margin-left: 0.5em;
     }
     textarea, input {
       width: 100%;
       padding: 0.5em;
       font-size: 1em;
-      box-sizing: border-box;
-      margin-top: 0.5em;
+      margin-top: 0.3em;
+      border: 1px solid #ccc;
+      border-radius: 5px;
     }
-    textarea {
+    textarea[name="q7"] {
       height: 5em;
     }
+    .buttons {
+      margin-top: 2em;
+      display: flex;
+      gap: 1em;
+      flex-wrap: wrap;
+    }
     button {
-      padding: 1em;
-      margin: 1em 0.5em 0 0;
-      font-size: 1.1em;
-      border-radius: 8px;
+      flex: 1 1 auto;
+      font-size: 1em;
+      padding: 0.7em;
       border: none;
+      border-radius: 8px;
       cursor: pointer;
     }
-    #confirmBtn { background-color: #87cefa; color: #fff; }
-    #resetBtn { background-color: #d3d3d3; }
-    #copyBtn { background-color: #00c300; color: #fff; display: none; }
-    .error { color: red; font-size: 0.9em; }
-    pre { background-color: #fff; border: 1px solid #ccc; padding: 1em; white-space: pre-wrap; }
+    #confirmBtn {
+      background-color: #00c300;
+      color: white;
+    }
+    #resetBtn {
+      background-color: #ccc;
+      color: black;
+    }
+    #copyBtn {
+      background-color: #00c300;
+      color: white;
+      display: none;
+    }
+    .output {
+      white-space: pre-wrap;
+      margin-top: 2em;
+      padding: 1em;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: #fff;
+    }
+    .error {
+      color: red;
+      margin-top: 1em;
+      white-space: pre-wrap;
+    }
   </style>
 </head>
 <body>
   <h1>PureLightの自己紹介作成ツール</h1>
+
   <form id="introForm">
-    <label>①ライン名（LINEのアカウント名と同じお名前でお願いします） <span>（※必須）</span>
-      <input type="text" id="lineName">
+    <label>①ライン名（LINEのアカウント名と同じお名前でお願いします）<span class="required">（※必須）</span>
+      <input type="text" name="q1" />
     </label>
 
-    <label>②ご家族（ケアラー）自身のお住まいの都道府県（海外の方は国名） <span>（※必須）</span>
-      <input type="text" id="location">
+    <label>②ご家族（ケアラー）自身のお住まいの都道府県（海外の方は国名）<span class="required">（※必須）</span>
+      <input type="text" name="q2" />
     </label>
 
-    <label>③当事者からみたあなたの立場 <span>（※必須）</span>
-      <input type="text" id="relation">
+    <label>③当事者からみたあなたの立場<span class="required">（※必須）</span>
+      <input type="text" name="q3" />
     </label>
 
-    <label>④当事者の性別 <span>（※必須）</span>
-      <input type="text" id="gender">
+    <label>④当事者の性別<span class="required">（※必須）</span>
+      <input type="text" name="q4" />
     </label>
 
-    <label>⑤当事者の年齢（数字だけを入力してください） <span>（※必須）</span>
-      <input type="text" id="age">
+    <label>⑤当事者の年齢（数字だけを入力してください）<span class="required">（※必須）</span>
+      <input type="text" name="q5" />
     </label>
 
-    <label>⑥-①発症年齢（数字だけを入力してください） <span>（※必須）</span>
-      <input type="text" id="onsetAge">
+    <label>⑥-①発症年齢（数字だけを入力してください）<span class="required">（※必須）</span>
+      <input type="text" name="q6_1" />
     </label>
 
-    <label>⑥-②再発回数（数字だけを入力してください。再発歴がない場合は0を入れてください） <span>（※必須）</span>
-      <input type="text" id="relapseCount">
+    <label>⑥-②再発回数（数字だけを入力してください。再発歴がない場合は0を入れてください）<span class="required">（※必須）</span>
+      <input type="text" name="q6_2" />
     </label>
 
-    <label>⑦発症から現在の状況（ざっくりでも盛り沢山でもOK）悩み、相談、気になっていることなど <span>（※必須）</span>
-      <textarea id="status"></textarea>
+    <label>⑦発症から現在の状況（ざっくりでも盛り沢山でもOK）悩み、相談、気になっていることなど<span class="required">（※必須）</span>
+      <textarea name="q7"></textarea>
     </label>
 
-    <label>⑧現在、過去のお薬歴、サプリ、漢方、栄養療法など <span>（※必須）</span>
-      <input type="text" id="meds">
+    <label>⑧現在、過去のお薬歴、サプリ、漢方、栄養療法など<span class="required">（※必須）</span>
+      <input type="text" name="q8" />
     </label>
 
     <label>⑨PureLight内の所属グループ（基本の家族グループ以外）サブグループ、混合グループ
-      <input type="text" id="group">
+      <input type="text" name="q9" />
     </label>
 
     <label>⑩所属している地域の家族会（任意）
-      <input type="text" id="community">
+      <input type="text" name="q10" />
     </label>
 
-    <div id="errorBox" class="error"></div>
-    <button type="button" id="confirmBtn">確認する</button>
-    <button type="button" id="resetBtn">やりなおす</button>
-    <button type="button" id="copyBtn">LINEに貼り付けるためにコピーする</button>
+    <div class="buttons">
+      <button type="button" id="confirmBtn">確認する</button>
+      <button type="button" id="resetBtn">やりなおす</button>
+      <button type="button" id="copyBtn">LINEに貼り付けるためにコピーする</button>
+    </div>
+
+    <div id="error" class="error"></div>
+    <div id="output" class="output"></div>
   </form>
 
-  <pre id="output"></pre>
-
   <script>
-    const form = document.getElementById('introForm');
-    const errorBox = document.getElementById('errorBox');
-    const output = document.getElementById('output');
-    const confirmBtn = document.getElementById('confirmBtn');
-    const resetBtn = document.getElementById('resetBtn');
-    const copyBtn = document.getElementById('copyBtn');
+    const form = document.getElementById("introForm");
+    const output = document.getElementById("output");
+    const error = document.getElementById("error");
+    const copyBtn = document.getElementById("copyBtn");
 
-    function toHalfWidth(str) {
-      return str.replace(/[０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xFEE0));
-    }
+    const fields = [
+      "q1","q2","q3","q4","q5","q6_1","q6_2","q7","q8","q9","q10"
+    ];
 
-    function saveToLocalStorage(values) {
-      localStorage.setItem('pl_intro', JSON.stringify(values));
-    }
+    const required = ["q1","q2","q3","q4","q5","q6_1","q6_2","q7","q8"];
 
-    function loadFromLocalStorage() {
-      const saved = localStorage.getItem('pl_intro');
-      return saved ? JSON.parse(saved) : {};
-    }
+    const shortLabels = {
+      q1: "①ライン名",
+      q2: "②お住まいの都道府県/国名",
+      q3: "③当事者からみた立場",
+      q4: "④当事者の性別",
+      q5: "⑤当事者の年齢",
+      q6: "⑥発症年齢、再発回数等",
+      q7: "⑦現在の状況・悩みなど",
+      q8: "⑧お薬歴など",
+      q9: "⑨PureLight内の所属グループ",
+      q10: "⑩地域の家族会（任意）"
+    };
 
-    function fillForm(data) {
-      Object.keys(data).forEach(key => {
-        const el = document.getElementById(key);
-        if (el) el.value = data[key];
-      });
-    }
+    const storageKey = "purelight_intro";
 
-    function validate(values) {
-      let errors = [];
-      if (!values.lineName) errors.push("①ライン名を入力してください。");
-      if (!values.location) errors.push("②お住まいの都道府県/国名を入力してください。");
-      if (!values.relation) errors.push("③当事者からみた立場を入力してください。");
-      if (!values.gender) errors.push("④当事者の性別を入力してください。");
-      if (!values.age) errors.push("⑤当事者の年齢を入力してください。");
-      if (!values.onsetAge) errors.push("⑥-①発症年齢を入力してください。");
-      if (!values.relapseCount) errors.push("⑥-②再発回数を入力してください。");
-      if (!values.status) errors.push("⑦現在の状況・悩みなどを入力してください。");
-      if (!values.meds) errors.push("⑧お薬歴などを入力してください。");
-      return errors;
-    }
+    window.onload = () => {
+      const saved = localStorage.getItem(storageKey);
+      if (saved) {
+        const data = JSON.parse(saved);
+        for (const k of fields) {
+          if (data[k]) form[k].value = data[k];
+        }
+      }
+    };
 
-    function generateOutput(values) {
-      const age = toHalfWidth(values.age) + '歳';
-      const onset = '発症' + toHalfWidth(values.onsetAge) + '歳';
-      const relapse = toHalfWidth(values.relapseCount) === '0' ? '再発なし' : '再発' + toHalfWidth(values.relapseCount) + '回';
-      const group = toHalfWidth(values.group || '');
+    document.getElementById("confirmBtn").onclick = () => {
+      error.textContent = "";
+      output.textContent = "";
+      copyBtn.style.display = "none";
 
-      return `①ライン名\n【${values.lineName}】\n\n②お住まいの都道府県/国名\n【${values.location}】\n\n③当事者からみた立場\n【${values.relation}】\n\n④当事者の性別\n【${values.gender}】\n\n⑤当事者の年齢\n【${age}】\n\n⑥発症年齢、再発回数等\n【${onset}、${relapse}】\n\n⑦現在の状況・悩みなど\n【${values.status}】\n\n⑧お薬歴など\n【${values.meds}】\n\n⑨PureLight内の所属グループ\n【${group}】\n\n⑩地域の家族会（任意）\n【${values.community || ''}】\n\n❗ご注意❗\n完全退会される際はくれぐれも、家族グループ内のノートの削除を忘れないようにしてください。\nノートはご本人でないと削除できません❗`;
-    }
+      const data = {};
+      const errors = [];
 
-    confirmBtn.onclick = () => {
-      const values = {
-        lineName: form.lineName.value.trim(),
-        location: form.location.value.trim(),
-        relation: form.relation.value.trim(),
-        gender: form.gender.value.trim(),
-        age: form.age.value.trim(),
-        onsetAge: form.onsetAge.value.trim(),
-        relapseCount: form.relapseCount.value.trim(),
-        status: form.status.value.trim(),
-        meds: form.meds.value.trim(),
-        group: form.group.value.trim(),
-        community: form.community.value.trim()
-      };
-      const errors = validate(values);
-      if (errors.length > 0) {
-        errorBox.innerText = errors.join('\n');
-        output.innerText = '';
-        copyBtn.style.display = 'none';
+      for (const k of fields) {
+        let val = form[k].value.trim();
+        if (["q5", "q6_1", "q6_2"].includes(k)) val = val.replace(/[０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 65248));
+        data[k] = val;
+        if (required.includes(k) && !val) {
+          if (k === "q6_1") errors.push("⑥-①発症年齢を入力してください。");
+          else if (k === "q6_2") errors.push("⑥-②再発回数を入力してください。");
+          else errors.push(shortLabels[k] + "を入力してください。");
+        }
+      }
+
+      if (errors.length) {
+        error.textContent = errors.join("\n");
         return;
       }
-      errorBox.innerText = '';
-      const result = generateOutput(values);
-      output.innerText = result;
-      saveToLocalStorage(values);
-      copyBtn.style.display = 'inline-block';
+
+      localStorage.setItem(storageKey, JSON.stringify(data));
+
+      let intro =
+`${shortLabels.q1}
+【${data.q1}】
+
+${shortLabels.q2}
+【${data.q2}】
+
+${shortLabels.q3}
+【${data.q3}】
+
+${shortLabels.q4}
+【${data.q4}】
+
+${shortLabels.q5}
+【${data.q5}歳】
+
+${shortLabels.q6}
+【発症${data.q6_1}歳、${data.q6_2 === "0" ? "再発なし" : "再発" + data.q6_2 + "回"}】
+
+${shortLabels.q7}
+【${data.q7}】
+
+${shortLabels.q8}
+【${data.q8}】
+
+${shortLabels.q9}
+【${data.q9}】
+
+${shortLabels.q10}
+【${data.q10}】
+
+❗ご注意❗
+完全退会される際はくれぐれも、家族グループ内のノートの削除を忘れないようにしてください。
+ノートはご本人でないと削除できません❗`;
+
+      output.textContent = intro;
+      copyBtn.style.display = "inline-block";
+    };
+
+    document.getElementById("resetBtn").onclick = () => {
+      if (confirm("入力内容を消しても良いですか？")) {
+        for (const k of fields) form[k].value = "";
+        localStorage.removeItem(storageKey);
+        output.textContent = "";
+        error.textContent = "";
+        copyBtn.style.display = "none";
+      }
     };
 
     copyBtn.onclick = async () => {
-      await navigator.clipboard.writeText(output.innerText);
-      alert("コピーしました");
-    };
-
-    resetBtn.onclick = () => {
-      if (confirm("入力内容を消しても良いですか？")) {
-        form.reset();
-        localStorage.removeItem('pl_intro');
-        output.innerText = '';
-        errorBox.innerText = '';
-        copyBtn.style.display = 'none';
+      try {
+        await navigator.clipboard.writeText(output.textContent);
+        alert("コピーしました");
+      } catch (err) {
+        alert("コピーに失敗しました");
       }
-    };
-
-    window.onload = () => {
-      const saved = loadFromLocalStorage();
-      fillForm(saved);
     };
   </script>
 </body>
