@@ -99,8 +99,11 @@
     <label>⑤当事者の年齢（数字だけを入力してください）<br><small>（※必須）</small></label>
     <input type="text" id="age">
 
-    <label>⑥発症年齢、再発回数等<br><small>（※必須）</small></label>
-    <input type="text" id="onset">
+    <label>⑥-①発症年齢（数字だけを入力してください）<br><small>（※必須）</small></label>
+    <input type="text" id="onsetAge">
+
+    <label>⑥-②再発回数（数字だけを入力してください。再発歴がない場合は0を入れてください）<br><small>（※必須）</small></label>
+    <input type="text" id="relapseCount">
 
     <label>⑦発症から現在の状況（ざっくりでも盛り沢山でもOK）悩み、相談、気になっていることなど<br><small>（※必須）</small></label>
     <textarea id="status"></textarea>
@@ -124,7 +127,7 @@
   <div id="errorMsg" class="error"></div>
 
   <script>
-    const requiredFields = ["name", "location", "relation", "gender", "age", "onset", "status", "meds"];
+    const requiredFields = ["name", "location", "relation", "gender", "age", "onsetAge", "relapseCount", "status", "meds"];
     const fieldLabels = {
       name: "①ライン名",
       location: "②お住まいの都道府県/国名",
@@ -145,7 +148,7 @@
       const data = {};
       requiredFields.forEach(id => {
         const val = document.getElementById(id).value.trim();
-        if (!val) error.push(`${fieldLabels[id]}を入力してください`);
+        if (!val) error.push(`${fieldLabels[id === "onsetAge" || id === "relapseCount" ? "onset" : id]}を入力してください`);
         data[id] = val;
       });
       if (error.length > 0) {
@@ -154,7 +157,11 @@
       }
 
       data.age = toHalfWidth(data.age) + "歳";
-      data.onset = toHalfWidth(data.onset);
+      const onsetAge = toHalfWidth(data.onsetAge);
+      const relapseCount = parseInt(toHalfWidth(data.relapseCount));
+      const onsetSummary = `発症${onsetAge}歳、` + (relapseCount === 0 ? "再発なし" : `再発${relapseCount}回`);
+
+      data.onset = onsetSummary;
       data.group = toHalfWidth(document.getElementById("group").value.trim());
       data.local = document.getElementById("local").value.trim();
 
