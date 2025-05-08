@@ -96,7 +96,7 @@
     <label>④当事者の性別<br><small>（※必須）</small></label>
     <input type="text" id="gender">
 
-    <label>⑤当事者の年齢（20代前半などでもOK）<br><small>（※必須）</small></label>
+    <label>⑤当事者の年齢（数字だけを入力してください）<br><small>（※必須）</small></label>
     <input type="text" id="age">
 
     <label>⑥発症年齢、再発回数等<br><small>（※必須）</small></label>
@@ -153,7 +153,7 @@
         return;
       }
 
-      data.age = toHalfWidth(data.age);
+      data.age = toHalfWidth(data.age) + "歳";
       data.onset = toHalfWidth(data.onset);
       data.group = toHalfWidth(document.getElementById("group").value.trim());
       data.local = document.getElementById("local").value.trim();
