@@ -86,7 +86,7 @@
   <form id="introForm">
     <label>①ライン名（LINEのアカウント名と同じお名前でお願いします）<br><small>（※必須）</small></label>
     <input type="text" id="name">
-    
+
     <label>②ご家族（ケアラー）自身のお住まいの都道府県（海外の方は国名）<br><small>（※必須）</small></label>
     <input type="text" id="location">
 
@@ -143,12 +143,36 @@
 
     const toHalfWidth = str => str.replace(/[０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xFEE0));
 
+    const gatherFormData = () => {
+      const data = {};
+      requiredFields.concat(["group", "local"]).forEach(id => {
+        data[id] = document.getElementById(id).value.trim();
+      });
+      return data;
+    };
+
+    const formatOutput = data => {
+      const relapseCountNum = parseInt(toHalfWidth(data.relapseCount));
+      const onsetSummary = `発症${toHalfWidth(data.onsetAge)}歳、` + (relapseCountNum === 0 ? "再発なし" : `再発${relapseCountNum}回`);
+      data.age = toHalfWidth(data.age) + "歳";
+      data.onset = onsetSummary;
+      data.group = toHalfWidth(data.group);
+      data.local = data.local;
+
+      let output = "";
+      Object.keys(fieldLabels).forEach(id => {
+        output += `${fieldLabels[id]}\n【${data[id] || ""}】\n\n`;
+      });
+      output += "❗ご注意❗\n完全退会される際はくれぐれも、家族グループ内のノートの削除を忘れないようにしてください。\nノートはご本人でないと削除できません❗";
+      return output;
+    };
+
     const handleConfirm = () => {
       let error = [];
-      const data = {};
+      const data = gatherFormData();
+
       requiredFields.forEach(id => {
-        const val = document.getElementById(id).value.trim();
-        if (!val) {
+        if (!data[id]) {
           if (id === "onsetAge") {
             error.push("⑥-①発症年齢を入力してください。");
           } else if (id === "relapseCount") {
@@ -157,29 +181,15 @@
             error.push(`${fieldLabels[id]}を入力してください`);
           }
         }
-        data[id] = val;
       });
+
       if (error.length > 0) {
         document.getElementById("errorMsg").textContent = error.join("\n");
         return;
       }
 
-      data.age = toHalfWidth(data.age) + "歳";
-      const onsetAge = toHalfWidth(data.onsetAge);
-      const relapseCount = parseInt(toHalfWidth(data.relapseCount));
-      const onsetSummary = `発症${onsetAge}歳、` + (relapseCount === 0 ? "再発なし" : `再発${relapseCount}回`);
-
-      data.onset = onsetSummary;
-      data.group = toHalfWidth(document.getElementById("group").value.trim());
-      data.local = document.getElementById("local").value.trim();
-
-      let output = ``;
-      Object.keys(fieldLabels).forEach(id => {
-        output += `${fieldLabels[id]}\n【${data[id] || ""}】\n\n`;
-      });
-      output += "❗ご注意❗\n完全退会される際はくれぐれも、家族グループ内のノートの削除を忘れないようにしてください。\nノートはご本人でないと削除できません❗";
-
-      document.getElementById("output").textContent = output;
+      const formatted = formatOutput(data);
+      document.getElementById("output").textContent = formatted;
       document.getElementById("output").style.display = "block";
       document.getElementById("copyButton").style.display = "block";
       document.getElementById("errorMsg").textContent = "";
@@ -196,11 +206,13 @@
     };
 
     const copyToClipboard = () => {
-      const text = document.getElementById("output").textContent;
-      navigator.clipboard.writeText(text).then(() => {
-        alert("コピーしました");
-      });
-    };
+  const data = gatherFormData();
+  const formatted = formatOutput(data);
+  navigator.clipboard.writeText(formatted).then(() => {
+    alert("コピーしました");
+  });
+  localStorage.setItem("purelight_form", JSON.stringify(data));
+};
 
     window.onload = () => {
       const saved = localStorage.getItem("purelight_form");
