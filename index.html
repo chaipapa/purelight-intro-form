@@ -148,7 +148,15 @@
       const data = {};
       requiredFields.forEach(id => {
         const val = document.getElementById(id).value.trim();
-        if (!val) error.push(`${fieldLabels[id === "onsetAge" || id === "relapseCount" ? "onset" : id]}を入力してください`);
+        if (!val) {
+          if (id === "onsetAge") {
+            error.push("⑥-①発症年齢を入力してください。");
+          } else if (id === "relapseCount") {
+            error.push("⑥-②再発回数を入力してください。");
+          } else {
+            error.push(`${fieldLabels[id]}を入力してください`);
+          }
+        }
         data[id] = val;
       });
       if (error.length > 0) {
