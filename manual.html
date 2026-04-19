@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PureLight 受付係マニュアル</title>
+<style>
+:root {
+  --blk: #2C2C2E; --dk: #3A3A3C; --gry: #58585B; --gry-lt: #AEAEB2;
+  --gry-xlt: #E5E5EA; --card-bg: #FFF5EE; --warm-bg: #FFFAF6;
+  --rose: #E8638B; --rose-dk: #C44569; --rose-lt: #F9D5E0;
+  --coral: #F4845F; --peach: #F7B267; --sage: #7CB69D; --sage-dk: #5A9E80;
+  --laven: #9B8EC4; --sky: #6AABD2; --tomato: #E25C5C;
+  --cover-bg: #3D2C3E; --line-grn: #06C755;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 15px; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  color: var(--gry); background: var(--warm-bg); line-height: 1.7;
+  max-width: 520px; margin: 0 auto; padding: 2.5rem 0 0;
+}
+/* ── 表紙 ── */
+.cover {
+  background: var(--cover-bg); color: #fff; padding: 3rem 1.5rem 2rem;
+  min-height: calc(100vh - 2.5rem); display: flex; flex-direction: column; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.cover::before {
+  content: ''; position: absolute; top: -4rem; right: -6rem;
+  width: 16rem; height: 16rem; border-radius: 50%;
+  background: rgba(255,255,255,0.03);
+}
+.cover .accent-bar { width: 3rem; height: 3px; background: var(--rose); margin-bottom: 2rem; }
+.cover .org { font-size: 0.75rem; color: var(--gry-lt); letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+.cover h1 { font-size: 2.6rem; font-weight: 700; line-height: 1.1; margin-bottom: 0.3rem; letter-spacing: -0.02em; }
+.cover .manual-title { font-size: 1.8rem; color: var(--rose); font-weight: 600; margin-bottom: 1.5rem; }
+.cover .tagline { font-size: 0.85rem; color: rgba(255,255,255,0.5); }
+.cover .footer { position: absolute; bottom: 1.5rem; left: 1.5rem; font-size: 0.7rem; color: var(--gry-lt); }
+
+/* ── 目次 ── */
+.toc { padding: 2rem 1.5rem; }
+.toc-label { font-size: 0.75rem; color: var(--rose); letter-spacing: 0.1em; font-weight: 600; margin-bottom: 0.3rem; }
+.toc-line { width: 1.5rem; height: 2px; background: var(--rose); margin-bottom: 1.5rem; }
+.toc ol { list-style: none; counter-reset: toc; }
+.toc li { counter-increment: toc; padding: 0.45rem 0; border-bottom: 1px solid var(--gry-xlt); }
+.toc li a { text-decoration: none; color: var(--blk); font-size: 0.95rem; display: flex; align-items: baseline; gap: 0.6rem; }
+.toc li a::before { content: counter(toc, decimal-leading-zero); font-size: 0.75rem; color: var(--gry-lt); font-variant-numeric: tabular-nums; min-width: 1.2rem; }
+.toc li a:hover { color: var(--rose); }
+
+/* ── セクション ── */
+section { padding: 2rem 1.5rem 1rem; }
+section + section { border-top: 1px solid var(--gry-xlt); }
+.sec-label { font-size: 0.7rem; color: var(--rose); letter-spacing: 0.1em; font-weight: 600; margin-bottom: 0.3rem; }
+.phase-badge {
+  display: inline-block; font-size: 0.58rem; color: #fff;
+  padding: 0.08rem 0.45rem; border-radius: 3px;
+  letter-spacing: 0.04em; font-weight: 600;
+  margin-left: 0.4rem; vertical-align: middle;
+}
+.phase-badge.p1 { background: var(--rose); }
+.phase-badge.p2 { background: var(--coral); }
+.phase-badge.p3 { background: var(--laven); }
+.phase-badge.p4 { background: var(--sage); }
+.phase-badge.p5 { background: var(--sky); }
+.sec-title { font-size: 1.7rem; color: var(--blk); font-weight: 700; line-height: 1.2; margin-bottom: 0.2rem; }
+.sec-accent { width: 2rem; height: 2px; background: var(--rose); margin-bottom: 0.8rem; }
+.sec-sub { font-size: 0.85rem; color: var(--gry); margin-bottom: 1rem; }
+
+h3 { font-size: 1.05rem; color: var(--dk); font-weight: 600; margin: 1.2rem 0 0.4rem; }
+h4 { font-size: 0.9rem; font-weight: 600; margin: 0.8rem 0 0.3rem; }
+p { margin-bottom: 0.5rem; font-size: 0.9rem; }
+
+/* ── カード ── */
+.card {
+  background: var(--card-bg); border-radius: 8px; padding: 0.8rem 0.9rem;
+  margin-bottom: 0.5rem; border-left: 3px solid var(--rose); position: relative;
+}
+.card.coral  { border-left-color: var(--coral); }
+.card.peach  { border-left-color: var(--peach); }
+.card.sage   { border-left-color: var(--sage); }
+.card.sky    { border-left-color: var(--sky); }
+.card.laven  { border-left-color: var(--laven); }
+.card.tomato { border-left-color: var(--tomato); }
+.card-title { font-size: 0.9rem; font-weight: 600; color: var(--blk); margin-bottom: 0.25rem; }
+.card-body { font-size: 0.82rem; line-height: 1.65; color: var(--gry); }
+
+/* ── バッジアイテム ── */
+.badge-list { list-style: none; margin: 0.3rem 0 0.5rem; }
+.badge-item { display: flex; gap: 0.6rem; margin-bottom: 0.6rem; align-items: flex-start; }
+.badge-num {
+  width: 1.4rem; height: 1.4rem; border-radius: 50%; display: flex;
+  align-items: center; justify-content: center; font-size: 0.7rem;
+  color: #fff; font-weight: 600; flex-shrink: 0; margin-top: 0.1rem;
+}
+.badge-num.rose   { background: var(--rose); }
+.badge-num.coral  { background: var(--coral); }
+.badge-num.sage   { background: var(--sage); }
+.badge-num.sky    { background: var(--sky); }
+.badge-num.laven  { background: var(--laven); }
+.badge-num.peach  { background: var(--peach); }
+.badge-num.tomato { background: var(--tomato); }
+.badge-num.rose-dk{ background: var(--rose-dk); }
+.badge-num.sage-dk{ background: var(--sage-dk); }
+.badge-content { flex: 1; }
+.badge-title { font-size: 0.9rem; font-weight: 600; color: var(--blk); line-height: 1.3; }
+.badge-desc { font-size: 0.82rem; color: var(--gry); line-height: 1.6; margin-top: 0.1rem; }
+
+/* ── フローチャート ── */
+.flow { display: flex; flex-direction: column; align-items: center; margin: 0.5rem 0; }
+.flow-step {
+  width: 92%; border-radius: 6px; padding: 0.5rem 0.7rem; color: #fff; position: relative;
+}
+.flow-step .step-num { font-size: 0.6rem; opacity: 0.6; letter-spacing: 0.05em; }
+.flow-step .step-text { font-size: 0.85rem; font-weight: 500; }
+.flow-arrow { width: 1px; height: 1rem; background: var(--gry-xlt); position: relative; }
+.flow-arrow::after {
+  content: ''; position: absolute; bottom: -3px; left: -3px;
+  border-left: 4px solid transparent; border-right: 4px solid transparent;
+  border-top: 5px solid var(--gry-xlt);
+}
+
+/* ── 判定ゾーン ── */
+.zone { border-radius: 8px; overflow: hidden; margin-bottom: 0.5rem; }
+.zone-header { padding: 0.5rem 0.8rem; color: #fff; font-size: 0.95rem; font-weight: 600; }
+.zone-header.sage   { background: var(--sage); }
+.zone-header.peach  { background: var(--peach); }
+.zone-header.tomato { background: var(--tomato); }
+.zone-body { padding: 0.4rem 0.8rem 0.5rem; }
+.zone-body li { font-size: 0.85rem; line-height: 1.6; padding: 0.15rem 0; }
+
+/* ── Q&A ── */
+.qa-item { margin-bottom: 0.6rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--gry-xlt); }
+.qa-q { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.2rem; }
+.qa-q.rose   { color: var(--rose); }
+.qa-q.coral  { color: var(--coral); }
+.qa-q.sky    { color: var(--sky); }
+.qa-q.peach  { color: var(--peach); }
+.qa-q.tomato { color: var(--tomato); }
+.qa-q.laven  { color: var(--laven); }
+.qa-a { font-size: 0.82rem; padding-left: 0.5rem; }
+
+/* ── ステージバー ── */
+.stage {
+  border-radius: 6px; padding: 0.55rem 0.75rem; margin-bottom: 0.45rem;
+  position: relative; overflow: hidden; background: #fff;
+  border: 1px solid var(--gry-xlt);
+}
+.stage-bg {
+  position: absolute; top: 0; left: 0; height: 100%;
+  border-radius: 6px 0 0 6px; opacity: 0.18;
+}
+.stage-content { position: relative; z-index: 1; }
+.stage-name { font-size: 0.9rem; font-weight: 700; color: var(--blk); }
+.stage-desc { font-size: 0.75rem; color: var(--gry); margin-top: 0.15rem; }
+.stage-pill {
+  display: inline-block; font-size: 0.62rem; font-weight: 700;
+  padding: 0.08rem 0.45rem; border-radius: 3px; color: #fff;
+  margin-right: 0.45rem; vertical-align: middle;
+}
+
+/* ── 用語集 ── */
+.glossary-row { display: flex; gap: 0.5rem; padding: 0.4rem 0; border-bottom: 1px solid var(--gry-xlt); }
+.glossary-term { min-width: 5.5rem; font-size: 0.88rem; font-weight: 600; color: var(--blk); flex-shrink: 0; }
+.glossary-def { font-size: 0.82rem; color: var(--gry); }
+
+/* ── LINE モック（リアル版） ── */
+.line-mock {
+  border-radius: 14px; overflow: hidden; margin: 0.7rem 0;
+  border: 1px solid var(--gry-xlt); background: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+.line-header {
+  background: #FFF; color: var(--blk);
+  padding: 0.5rem 0.7rem; font-size: 0.8rem; font-weight: 600;
+  text-align: center; border-bottom: 1px solid #EEE; position: relative;
+}
+.line-header::before {
+  content: '‹'; position: absolute; left: 0.8rem; top: 50%;
+  transform: translateY(-55%); font-size: 1.2rem; color: #666; font-weight: 300;
+}
+.line-header .hd-icons {
+  position: absolute; right: 0.6rem; top: 50%; transform: translateY(-50%);
+  font-size: 0.65rem; color: #888; letter-spacing: 0.18em;
+}
+.line-chat { padding: 0.6rem 0.45rem; background: #E8E9EC; min-height: 4rem; }
+.line-chat.sky-theme { background: linear-gradient(180deg, #A8CFEA 0%, #C6DFEE 100%); }
+
+.line-sys-wrap { text-align: center; margin: 0.35rem 0; }
+.line-sys-pill {
+  display: inline-block; font-size: 0.64rem; color: #fff;
+  background: rgba(90,100,120,0.45); padding: 0.15rem 0.65rem; border-radius: 0.9rem;
+}
+
+.line-auto-label { font-size: 0.6rem; color: #888; text-align: right; padding: 0 0.35rem 0.05rem; }
+
+.line-row { display: flex; margin: 0.25rem 0; gap: 0.35rem; align-items: flex-end; }
+.line-row.self { justify-content: flex-end; }
+.line-row.other { justify-content: flex-start; }
+
+.line-avatar {
+  width: 1.9rem; height: 1.9rem; border-radius: 50%;
+  background: linear-gradient(135deg, #cfcfd3, #a8a8af);
+  flex-shrink: 0; align-self: flex-start; margin-top: 1.1rem;
+}
+.line-avatar.sage { background: linear-gradient(135deg, #A3D1BB, #6DAE91); }
+.line-avatar.sky  { background: linear-gradient(135deg, #A8C9E5, #6A9FC7); }
+.line-avatar.laven{ background: linear-gradient(135deg, #C5B8DC, #9B8EC4); }
+.line-avatar.peach{ background: linear-gradient(135deg, #F7CFA8, #E5A677); }
+
+.line-stack { max-width: 72%; display: flex; flex-direction: column; }
+.line-stack.self  { align-items: flex-end; }
+.line-stack.other { align-items: flex-start; }
+.line-name { font-size: 0.68rem; color: #444; margin-bottom: 0.15rem; padding: 0 0.2rem; }
+
+.line-bubble {
+  padding: 0.48rem 0.65rem; border-radius: 14px;
+  font-size: 0.8rem; line-height: 1.55; word-break: break-word; max-width: 100%;
+}
+.line-bubble.other { background: #fff; color: var(--blk); border-top-left-radius: 4px; }
+.line-bubble.self  { background: #E6EBF5; color: var(--blk); border-top-right-radius: 4px; }
+.line-bubble.self.gchat { background: #85E584; }
+
+.line-preview {
+  background: #fff; border-radius: 8px; margin-top: 0.3rem;
+  padding: 0.4rem 0.55rem; font-size: 0.72rem; color: #333;
+  border-left: 3px solid var(--sky); line-height: 1.4;
+}
+.line-preview .pv-title { font-weight: 600; color: var(--blk); margin-bottom: 0.15rem; }
+.line-preview .pv-desc  { font-size: 0.65rem; color: #888; }
+
+.line-meta {
+  font-size: 0.58rem; color: #666;
+  display: flex; flex-direction: column;
+  padding: 0 0.15rem 0.18rem; line-height: 1.2;
+}
+.line-meta.l { align-items: flex-end; }
+.line-meta.r { align-items: flex-start; }
+
+/* 公式アカウント管理画面ホーム */
+.line-home { background: #FFF; padding: 0.65rem 0.6rem; }
+.line-home-top {
+  display: flex; align-items: center; gap: 0.55rem;
+  padding-bottom: 0.55rem; border-bottom: 1px solid #EEE;
+}
+.line-home-ava {
+  width: 2.5rem; height: 2.5rem; border-radius: 50%;
+  background: linear-gradient(135deg, #B4D4B5, #7CAB80); flex-shrink: 0;
+}
+.line-home-name { font-size: 0.76rem; font-weight: 600; color: var(--blk); }
+.line-home-id   { font-size: 0.66rem; color: #999; }
+.line-home-stat {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.45rem 0; border-bottom: 1px solid #F0F0F0;
+  font-size: 0.72rem; color: #555;
+}
+.line-home-stat .n { color: var(--blk); font-weight: 600; }
+.line-home-cta {
+  background: var(--line-grn); color: #fff;
+  text-align: center; padding: 0.55rem; border-radius: 6px;
+  font-size: 0.78rem; font-weight: 600; margin-top: 0.55rem;
+}
+.line-home-tools {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 0.5rem;
+  margin-top: 0.7rem; text-align: center;
+}
+.line-home-tool { font-size: 0.58rem; color: #666; line-height: 1.3; }
+.line-home-tool .ico {
+  width: 1.9rem; height: 1.9rem; margin: 0 auto 0.2rem;
+  background: #555; border-radius: 5px;
+}
+
+/* トーク一覧 */
+.line-list { background: #FFF; }
+.line-list-item {
+  display: flex; gap: 0.55rem; padding: 0.55rem 0.7rem;
+  border-bottom: 1px solid #F2F2F2; align-items: center;
+}
+.line-list-ava {
+  width: 2.1rem; height: 2.1rem; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, #d0d0d6, #a8a8af);
+}
+.line-list-body { flex: 1; min-width: 0; }
+.line-list-name { font-size: 0.8rem; font-weight: 600; color: var(--blk); }
+.line-list-snip {
+  font-size: 0.68rem; color: #999;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.line-list-time { font-size: 0.62rem; color: #aaa; align-self: flex-start; padding-top: 0.15rem; }
+
+/* ── 最終ページ ── */
+.closing {
+  background: var(--cover-bg); color: rgba(255,255,255,0.6); padding: 3rem 1.5rem 2rem;
+  min-height: calc(80vh - 2.5rem); display: flex; flex-direction: column; justify-content: center;
+}
+.closing .accent-bar { width: 2.5rem; height: 2px; background: var(--rose); margin-bottom: 2rem; }
+.closing .lead { font-size: 0.9rem; color: var(--gry-lt); margin-bottom: 1rem; }
+.closing .highlight { font-size: 1.5rem; color: var(--rose); font-weight: 700; margin-bottom: 1.5rem; line-height: 1.3; }
+.closing p { font-size: 0.85rem; line-height: 1.7; margin-bottom: 0.3rem; }
+.closing .sign { margin-top: 2rem; font-size: 0.7rem; color: var(--gry-lt); }
+
+/* ── ヘッダー ── */
+.page-header {
+  position: sticky; top: 0; z-index: 10; background: rgba(255,250,246,0.92);
+  backdrop-filter: blur(8px); padding: 0.5rem 1.5rem;
+  border-bottom: 1px solid var(--gry-xlt); font-size: 0.7rem; color: var(--gry-lt);
+}
+
+/* ── タブナビゲーション ── */
+.tab-nav {
+  position: fixed; top: 0; left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 520px; z-index: 100;
+  background: rgba(255,250,246,0.96); backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--gry-xlt);
+  display: flex; overflow-x: auto; overflow-y: hidden;
+  white-space: nowrap; -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+.tab-nav::-webkit-scrollbar { height: 3px; }
+.tab-nav::-webkit-scrollbar-thumb { background: var(--gry-xlt); border-radius: 2px; }
+.tab-btn {
+  flex: 0 0 auto; background: none; border: none;
+  padding: 0.6rem 0.75rem; font-size: 0.72rem; color: var(--gry);
+  cursor: pointer; font-family: inherit; font-weight: 500;
+  border-bottom: 2px solid transparent; position: relative;
+  transition: color 0.15s, border-color 0.15s;
+}
+.tab-btn:hover { color: var(--rose); }
+.tab-btn.active { color: var(--rose); border-bottom-color: var(--rose); font-weight: 700; }
+.tab-btn .tab-phase {
+  display: inline-block; font-size: 0.56rem; color: #fff;
+  padding: 0.05rem 0.35rem; border-radius: 2px;
+  margin-right: 0.28rem; font-weight: 700; letter-spacing: 0.03em;
+  vertical-align: 1px;
+}
+.tab-btn .tab-phase.p1 { background: var(--rose); }
+.tab-btn .tab-phase.p2 { background: var(--coral); }
+.tab-btn .tab-phase.p3 { background: var(--laven); }
+.tab-btn .tab-phase.p4 { background: var(--sage); }
+.tab-btn .tab-phase.p5 { background: var(--sky); }
+
+/* ── ページ ── */
+.page { display: none; animation: fadeIn 0.2s ease; }
+.page.active { display: block; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.pager {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 0.5rem; padding: 1.2rem 1.5rem 1.8rem;
+  border-top: 1px solid var(--gry-xlt); margin-top: 1rem;
+}
+.pager a {
+  flex: 1; padding: 0.55rem 0.7rem; border: 1px solid var(--gry-xlt);
+  border-radius: 6px; text-decoration: none; color: var(--blk);
+  font-size: 0.78rem; background: #fff; display: block;
+  transition: background 0.15s, border-color 0.15s;
+}
+.pager a:hover { background: var(--card-bg); border-color: var(--rose); }
+.pager a.prev  { text-align: left; }
+.pager a.next  { text-align: right; }
+.pager a.disabled { opacity: 0.3; pointer-events: none; }
+.pager .nav-label { font-size: 0.62rem; color: var(--gry-lt); display: block; }
+.pager .nav-title { font-weight: 600; }
+
+@media print {
+  .tab-nav { display: none; }
+  .page { display: block !important; page-break-after: always; }
+  section { page-break-inside: avoid; }
+  .cover, .closing { page-break-after: always; }
+  .pager { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- 表紙 -->
+<div class="page" id="p00">
+<div class="cover">
+  <div class="accent-bar"></div>
+  <div class="org">統合失調症の家族支援グループ</div>
+  <h1>PureLight</h1>
+  <div class="manual-title">受付係マニュアル</div>
+  <div class="tagline">新規さんを温かくお迎えするためのガイド</div>
+  <div class="footer">PureLight &nbsp;|&nbsp; 2025年2月版</div>
+</div>
+<div class="pager">
+  <a class="prev disabled">&nbsp;</a>
+  <a class="next" data-next="p01"><span class="nav-label">次へ →</span><span class="nav-title">受付係の概要</span></a>
+</div>
+</div>
+
+<!-- タブナビゲーション -->
+<nav class="tab-nav" id="tabNav">
+  <button class="tab-btn" data-page="p00">表紙</button>
+  <button class="tab-btn" data-page="p01">概要</button>
+  <button class="tab-btn" data-page="p02">全体フロー</button>
+  <button class="tab-btn" data-page="p03"><span class="tab-phase p1">1</span>公式LINE操作</button>
+  <button class="tab-btn" data-page="p04"><span class="tab-phase p1">1</span>最初の質問</button>
+  <button class="tab-btn" data-page="p05"><span class="tab-phase p2">2</span>担当決め</button>
+  <button class="tab-btn" data-page="p06"><span class="tab-phase p3">3</span>個チャ・ツール送付</button>
+  <button class="tab-btn" data-page="p07"><span class="tab-phase p3">3</span>10項目チェック</button>
+  <button class="tab-btn" data-page="p08"><span class="tab-phase p3">3</span>入会判断</button>
+  <button class="tab-btn" data-page="p09"><span class="tab-phase p3">3</span>よくあるケース</button>
+  <button class="tab-btn" data-page="p10"><span class="tab-phase p3">3</span>イレギュラー</button>
+  <button class="tab-btn" data-page="p11"><span class="tab-phase p4">4</span>情報サロン招待</button>
+  <button class="tab-btn" data-page="p12"><span class="tab-phase p5">5</span>案内係へ引継</button>
+  <button class="tab-btn" data-page="p13">研修ガイド</button>
+  <button class="tab-btn" data-page="p14">Q&amp;A</button>
+  <button class="tab-btn" data-page="p15">心構え</button>
+  <button class="tab-btn" data-page="p16">用語集</button>
+  <button class="tab-btn" data-page="p99">終</button>
+</nav>
+
+<!-- ── 1. 受付係の概要 ── -->
+<div class="page" id="p01">
+<section id="s01">
+  <div class="sec-label">SECTION 01</div>
+  <div class="sec-title">受付係の概要</div>
+  <div class="sec-accent"></div>
+  <p>受付係とは、PureLight（統合失調症の家族支援グループ）への入会希望の新規さんを受け入れ、適切な家族グループへの配置を行うボランティアです。</p>
+  <p>新規さんにとって、受付係はPureLightとの「最初の接点」です。その対応が新規さんの安心感を大きく左右します。</p>
+
+  <h3>主な責務</h3>
+  <ul class="badge-list">
+    <li class="badge-item"><span class="badge-num rose">1</span><div class="badge-content"><div class="badge-title">初期相談対応</div><div class="badge-desc">新規さんからの問い合わせに最初に応答します。</div></div></li>
+    <li class="badge-item"><span class="badge-num coral">2</span><div class="badge-content"><div class="badge-title">入会資格の判定</div><div class="badge-desc">医師の診断の有無を確認し、入会可否を判断します。</div></div></li>
+    <li class="badge-item"><span class="badge-num laven">3</span><div class="badge-content"><div class="badge-title">家族グループへの振り分け</div><div class="badge-desc">適切なグループへの配置を案内係と連携して行います。</div></div></li>
+    <li class="badge-item"><span class="badge-num sage">4</span><div class="badge-content"><div class="badge-title">心理サポート</div><div class="badge-desc">不安を抱える新規さんに寄り添い、安心感を提供します。</div></div></li>
+    <li class="badge-item"><span class="badge-num sky">5</span><div class="badge-content"><div class="badge-title">他の係との連携</div><div class="badge-desc">案内係・運営係と情報共有し、スムーズな入会を実現します。</div></div></li>
+  </ul>
+
+  <h3>求められるマインドセット</h3>
+  <div class="card"><div class="card-title">共感と傾聴</div><div class="card-body">新規さんは多くの場合、初めての状況で大きな不安を抱えています。「大変ですね」という一言が、相手の心を開きます。</div></div>
+  <div class="card sky"><div class="card-title">判断の公平性</div><div class="card-body">医師の診断が明確なケースと「疑い」の段階を厳密に区別する必要があります。</div></div>
+  <div class="card sage"><div class="card-title">チームワーク</div><div class="card-body">複数の受付係で支え合い、一人で抱え込まない姿勢が大切です。困ったら相談。それが基本です。</div></div>
+</section>
+<div class="pager">
+  <a class="prev" data-next="p00"><span class="nav-label">← 前へ</span><span class="nav-title">表紙</span></a>
+  <a class="next" data-next="p02"><span class="nav-label">次へ →</span><span class="nav-title">受付の全体フロー</span></a>
+</div>
+</div>
+
+<!-- ── 2. 受付の全体フロー ── -->
+<div class="page" id="p02">
+<section id="s02">
+  <div class="sec-label">SECTION 02</div>
+  <div class="sec-title">受付の全体フロー</div>
+  <p class="sec-sub">新規さんが公式LINEに登録してから、家族グループ配置完了までの全プロセス。5つのフェーズに分かれています。</p>
+
+  <div class="card laven" style="margin-bottom:0.6rem"><div class="card-title">時間軸のポイント：PHASE 1 と PHASE 2 は<u>並行進行</u></div><div class="card-body">
+    公式LINE上で新規さんとやりとり（PHASE 1）を進めている間、<strong>裏では受付係グループで担当決め（PHASE 2）が並行して進行</strong>しています。担当が決まっていないと PHASE 1 のラスト（個人LINE誘導）に進めないので、PHASE 1 の「規約への了承」をもらう頃までに、PHASE 2 の担当決めを終えておくのが理想です。<br><br>
+    <strong>PHASE 3 以降</strong>（個チャ・情報サロン・案内係引き継ぎ）は、PHASE 1 と PHASE 2 が両方終わってから開始します。
+  </div></div>
+
+  <h3 style="margin-top:0.8rem"><span class="phase-badge p1">PHASE 1</span>公式LINE段階（新規さんとの初期やりとり）</h3>
+  <div class="flow">
+    <div class="flow-step" style="background:var(--rose)"><div class="step-num">STEP 01</div><div class="step-text">新規さんが公式LINEを友だち追加 → 自動応答の質問①〜⑦が飛ぶ</div></div><div class="flow-arrow"></div>
+    <div class="flow-step" style="background:var(--rose-dk)"><div class="step-num">STEP 02</div><div class="step-text">新規さんが①〜⑦に回答</div></div><div class="flow-arrow"></div>
+    <div class="flow-step" style="background:var(--rose-dk)"><div class="step-num">STEP 03</div><div class="step-text">受付係が🌟1〜4の「最初の質問」（診断名／きっかけ／望むこと／診断変更時の了承）を送付</div></div><div class="flow-arrow"></div>
+    <div class="flow-step" style="background:var(--rose-dk)"><div class="step-num">STEP 04</div><div class="step-text">🌟1「診断名」と🌟4「了承」の2点を確認（揃わない場合は次に進めない）</div></div><div class="flow-arrow"></div>
+    <div class="flow-step" style="background:var(--rose-dk)"><div class="step-num">STEP 05</div><div class="step-text">受付係が「規約」「注意事項」を送り、再度【了承】をもらう</div></div><div class="flow-arrow"></div>
+    <div class="flow-step" style="background:var(--rose-dk)"><div class="step-num">STEP 06</div><div class="step-text"><strong>★PHASE 2 で決まった担当者の</strong>個人LINE友だち追加URLを送付 → 個チャに移行</div></div>
+  </div>
+
+  <h3 style="margin-top:1.2rem"><span class="phase-badge p2">PHASE 2</span>受付係グループ段階（裏で<u>並行して</u>担当決め）</h3>
+  <p style="font-size:0.82rem;color:var(--gry);margin-bottom:0.4rem">⟵ PHASE 1 の STEP 02（新規さんからの回答到着）が合図。STEP 06（個人LINE誘導）までに担当を確定させる</p>
+  <div class="flow">
+    <div class="flow-step" style="background:var(--coral)"><div class="step-num">STEP α</div><div class="step-text">PHASE 1 STEP 02 の回答を受付係グループに共有</div></div><div class="flow-arrow"></div>
+    <div class="flow-step" style="background:var(--coral)"><div class="step-num">STEP β</div><div class="step-text">受付係同士で相談 → 担当者が名乗り出る</div></div><div class="flow-arrow"></div>
+    <div class="flow-step" style="background:var(--coral)"><div class="step-num">STEP γ</div><div class="step-text">担当確定 → PHASE 1 STEP 06 で誘導開始できる状態に</div></div>
+  </div>
+
+  <h3 style="margin-top:1.2rem"><span class="phase-badge p3">PHASE 3</span>個チャ段階（個人LINE）</h3>
+  <p style="font-size:0.82rem;color:var(--gry);margin-bottom:0.4rem">⟵ PHASE 1 と PHASE 2 の両方が完了してから開始</p>
+  <div class="flow">
+    <div class="flow-step" style="background:var(--laven)"><div class="step-num">STEP 07</div><div class="step-text">担当者が個チャで挨拶・説明</div></div><div class="flow-arrow"></div>
+    <div class="flow-step" style="background:var(--laven)"><div class="step-num">STEP 08</div><div class="step-text">レターシーリングがONになっていることを受付係側の設定画面で確認</div></div><div class="flow-arrow"></div>
+    <div class="flow-step" style="background:var(--laven)"><div class="step-num">STEP 09</div><div class="step-text">自己紹介作成ツールのURLを送付</div></div><div class="flow-arrow"></div>
+    <div class="flow-step" style="background:var(--laven)"><div class="step-num">STEP 10</div><div class="step-text">新規さんがツールで作成 → コピー → 個チャに貼り付けて送信</div></div><div class="flow-arrow"></div>
+    <div class="flow-step" style="background:var(--laven)"><div class="step-num">STEP 11</div><div class="step-text">受付係グループで複数人チェック（目安3名）／必要なら修正依頼</div></div>
+  </div>
+
+  <h3 style="margin-top:1.2rem"><span class="phase-badge p4">PHASE 4</span>情報サロン段階</h3>
+  <div class="flow">
+    <div class="flow-step" style="background:var(--sage)"><div class="step-num">STEP 12</div><div class="step-text">受付係がグループで「情報サロンに招待します」と宣言</div></div><div class="flow-arrow"></div>
+    <div class="flow-step" style="background:var(--sage)"><div class="step-num">STEP 13</div><div class="step-text">個チャで「参加したら『参加しました』と書いてください」とお願い</div></div><div class="flow-arrow"></div>
+    <div class="flow-step" style="background:var(--sage)"><div class="step-num">STEP 14</div><div class="step-text">情報サロンにグループ招待を送信</div></div><div class="flow-arrow"></div>
+    <div class="flow-step" style="background:var(--sage)"><div class="step-num">STEP 15</div><div class="step-text">新規さんが情報サロンで「参加しました」と書き込み</div></div>
+  </div>
+
+  <h3 style="margin-top:1.2rem"><span class="phase-badge p5">PHASE 5</span>案内係への引き継ぎ段階</h3>
+  <div class="flow">
+    <div class="flow-step" style="background:var(--sage-dk)"><div class="step-num">STEP 16</div><div class="step-text">案内係が反応 → 家族グループへ振り分け</div></div><div class="flow-arrow"></div>
+    <div class="flow-step" style="background:var(--sage-dk)"><div class="step-num">STEP 17</div><div class="step-text">ノート投稿完了 → 受付完了</div></div>
+  </div>
+
+  <div class="card peach" style="margin-top:0.8rem"><div class="card-title">各フェーズで意識すること</div><div class="card-body">「誰が、どこで、何をするか」を意識すると流れがつかみやすくなります。PHASE 1 は公式LINE、PHASE 2 は受付係グループ、PHASE 3 は個人LINE、PHASE 4 は情報サロン、PHASE 5 は案内係に主役が移っていきます。</div></div>
+</section>
+<div class="pager">
+  <a class="prev" data-next="p01"><span class="nav-label">← 前へ</span><span class="nav-title">受付係の概要</span></a>
+  <a class="next" data-next="p03"><span class="nav-label">PHASE 1 →</span><span class="nav-title">公式LINE操作</span></a>
+</div>
+</div>
+
+<!-- ── 3. 公式LINE ── -->
+<div class="page" id="p03">
+<section id="s03">
+  <div class="sec-label">SECTION 03</div>
+  <div class="sec-title">公式LINEアカウントの操作方法</div>
+  <div class="sec-accent"></div>
+
+  <div class="line-mock">
+    <div class="line-header">ホーム<span class="hd-icons">≡ ⋮</span></div>
+    <div class="line-home">
+      <div class="line-home-top">
+        <div class="line-home-ava"></div>
+        <div>
+          <div class="line-home-name">☆統合失調症LINE家族会ピュアライ…</div>
+          <div class="line-home-id">@xxxxxxxx</div>
+        </div>
+      </div>
+      <div class="line-home-stat"><span>ターゲットリーチ</span><span class="n">XXX &nbsp;›</span></div>
+      <div class="line-home-stat"><span>無料メッセージ</span><span class="n">0 / 200 &nbsp;›</span></div>
+      <div class="line-home-cta">メッセージを配信する</div>
+      <div class="line-home-tools">
+        <div class="line-home-tool"><div class="ico"></div>メッセージ<br>配信</div>
+        <div class="line-home-tool"><div class="ico"></div>あいさつ<br>メッセージ</div>
+        <div class="line-home-tool"><div class="ico"></div>応答<br>メッセージ</div>
+        <div class="line-home-tool"><div class="ico"></div>リッチ<br>メッセージ</div>
+      </div>
+    </div>
+  </div>
+  <p style="font-size:0.75rem;color:var(--gry);margin-top:0.3rem">↑ 公式LINEアカウントの管理画面。「応答メッセージ」で自動応答の質問(①〜⑦)を自動配信する設定があります。</p>
+
+  <h4 style="margin-top:1rem">トーク一覧（新規さんの確認画面）</h4>
+  <div class="line-mock">
+    <div class="line-header">すべて ▼<span class="hd-icons">⋮</span></div>
+    <div class="line-list">
+      <div class="line-list-item">
+        <div class="line-list-ava" style="background:linear-gradient(135deg,#A3D1BB,#6DAE91)"></div>
+        <div class="line-list-body">
+          <div class="line-list-name">新規さん（A）</div>
+          <div class="line-list-snip">大変お待たせしました…係に以前の○○さんとの…</div>
+        </div>
+        <div class="line-list-time">金曜日</div>
+      </div>
+      <div class="line-list-item">
+        <div class="line-list-ava" style="background:linear-gradient(135deg,#F7CFA8,#E5A677)"></div>
+        <div class="line-list-body">
+          <div class="line-list-name">新規さん（B）</div>
+          <div class="line-list-snip">何か手続きについてご不安やご不明な点など…</div>
+        </div>
+        <div class="line-list-time">火曜日</div>
+      </div>
+      <div class="line-list-item">
+        <div class="line-list-ava" style="background:linear-gradient(135deg,#C5B8DC,#9B8EC4)"></div>
+        <div class="line-list-body">
+          <div class="line-list-name">家族〇 参加済 新規さん（C）</div>
+          <div class="line-list-snip">設定確認ありがとうございます。この後、グループ…</div>
+        </div>
+        <div class="line-list-time">4/12</div>
+      </div>
+      <div class="line-list-item">
+        <div class="line-list-ava" style="background:linear-gradient(135deg,#A8C9E5,#6A9FC7)"></div>
+        <div class="line-list-body">
+          <div class="line-list-name">家族〇 参加済 新規さん（D）</div>
+          <div class="line-list-snip">ご確認を有難うございました。この後、グループ招待…</div>
+        </div>
+        <div class="line-list-time">4/10</div>
+      </div>
+    </div>
+  </div>
+  <p style="font-size:0.75rem;color:var(--gry);margin-top:0.3rem">↑ 対応完了後は、表示名の頭に「家族〇 参加済」を付けて、振り分け先を明示する運用になっています。</p>
+
+  <h3>アカウント設定</h3>
+  <p>公式LINE：PureLightの公式アカウント（営業日に対応）</p>
+  <p>スマートフォンへのインストールが必須です</p>
+  <p>受付係になった時点で権限を確認してもらう必要があります</p>
+
+  <h3>基本操作</h3>
+  <ul class="badge-list">
+    <li class="badge-item"><span class="badge-num rose">1</span><div class="badge-content"><div class="badge-title">ホーム画面の確認</div><div class="badge-desc">新規さんは「公式アカウントのホーム」に表示されます。丸いエリアに新規さんがやってきます。</div></div></li>
+    <li class="badge-item"><span class="badge-num coral">2</span><div class="badge-content"><div class="badge-title">メッセージのやりとり</div><div class="badge-desc">前回のテンプレートをコピー＆ペースト。細かいアレンジも可能。送信取り消し機能もあります。</div></div></li>
+    <li class="badge-item"><span class="badge-num sage">3</span><div class="badge-content"><div class="badge-title">モック練習</div><div class="badge-desc">初期段階では実際の新規対応を見学して学習。2〜3人の事例を見守ってから徐々に試してみましょう。</div></div></li>
+  </ul>
+
+  <div class="card tomato"><div class="card-title">重要な禁止事項</div><div class="card-body">公式アカウントの設定はいかなる場合も変更してはいけません。権限設定に問題がある場合は、受付係のグループ内で必ず確認してください。</div></div>
+</section>
+<div class="pager">
+  <a class="prev" data-next="p02"><span class="nav-label">← 前へ</span><span class="nav-title">受付の全体フロー</span></a>
+  <a class="next" data-next="p04"><span class="nav-label">PHASE 1 →</span><span class="nav-title">最初の質問</span></a>
+</div>
+</div>
+
+<!-- ── 4. 最初の質問と回答（PHASE 1） ── -->
+<div class="page" id="p04">
+<section id="s04">
+  <div class="sec-label">SECTION 04 &nbsp;<span class="phase-badge p1">PHASE 1 公式LINE</span></div>
+  <div class="sec-title">公式LINEでの受付フロー</div>
+  <div class="sec-accent"></div>
+  <p class="sec-sub">新規さんが公式LINEを友だち追加してから、担当者の個人LINEへ誘導するまでの全6ステップ。個別対応（自己紹介作成ツールなど）は、ここが完了してから個チャで進めます。</p>
+
+  <h3 style="margin-top:0.6rem">STEP 1 ── 友だち追加で「自動応答の質問」①〜⑦が配信</h3>
+  <p>新規さんが公式LINEを友だち追加した瞬間、LINEの「応答メッセージ」機能で①〜⑦の質問が自動で飛びます。受付係はまだ何もしません。<strong>これは自動配信であり、受付係が手動で送る「最初の質問」（STEP 3）とは別物です</strong>のでご注意ください。</p>
+
+  <div class="line-mock">
+    <div class="line-header">新規さん<span class="hd-icons">⌕ ☎ ⋮</span></div>
+    <div class="line-chat">
+      <div class="line-sys-wrap"><span class="line-sys-pill">今日</span></div>
+      <div class="line-sys-wrap"><span class="line-sys-pill">21:24 友だち追加されました</span></div>
+      <div class="line-auto-label">応答メッセージ</div>
+      <div class="line-row self">
+        <div class="line-meta l"><span>既読</span><span>21:24</span></div>
+        <div class="line-stack self">
+          <div class="line-bubble self">
+            ようこそ○○さん、☆統合失調症LINE家族会PureLight☆です。<br><br>
+            こちらは、統合失調症を発症された当事者を看られている「家族のための会」です。<br><br>
+            当事者の方の入会はご遠慮いただいております。<br><br>
+            荒し・迷惑行為対策のために、入会を希望される方は以下についてご返信をお願い致します。<br><br>
+            ①ご家族（ケアラー）自身のお住まいの都道府県<br>
+            ②当事者からみたあなたの立場<br>
+            ③当事者の方の性別<br>
+            ④当事者の方の年齢<br>
+            ⑤発症年齢<br>
+            ⑥服用しているお薬<br>
+            ⑦簡単な病歴<br><br>
+            担当者からご連絡いたします。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3>STEP 2 ── 新規さんが①〜⑦に回答</h3>
+  <p>新規さん側から①〜⑦への回答が届きます。受付係は回答を確認し、受付係グループに共有します（担当決めはPHASE 2で扱います）。</p>
+
+  <div class="line-mock">
+    <div class="line-header">新規さん<span class="hd-icons">⌕ ☎ ⋮</span></div>
+    <div class="line-chat">
+      <div class="line-row other">
+        <div class="line-avatar"></div>
+        <div class="line-stack other">
+          <div class="line-bubble other">①〇〇県<br>②母親<br>③女子<br>④20歳（大学3年生）<br>⑤19歳（大学1年生）<br>⑥△△△△<br>⑦大学入学して夏休みに発症しました。数ヶ月で陽性症状は落ちつきましたが、現在は陰性症状があり日常生活に困難があります。</div>
+        </div>
+        <div class="line-meta r"><span>21:30</span></div>
+      </div>
+    </div>
+  </div>
+
+  <h3>STEP 3 ── 受付係から「最初の質問」🌟1〜4を送る</h3>
+  <p>ここからは受付係が手動で質問します。これがマニュアル内で<strong>「最初の質問」</strong>と呼ぶものです（STEP 1の自動応答とは別）。デフォルトで送る4点は以下のとおり。</p>
+
+  <div class="card tomato" style="margin-bottom:0.6rem">
+    <div class="card-title">⚠️ 次に進めない条件（ここで必ず確認）</div>
+    <div class="card-body">
+      <strong>🌟1「診断名」</strong>が「統合失調症」または「その疑い」であること、<strong>🌟4「了承」</strong>のお返事がいただけること、この2点が揃わないと先には進めません。<br><br>
+      <strong>🌟1 が否定的・曖昧なとき</strong>（診断されていない／別の診断名／本人・家族の主観のみ等）→ 先には進めず、医療機関での診断を勧めるなど丁寧にお断り。<br>
+      <strong>🌟4 が否定的・曖昧なとき</strong>（「了承」またはそれに類する返事がもらえない）→ 先には進めず、内容の再説明をして了承可否を確認。<br><br>
+      一方、<strong>🌟2「きっかけ」・🌟3「望むこと」</strong>は入会可否の判定条件ではありません。曖昧でも次に進めます（ただし🌟3「望むこと」が、家族会やPureLightで提供できる内容と大きくミスマッチしているように感じる場合だけ、次に進む前に受付係グループで相談してください）。
+    </div>
+  </div>
+
+  <div class="card tomato">
+    <div class="card-title">デフォルトで送る4点の質問</div>
+    <div class="card-body">
+      🌟<strong>1. 現在の医師からの診断名は何でしょうか？</strong><br>
+      🌟<strong>2. PureLightはどんなきっかけでお知りになりましたか？</strong><br>
+      🌟<strong>3. PureLightに望むことはどんなことでしょうか？</strong><br>
+      🌟<strong>4.</strong> PureLightは統合失調症、またはその疑いと診断されたご家族のための家族会です。今後、診断名が変わった場合にはご退出をお願いする事もございますこと、ご了承いただけますか？ 【了承】して頂ける場合のお返事もお願いいたします。
+    </div>
+  </div>
+
+  <div class="line-mock">
+    <div class="line-header">新規さん<span class="hd-icons">⌕ ☎ ⋮</span></div>
+    <div class="line-chat">
+      <div class="line-row self">
+        <div class="line-meta l"><span>既読</span><span>21:33</span></div>
+        <div class="line-stack self">
+          <div class="line-bubble self">
+            PureLightへのご参加希望、ありがとうございます😊<br>
+            ご参加前にもう少し質問を重ねさせてくださいませ。<br><br>
+            🌟1. 現在の医師から何と診断されていますでしょうか？<br><br>
+            🌟2. PureLightはどんなきっかけでお知りになりましたか？<br><br>
+            🌟3. PureLightに望むことはどんなことでしょうか？<br><br>
+            PureLightは統合失調症、<br>
+            またはその疑いと診断された<br>
+            ご家族の為の家族会となっております。<br><br>
+            今後、診断名が変わった場合にはご退出をお願いする事もございますこと、ご了承いただけますか？<br><br>
+            🌟4.【了承】して頂ける場合のお返事もお願いいたします。<br><br>
+            ご自身のタイミングで構いませんので、<br>
+            ご返信をお願いします🙏
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card peach"><div class="card-title">🌟3「望むこと」にミスマッチを感じたとき</div><div class="card-body">🌟3は入会可否の条件ではないため、基本は次に進んで構いません。ただし、望まれていることが<strong>家族会やPureLightで提供できる内容と大きくミスマッチ</strong>していると感じた場合（例：当事者本人へのカウンセリング希望／金銭・仕事の相談／医療的な診断の依頼 等）は、<strong>次に進む前に受付係グループで相談</strong>してください。迷ったら一人で判断せず、グループに投げる——が鉄則です。</div></div>
+
+  <h3>STEP 4 ── 🌟1「診断名」と🌟4「了承」を確認</h3>
+  <p>新規さんから🌟1〜4への回答が届きます。次に進めるかどうかは、<strong>🌟1「診断名」と🌟4「了承」の2点</strong>で判定します。</p>
+
+  <div class="zone" style="margin-bottom:0.6rem"><div class="zone-header sage">○ 次に進める</div><ul class="zone-body"><li>🌟1 の診断名が「統合失調症」または「その疑い」である</li><li>🌟4 に「了承」またはそれに類するお返事がある（例：「承知しました」「了解です」「はい」等）</li></ul></div>
+  <div class="zone" style="margin-bottom:0.6rem"><div class="zone-header tomato">× 次に進めない（丁寧にお断り or 再確認）</div><ul class="zone-body"><li>🌟1 で「診断されていない」「別の疾患」「本人/家族の主観のみ」等 → 医療機関での診断を勧めてお断り</li><li>🌟4 で「了承」またはそれに類するお返事がいただけない → 内容を再説明し、改めて了承可否を確認</li></ul></div>
+  <p style="font-size:0.78rem;color:var(--gry)">※ 🌟2「きっかけ」と🌟3「望むこと」は入会可否の条件ではありません。曖昧でも先に進めて構いません。</p>
+
+  <div class="line-mock">
+    <div class="line-header">新規さん<span class="hd-icons">⌕ ☎ ⋮</span></div>
+    <div class="line-chat">
+      <div class="line-row other">
+        <div class="line-avatar"></div>
+        <div class="line-stack other">
+          <div class="line-bubble other">1. 統合失調症<br><br>2. Googleで検索しました<br><br>3. 分からないことばかりでいるので、皆様のお話を参考にさせていただきたいと思います<br><br>4. 承知致しました</div>
+        </div>
+        <div class="line-meta r"><span>21:38</span></div>
+      </div>
+    </div>
+  </div>
+
+  <h3>STEP 5 ── 受付係から「規約」と「注意事項」を送付</h3>
+  <p>🌟1〜4の了承が取れたら、次に<strong>利用規約とグループトーク参加にあたっての注意事項</strong>を送ります。最後に改めて【了承】のお返事をもらうまでがセットです。</p>
+
+  <div class="line-mock">
+    <div class="line-header">新規さん<span class="hd-icons">⌕ ☎ ⋮</span></div>
+    <div class="line-chat">
+      <div class="line-row self">
+        <div class="line-meta l"><span>既読</span><span>21:47</span></div>
+        <div class="line-stack self">
+          <div class="line-bubble self">
+            お返事とご了承ありがとうございます😊<br><br>
+            この家族会では、少し先を歩んでいる方々がいます。お話されることでお気持ちが、少しでも軽くなればと思います。<br><br>
+            それでは、入会の手続きに入らせていただきます。<br>
+            PureLight では、皆さまに中で安心してお話いただくために、知っておいてほしいこととお願いしたい作業がございます。まずはこちらをお読みください。
+          </div>
+        </div>
+      </div>
+      <div class="line-row self">
+        <div class="line-meta l"><span>既読</span><span>21:47</span></div>
+        <div class="line-stack self">
+          <div class="line-bubble self">
+            【PureLight利用規約と、入会(グループトークへの参加)にあたっての注意事項について】<br>
+            <strong>1　規約</strong><br>
+            HPに記載している規約に目を通してください。またLINEの利用規約にも準じますので、こちらもお読みください。入会時はどちらにも同意されたものとさせて頂きます。<br>
+            <span style="color:#1a73e8;text-decoration:underline">https://purelight-family.wixsite.com/...</span><br><br>
+            <strong>2　情報の転載・転用・共有</strong><br>
+            （1）Pure Lightグループ内での情報を、グループ外へ転載・転用・共有することは原則禁止です。<br>
+            （2）Pure Lightグループ【内】へ情報の共有・転送する際は、情報元の方が不快な思いをしないよう気をつけてください。<br><br>
+            <strong>3　招待</strong><br>
+            （1）新規入会時：必ず受付窓口を通してからPure Lightに参加となります。<br>
+            （2）入会時を除くPureLight内グループへの招待：どなたが行っても構いません。<br><br>
+            <strong>4　その他</strong><br>
+            （1）基本となる家族グループとひろばグループの中から、少なくとも1グループには必ず参加してください。<br>
+            （2）これらの注意事項にご理解頂けない場合は退会とさせて頂きます。
+            <div class="line-preview">
+              <div class="pv-title">Pure Light利用規約 | Pure Light</div>
+              <div class="pv-desc">purelight-family.wixsite.com</div>
+            </div>
+            <div class="line-preview">
+              <div class="pv-title">活動と入会について | Pure Light</div>
+              <div class="pv-desc">統合失調症、または、統合失調症の疑いと診断された方の家族のため…</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="line-row self">
+        <div class="line-meta l"><span>既読</span><span>21:47</span></div>
+        <div class="line-stack self">
+          <div class="line-bubble self">こちらの規約と注意事項にご理解いただけるようでしたら、<br>【了承】とお返事をお願いいたします。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card sage"><div class="card-title">確認するポイント</div><div class="card-body">規約本文のWixのURLと「活動と入会について」のURLの2つを共有し、最後に<strong>「【了承】とお返事をお願いいたします」</strong>と明確に依頼。返信が来るまで次のステップには進みません。</div></div>
+
+  <div class="card tomato" style="margin-top:1rem"><div class="card-title">⚠️ ここから先は<u>次のセクションで決まった担当</u>が引き継ぐ前提です</div><div class="card-body">
+    STEP 6（個人LINEへの誘導）は、<strong>原則として担当に決まった受付係が行います</strong>。公式LINEでの STEP 1〜5 のやりとりを進めていた受付係が、そのまま個チャまで担当するとは限りません。<br><br>
+    公式LINEのやりとりは概ね事務的に進められるので、<strong>STEP 1〜5 を誰かが進めてくれている間に、受付係グループの裏側では次のセクション（SECTION 05）の担当決めが並行で進行</strong>します。ここまでに担当が決まっていれば、個チャ誘導は担当受付係が引き取って行います（既に公式LINEのやりとり中に担当が決まっている場合は、その時点から担当が続投しても構いません）。<br><br>
+    <strong>まだ担当が決まっていない場合は、誘導に進まず、受付係グループで担当決めを急いでください。</strong>
+  </div></div>
+
+  <h3>STEP 6 ── 【了承】を確認したら、<u>担当者が</u>個人LINEへ誘導</h3>
+  <p>新規さんから「了承」の返事が届き、かつ次のセクションで<strong>担当が決まっていることが前提</strong>。最後に<strong>担当者が自分の個人LINE友だち追加URLを送って個チャに移行</strong>します。ここから先は個人LINE（個チャ）でのやりとりです。</p>
+
+  <div class="card laven"><div class="card-title">レターシーリング設定依頼は廃止</div><div class="card-body">以前はこの段階で「レターシーリングをONにしてください」と新規さんに依頼していましたが、<strong>最近のLINE仕様変更に伴い廃止</strong>になりました。代わりに、個チャに移行したあと受付係側で設定画面からレターシーリングがONになっていることを確認する運用に変わっています（詳細は次の個チャ段階で）。</div></div>
+
+  <div class="card">
+    <div class="card-title">誘導メッセージのテンプレート</div>
+    <div class="card-body">
+      この後、グループ招待の流れなど個人トークで対応させていただきます。<br><br>
+      以下⬇のURLから、ご都合の良い時に、友達申請をお願いします。<br>
+      アカウント名は、〇〇です。<br><br>
+      https://line.me/ti/p/xxxxxxxxx
+    </div>
+  </div>
+
+  <div class="line-mock">
+    <div class="line-header">新規さん<span class="hd-icons">⌕ ☎ ⋮</span></div>
+    <div class="line-chat">
+      <div class="line-row other">
+        <div class="line-avatar"></div>
+        <div class="line-stack other">
+          <div class="line-bubble other">了承</div>
+        </div>
+        <div class="line-meta r"><span>22:07</span></div>
+      </div>
+      <div class="line-row self">
+        <div class="line-meta l"><span>既読</span><span>22:22</span></div>
+        <div class="line-stack self">
+          <div class="line-bubble self">
+            この後、グループ招待の流れなど個人トークで対応させていただきます。<br><br>
+            以下⬇のURLから、ご都合の良い時に、友達申請をお願いします。<br>
+            アカウント名は、〇〇です。<br><br>
+            <span style="color:#1a73e8;text-decoration:underline">https://line.me/ti/p/xxxxxxxxx</span>
+            <div class="line-preview">
+              <div class="pv-title">Add LINE friend</div>
+              <div class="pv-desc">QRコードで友だちを追加　友だち追加するには、スマートフォン版LINEでQRコードをスキャン…</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p style="font-size:0.75rem;color:var(--gry);margin-top:0.3rem">↑ ここから先は公式LINEではなく、担当者の<strong>個人LINE（個チャ）</strong>でのやりとりに移ります。</p>
+
+  <h3>対応時の心得</h3>
+  <div class="card peach"><div class="card-title">スピード</div><div class="card-body">自動応答は自動で送られますが、新規さんからの回答に気づいた受付係は、できるだけ早めに受付係グループに共有してください。レスポンスの速さが「大事にされている」というシグナルになります。</div></div>
+  <div class="card sage"><div class="card-title">丁寧さ</div><div class="card-body">初めての方は不安が大きいので、丁寧な言葉遣いを心がけてください。「急ぎませんのでゆっくりお待ちしております」など、プレッシャーを与えない一言も効果的です。</div></div>
+</section>
+<div class="pager">
+  <a class="prev" data-next="p03"><span class="nav-label">← 前へ</span><span class="nav-title">公式LINE操作</span></a>
+  <a class="next" data-next="p05"><span class="nav-label">PHASE 2 →</span><span class="nav-title">担当決め</span></a>
+</div>
+</div>
+
+<!-- ── 5. 受付係グループでの担当決め（PHASE 2） ── -->
+<div class="page" id="p05">
+<section id="s05">
+  <div class="sec-label">SECTION 05 &nbsp;<span class="phase-badge p2">PHASE 2 受付係グループ</span></div>
+  <div class="sec-title">受付係グループでの担当決め・連携</div>
+  <div class="sec-accent"></div>
+  <p class="sec-sub">新規さんの回答が届いたら、受付係グループで報告し、担当者を決めます。個別対応はここから先、個チャ（LINE個人メッセージ）で進みます。</p>
+
+  <div class="line-mock">
+    <div class="line-header">☆受付☆PureLight☆ (13)<span class="hd-icons">⌕ ☎ ⌑ ≡</span></div>
+    <div class="line-chat sky-theme">
+      <div class="line-sys-wrap"><span class="line-sys-pill">今日</span></div>
+      <div class="line-row other">
+        <div class="line-avatar sage"></div>
+        <div class="line-stack other">
+          <div class="line-name">受付係A</div>
+          <div class="line-bubble other">新規さんからメッセージきました。お返事を待ちます🙇</div>
+        </div>
+        <div class="line-meta r"><span>10:12</span></div>
+      </div>
+      <div class="line-row other">
+        <div class="line-avatar sky"></div>
+        <div class="line-stack other">
+          <div class="line-name">受付係B</div>
+          <div class="line-bubble other">ありがとうございます🙇 気にかけておきますね✨</div>
+        </div>
+        <div class="line-meta r"><span>10:13</span></div>
+      </div>
+      <div class="line-row other">
+        <div class="line-avatar sage"></div>
+        <div class="line-stack other">
+          <div class="line-name">受付係A</div>
+          <div class="line-bubble other">お返事がきました。どなたか担当いかがでしょうか？</div>
+        </div>
+        <div class="line-meta r"><span>11:48</span></div>
+      </div>
+      <div class="line-row self">
+        <div class="line-meta l"><span>既読 11</span><span>11:52</span></div>
+        <div class="line-stack self">
+          <div class="line-bubble self gchat">私が対応しますね🙋</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3>基本の報告・連絡・相談（担当決めまで）</h3>
+  <ul class="badge-list">
+    <li class="badge-item"><span class="badge-num rose">1</span><div class="badge-content"><div class="badge-title">新規さんからの着信</div><div class="badge-desc">「新規さんからメッセージきました」と受付係グループに報告。</div></div></li>
+    <li class="badge-item"><span class="badge-num coral">2</span><div class="badge-content"><div class="badge-title">回答受信時</div><div class="badge-desc">「お返事きました。どなたか担当いかがでしょうか？」と呼びかけ。</div></div></li>
+    <li class="badge-item"><span class="badge-num sage">3</span><div class="badge-content"><div class="badge-title">担当決定時</div><div class="badge-desc">「私が対応します」「こちらが担当します」と名乗り出る。</div></div></li>
+  </ul>
+
+  <div class="card peach"><div class="card-title">担当者交代</div><div class="card-body">途中で手が離せなくなった場合は、事前に「代わります」とグループに報告。引き継ぎ時は「見守りをありがとうございました」と公式に報告。</div></div>
+  <div class="card sage"><div class="card-title">見守りと応援</div><div class="card-body">「お疲れさまです」「ありがとうございます」「ゆっくりペースでお願いします」— こうした一言が受付係同士の支え合いになります。</div></div>
+</section>
+<div class="pager">
+  <a class="prev" data-next="p04"><span class="nav-label">← 前へ</span><span class="nav-title">最初の質問</span></a>
+  <a class="next" data-next="p06"><span class="nav-label">PHASE 3 →</span><span class="nav-title">個チャ・ツール送付</span></a>
+</div>
+</div>
+
+<!-- ── 6. 個チャでの説明と自己紹介作成ツールの送付（PHASE 3前半） ── -->
+<div class="page" id="p06">
+<section id="s06">
+  <div class="sec-label">SECTION 06 &nbsp;<span class="phase-badge p3">PHASE 3 個チャ</span></div>
+  <div class="sec-title">個チャでの説明と自己紹介作成ツールの送付</div>
+  <div class="sec-accent"></div>
+  <p class="sec-sub">新規さんが担当者の個人LINEを友だち追加し、個チャが始まったところから。<strong>ノートで規約を再確認 → 流れの説明 → 質問受付 → OKなら自己紹介作成ツール案内</strong>の順で進めます。</p>
+
+  <div class="card tomato">
+    <div class="card-title">個チャでの進行順</div>
+    <div class="card-body">
+      <strong>Step 1</strong>：挨拶 → 規約をノートに投稿（いつでも見返せるように）<br>
+      <strong>Step 2</strong>：このあとの流れを説明<br>
+      <strong>Step 3</strong>：ここで一度区切って、質問を受け付ける<br>
+      <strong>Step 4</strong>：質問がなければ（OKなら）、自己紹介作成ツールを案内<br>
+      <strong>Step 5</strong>：新規さんがツールで作成 → コピー → 個チャに貼り付けて送信<br>
+      <strong>Step 6</strong>：受付係グループで複数人チェック（目安3名）／必要なら修正依頼
+    </div>
+  </div>
+
+  <h4>Step 1：挨拶と規約のノート投稿</h4>
+  <p>担当者が自己紹介を兼ねて挨拶し、<strong>規約（と注意事項）を個チャのノートに投稿</strong>します。公式LINEで一度送っているものと同じ内容ですが、個チャのノートにあると新規さんがいつでも見返せるので、ここで改めて置いておくのがポイントです。</p>
+
+  <div class="line-mock">
+    <div class="line-header">個チャット（担当者の個人LINE）<span class="hd-icons">⌕ ☎ ⌑ ≡</span></div>
+    <div class="line-chat">
+      <div class="line-sys-wrap"><span class="line-sys-pill">今日</span></div>
+      <div class="line-row self">
+        <div class="line-meta l"><span>既読</span><span>13:42</span></div>
+        <div class="line-stack self">
+          <div class="line-bubble self">○○さん、はじめまして😊<br>PureLight受付を担当させていただく△△と申します。よろしくお願いいたします🙇</div>
+        </div>
+      </div>
+      <div class="line-row self">
+        <div class="line-meta l"><span>既読</span><span>13:43</span></div>
+        <div class="line-stack self">
+          <div class="line-bubble self">
+            公式LINEでもお伝えした規約と注意事項を、いつでも見返せるようこちらのノートにも置いておきますね📌<br>
+            <span style="font-size:0.72rem;color:var(--gry)">（ノートに「【PureLight利用規約と注意事項】」を投稿）</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h4>Step 2：このあとの流れを説明</h4>
+  <p>個チャで何をするのか、どう進んでいくのかを、先に全体像として伝えます。見通しが立つと新規さんも安心して次に進めます。</p>
+
+  <div class="card">
+    <div class="card-title">流れ説明テンプレート</div>
+    <div class="card-body">
+      この後、入会の流れは以下のとおりです📝<br><br>
+      ① 自己紹介の作成（専用ツールをお送りします）<br>
+      ② 受付係でその内容を確認<br>
+      ③ 情報サロンというグループにご招待<br>
+      ④ その後、案内係から家族グループへのご案内<br><br>
+      ご自身のペースで大丈夫ですので、ゆっくり進めていきましょう😊
+    </div>
+  </div>
+
+  <h4>Step 3：ここで一度区切って、質問を受け付ける</h4>
+  <p>規約と流れを送ったら、<strong>いったんこちらから送るのをストップして、新規さんからの質問を受け付けます</strong>。不安や疑問があればここで聞いてもらい、不安を解消してから次のステップに進むのがポイント。</p>
+
+  <div class="line-mock">
+    <div class="line-header">個チャット（担当者の個人LINE）<span class="hd-icons">⌕ ☎ ⌑ ≡</span></div>
+    <div class="line-chat">
+      <div class="line-row self">
+        <div class="line-meta l"><span>既読</span><span>13:50</span></div>
+        <div class="line-stack self">
+          <div class="line-bubble self">ここまでで、何かご不明な点やご不安なことはございますか？<br>なければ次のステップ（自己紹介の作成）にお進みいただきますが、気になることがあれば遠慮なくお聞きください🙇</div>
+        </div>
+      </div>
+      <div class="line-row other">
+        <div class="line-avatar"></div>
+        <div class="line-stack other">
+          <div class="line-bubble other">大丈夫です。次に進めてください🙇</div>
+        </div>
+        <div class="line-meta r"><span>13:58</span></div>
+      </div>
+    </div>
+  </div>
+
+  <h4>Step 4：OKなら自己紹介作成ツールを案内</h4>
+  <p>新規さんから「大丈夫です」「次に進めてください」等の返事がもらえたら、自己紹介作成ツールのURLを送ります。<strong>使い方のポイント（ツール内の「コピー」ボタンで完成文をコピー → 個チャに貼り付けて送信）を必ず添えてください</strong>。</p>
+
+  <div class="line-mock">
+    <div class="line-header">個チャット（担当者の個人LINE）<span class="hd-icons">⌕ ☎ ⌑ ≡</span></div>
+    <div class="line-chat">
+      <div class="line-row self">
+        <div class="line-meta l"><span>既読</span><span>14:00</span></div>
+        <div class="line-stack self">
+          <div class="line-bubble self">
+            ありがとうございます😊<br>
+            それでは、自己紹介の作成をお願いいたします。<br><br>
+            以下の「自己紹介作成ツール」で項目を埋めていただき、最後に表示される<strong>「コピー」ボタン</strong>を押すとクリップボードに自己紹介文がコピーされます。<br>
+            そのまま個チャに貼り付けて送っていただけますでしょうか🙏<br><br>
+            ▼自己紹介作成ツール▼<br>
+            <span style="color:#1a73e8;text-decoration:underline">https://chaipapa.github.io/purelight-intro-form/</span>
+            <div class="line-preview">
+              <div class="pv-title">PureLight 自己紹介作成ツール</div>
+              <div class="pv-desc">chaipapa.github.io &nbsp;・&nbsp; 自己紹介の下書き作成</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="line-row other">
+        <div class="line-avatar"></div>
+        <div class="line-stack other">
+          <div class="line-bubble other">ありがとうございます。記入してみます🙇</div>
+        </div>
+        <div class="line-meta r"><span>14:05</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">ツールURL送付時のテンプレート例</div>
+    <div class="card-body">
+      ○○さん、よろしくお願いします。<br><br>
+      入会に向けて、自己紹介のご作成をお願いしております。<br>
+      以下の「自己紹介作成ツール」で項目を埋めていただくと、最後に完成した自己紹介文をコピーできます。<br>
+      コピーしたものをそのまま、このトークに貼り付けて送っていただけますでしょうか？<br><br>
+      ▼自己紹介作成ツール▼<br>
+      [ツールURL]<br><br>
+      全部で10項目ありますが、お時間のあるときにゆっくりご入力いただければ大丈夫です。<br>
+      わからないところがあれば、お気軽にお聞きくださいね。
+    </div>
+  </div>
+
+  <h4>Step 2：入力のフォロー</h4>
+  <p>新規さんがツールを開けない・入力方法がわからない場合に備え、丁寧にフォローします。</p>
+  <div class="card sky">
+    <div class="card-title">よくあるサポート場面</div>
+    <div class="card-body">
+      <strong>「リンクが開けません」</strong> → 「LINEの中でリンクをタップすると開きます。もし開けない場合は、リンクを長押ししてブラウザで開いてみてください」<br><br>
+      <strong>「コピーができません／貼り付け方がわかりません」</strong> → 「ツール内の『コピー』ボタンを押すと、自己紹介文がコピーされます。そのままこのトークの入力欄を長押しして『ペースト』でOKです」<br><br>
+      <strong>「何を書けばいいかわかりません」</strong> → 「ざっくりで大丈夫です。お気持ちやご状況を、思いつくまま書いていただければOKです」
+    </div>
+  </div>
+
+  <h4>Step 3：自己紹介テキストを個チャで受け取る</h4>
+  <div class="card coral">
+    <div class="card-title">貼り付け受信 → 受付係グループで共有</div>
+    <div class="card-body">
+      新規さんがツールで作成した自己紹介テキストを個チャに貼り付けて送ってきます。<br>
+      担当受付係は、その内容を受付係グループに共有し、複数人（目安3名）でチェックします。<br>
+      修正が必要な場合は、担当受付係が個チャで丁寧に修正をお願いします。
+    </div>
+  </div>
+
+  <div class="line-mock">
+    <div class="line-header">個チャット<span class="hd-icons">⌕ ☎ ⌑ ≡</span></div>
+    <div class="line-chat">
+      <div class="line-row other">
+        <div class="line-avatar"></div>
+        <div class="line-stack other">
+          <div class="line-bubble other">自己紹介、こちらです🙇<br><br>①お住まい：〇〇県<br>②立場：母親<br>③性別：女性<br>④年齢：20歳<br>⑤発症年齢：19歳<br>…</div>
+        </div>
+        <div class="line-meta r"><span>15:12</span></div>
+      </div>
+      <div class="line-row self">
+        <div class="line-meta l"><span>既読</span><span>15:15</span></div>
+        <div class="line-stack self">
+          <div class="line-bubble self">ありがとうございます😊 受付係で確認させていただきますね🙇 少しお時間いただきます。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card laven">
+    <div class="card-title">注意事項の案内を忘れずに</div>
+    <div class="card-body">
+      自己紹介の受け取り後または入会確定時に、以下の注意事項を新規さんに伝えてください。<br><br>
+      「❗ご注意❗ 完全退会される際はくれぐれも、家族グループ内のノートの削除を忘れないようにしてください。ノートはご本人でないと削除できません❗」
+    </div>
+  </div>
+</section>
+<div class="pager">
+  <a class="prev" data-next="p05"><span class="nav-label">← 前へ</span><span class="nav-title">担当決め</span></a>
+  <a class="next" data-next="p07"><span class="nav-label">PHASE 3 →</span><span class="nav-title">10項目チェック</span></a>
+</div>
+</div>
+
+<!-- ── 7. 10項目チェック（PHASE 3） ── -->
+<div class="page" id="p07">
+<section id="s07">
+  <div class="sec-label">SECTION 07 &nbsp;<span class="phase-badge p3">PHASE 3 個チャ</span></div>
+  <div class="sec-title">自己紹介テキストの確認項目（10項目）</div>
+  <p class="sec-sub">自己紹介作成ツールで作成される項目（全10項目）。新規さんから個チャで貼り付けが届いたら、受付係グループに共有して複数人でチェックします。</p>
+  <ul class="badge-list">
+    <li class="badge-item"><span class="badge-num rose">1</span><div class="badge-content"><div class="badge-title">①ライン名</div><div class="badge-desc">LINEのアカウント名と完全に一致しているか確認。</div></div></li>
+    <li class="badge-item"><span class="badge-num coral">2</span><div class="badge-content"><div class="badge-title">②お住まいの都道府県</div><div class="badge-desc">都道府県が正確に記入されているか。海外の方は国名。</div></div></li>
+    <li class="badge-item"><span class="badge-num rose">3</span><div class="badge-content"><div class="badge-title">③当事者からみた立場</div><div class="badge-desc">親、妻、夫、きょうだい、祖母など。「パートナー」など曖昧な場合は要確認。</div></div></li>
+    <li class="badge-item"><span class="badge-num coral">4</span><div class="badge-content"><div class="badge-title">④当事者の性別</div><div class="badge-desc">「男性」「女性」「男の子」「女の子」いずれもOK。</div></div></li>
+    <li class="badge-item"><span class="badge-num rose">5</span><div class="badge-content"><div class="badge-title">⑤当事者の年齢</div><div class="badge-desc">「23歳」「20代前半」など。曖昧でない限りOK。</div></div></li>
+    <li class="badge-item"><span class="badge-num tomato">6</span><div class="badge-content"><div class="badge-title">⑥発症年齢・再発回数等</div><div class="badge-desc">最重要。医師の診断と「疑い」段階の区別が必要。</div></div></li>
+    <li class="badge-item"><span class="badge-num rose">7</span><div class="badge-content"><div class="badge-title">⑦発症からの現在の状況</div><div class="badge-desc">経過、症状、服薬状況、家族の困りごと。医師の診断記載を確認。</div></div></li>
+    <li class="badge-item"><span class="badge-num coral">8</span><div class="badge-content"><div class="badge-title">⑧薬歴・サプリ・漢方等</div><div class="badge-desc">薬剤名の正確性を確認。（例：シプレキサ→ジプレキサ）</div></div></li>
+    <li class="badge-item"><span class="badge-num rose">9</span><div class="badge-content"><div class="badge-title">⑨PureLight内の所属グループ</div><div class="badge-desc">初回入会時は「未所属」が通常。</div></div></li>
+    <li class="badge-item"><span class="badge-num coral">10</span><div class="badge-content"><div class="badge-title">⑩所属している地域の家族会</div><div class="badge-desc">「なし」「○○家族会に所属」など。任意項目。</div></div></li>
+  </ul>
+</section>
+<div class="pager">
+  <a class="prev" data-next="p06"><span class="nav-label">← 前へ</span><span class="nav-title">個チャ・ツール送付</span></a>
+  <a class="next" data-next="p08"><span class="nav-label">PHASE 3 →</span><span class="nav-title">入会判断</span></a>
+</div>
+</div>
+
+<!-- ── 8. 入会判断（PHASE 3） ── -->
+<div class="page" id="p08">
+<section id="s08">
+  <div class="sec-label">SECTION 08 &nbsp;<span class="phase-badge p3">PHASE 3 個チャ</span></div>
+  <div class="sec-title">入会判断の基準</div>
+  <div class="sec-accent"></div>
+
+  <div class="zone"><div class="zone-header sage">○ &nbsp;入会OK</div><ul class="zone-body"><li>医師による確定診断がある</li><li>当事者とケアラーの関係が明確</li><li>統合失調症関連の具体的な困りごとがある</li></ul></div>
+  <div class="zone"><div class="zone-header peach">△ &nbsp;要相談</div><ul class="zone-body"><li>診断が最近（1〜2ヶ月以内）</li><li>子ども（小学生等）が当事者で「疑い」段階</li><li>入院中の方（基本OKだが急性期は退院後を勧めることも）</li></ul></div>
+  <div class="zone"><div class="zone-header tomato">× &nbsp;入会見送り</div><ul class="zone-body"><li>医師の診断がなく本人や家族の「疑い」のみ</li><li>当事者がケアラーを攻撃している段階（医療介入優先）</li><li>当事者本人の参加希望（PureLightは家族会）</li><li>カウンセラー的立場を求めている</li></ul></div>
+
+  <div class="card peach"><div class="card-title">判定の最重要ルール</div><div class="card-body">「医師の診断」が最優先。「〜の疑いあり」でも医師の見立てがあればOK。本人の主観のみの場合は見送り検討。判定は1人ではなく複数人で確認（目安3人）。困ったら受付係のグループで経験者に相談。</div></div>
+</section>
+<div class="pager">
+  <a class="prev" data-next="p07"><span class="nav-label">← 前へ</span><span class="nav-title">10項目チェック</span></a>
+  <a class="next" data-next="p09"><span class="nav-label">PHASE 3 →</span><span class="nav-title">よくあるケース</span></a>
+</div>
+</div>
+
+<!-- ── 9. よくあるケース（PHASE 3） ── -->
+<div class="page" id="p09">
+<section id="s09">
+  <div class="sec-label">SECTION 09 &nbsp;<span class="phase-badge p3">PHASE 3 個チャ</span></div>
+  <div class="sec-title">よくあるケースと対応例</div>
+  <div class="sec-accent"></div>
+
+  <h4 style="color:var(--sage)">初めて診断を受けたばかりの方</h4>
+  <p>数ヶ月前に突然症状が出現。仕事を休職。本人も家族も病気を理解しきれていない段階。</p>
+  <p style="color:var(--blk)">【OK判定】「わからないことばかりで大変ですよね。ここでは同じ立場の親御さんたちとお話しできます」と伝える。</p><hr style="border:none;border-top:1px solid var(--gry-xlt);margin:0.6rem 0">
+
+  <h4 style="color:var(--rose)">受験期に発症した若い当事者の親</h4>
+  <p>高3の受験期に発症、緊急措置入院。親が強い責任感と罪悪感を感じている。</p>
+  <p style="color:var(--blk)">【OK判定】「受験のストレスが引き金になることもあります。親御さんご自身の気持ちもとても大事です」と共感。</p><hr style="border:none;border-top:1px solid var(--gry-xlt);margin:0.6rem 0">
+
+  <h4 style="color:var(--peach)">子ども（小学生）が「疑い」段階</h4>
+  <p>11歳。不登校。発達検査予定中。幻覚や緊張状態があるが確定診断なし。</p>
+  <p style="color:var(--blk)">【要相談】医師が「統合失調症の可能性あり」と述べていればOK。親の主観的疑いのみの場合は見送り。</p><hr style="border:none;border-top:1px solid var(--gry-xlt);margin:0.6rem 0">
+
+  <h4 style="color:var(--sky)">薬を飲まない・治療拒否中</h4>
+  <p>確定診断あり。現在は自己断薬、不眠、激痩せなど。</p>
+  <p style="color:var(--blk)">【OK判定】診断は確定しているため入会可。「治療拒否の状況で親御さんは本当に大変ですね」と共感。</p><hr style="border:none;border-top:1px solid var(--gry-xlt);margin:0.6rem 0">
+
+  <h4 style="color:var(--laven)">グリーフケア（当事者を亡くされた方）</h4>
+  <p>娘さんが心不全で亡くなられた。グリーフケアグループがあるか相談。</p>
+  <p style="color:var(--blk)">【特別検討】運営係との協議が必要。非公式グループの提案や「わかちあいの会」等の紹介を検討。</p>
+</section>
+<div class="pager">
+  <a class="prev" data-next="p08"><span class="nav-label">← 前へ</span><span class="nav-title">入会判断</span></a>
+  <a class="next" data-next="p10"><span class="nav-label">PHASE 3 →</span><span class="nav-title">イレギュラー</span></a>
+</div>
+</div>
+
+<!-- ── 10. イレギュラー（PHASE 3） ── -->
+<div class="page" id="p10">
+<section id="s10">
+  <div class="sec-label">SECTION 10 &nbsp;<span class="phase-badge p3">PHASE 3 個チャ</span></div>
+  <div class="sec-title">イレギュラーケースへの対応</div>
+  <div class="sec-accent"></div>
+  <div class="card coral"><div class="card-title">複数の当事者を持つケアラー</div><div class="card-body">自己紹介は参加するケアラー1人につき1つが原則（ノート管理の観点から）。複数の当事者を抱える場合は、自己紹介の中にまとめて記載してもらい、必要に応じて複数の家族グループに所属してもらいます。</div></div>
+  <div class="card tomato"><div class="card-title">当事者がケアラーを攻撃中</div><div class="card-body">医学的介入が優先。「まず医療機関でのご相談を」と伝え、地域の支援先を紹介。</div></div>
+  <div class="card peach"><div class="card-title">当事者本人が入会希望</div><div class="card-body">丁寧にお断り。「家族のための会です」と説明し、当事者会やデイケアを紹介。</div></div>
+  <div class="card sky"><div class="card-title">退会時にノート未削除</div><div class="card-body">事前に「ノートはご本人でないと削除できません」と説明。退会後に未削除の場合は受付係のグループで共有して対応を相談。</div></div>
+  <div class="card"><div class="card-title">アカウント名の変更</div><div class="card-body">新規さんや既存メンバーがLINEアカウント名を変更した場合は、受付係グループに報告し、案内係にも情報共有してください。</div></div>
+</section>
+<div class="pager">
+  <a class="prev" data-next="p09"><span class="nav-label">← 前へ</span><span class="nav-title">よくあるケース</span></a>
+  <a class="next" data-next="p11"><span class="nav-label">PHASE 4 →</span><span class="nav-title">情報サロン招待</span></a>
+</div>
+</div>
+
+<!-- ── 11. 情報サロン招待（PHASE 4） ── -->
+<div class="page" id="p11">
+<section id="s11">
+  <div class="sec-label">SECTION 11 &nbsp;<span class="phase-badge p4">PHASE 4 情報サロン</span></div>
+  <div class="sec-title">情報サロンへの招待手順</div>
+  <div class="sec-accent"></div>
+  <p class="sec-sub">自己紹介テキストが受付係3名のOK確認を得たら、いよいよ情報サロンへの招待です。<strong>情報サロンへの招待は受付係が行います</strong>（案内係ではありません）。以下の手順を必ず守ってください。</p>
+
+  <div class="card tomato">
+    <div class="card-title">Step 1：受付係グループで宣言</div>
+    <div class="card-body">「<strong>新規の○○さんを、情報サロンに招待します</strong>」と受付係グループに宣言します。</div>
+  </div>
+  <div class="card coral">
+    <div class="card-title">Step 2：個チャで新規さんにお願い</div>
+    <div class="card-body">並行して、新規さんに個チャで「<strong>情報サロンに招待しますので、参加したら『参加しました』と書き込んでください</strong>」とお願いします。</div>
+  </div>
+  <div class="card sage">
+    <div class="card-title">Step 3：情報サロンに招待を送信</div>
+    <div class="card-body">情報サロンのLINEグループ招待を新規さんに送信します。</div>
+  </div>
+  <div class="card sky">
+    <div class="card-title">Step 4：新規さんが「参加しました」と書き込み</div>
+    <div class="card-body">新規さんが情報サロンに参加し、「<strong>参加しました</strong>」とグループに書き込みます。この書き込みが案内係への合図になります。</div>
+  </div>
+
+  <h3>受付係グループでのチェック〜招待宣言の流れ</h3>
+  <div class="line-mock">
+    <div class="line-header">☆受付☆PureLight☆ (13)<span class="hd-icons">⌕ ☎ ⌑ ≡</span></div>
+    <div class="line-chat sky-theme">
+      <div class="line-sys-wrap"><span class="line-sys-pill">今日</span></div>
+      <div class="line-row self">
+        <div class="line-meta l"><span>既読 11</span><span>13:05</span></div>
+        <div class="line-stack self">
+          <div class="line-bubble self gchat">@All 新規さんの自己紹介のチェック、お願いします🙇</div>
+        </div>
+      </div>
+      <div class="line-row other">
+        <div class="line-avatar sage"></div>
+        <div class="line-stack other">
+          <div class="line-name">受付係A</div>
+          <div class="line-bubble other">OKだと思います👌</div>
+        </div>
+        <div class="line-meta r"><span>13:18</span></div>
+      </div>
+      <div class="line-row other">
+        <div class="line-avatar sky"></div>
+        <div class="line-stack other">
+          <div class="line-name">受付係B</div>
+          <div class="line-bubble other">OKです✨</div>
+        </div>
+        <div class="line-meta r"><span>13:25</span></div>
+      </div>
+      <div class="line-row other">
+        <div class="line-avatar peach"></div>
+        <div class="line-stack other">
+          <div class="line-name">受付係C</div>
+          <div class="line-bubble other">OKです🙆</div>
+        </div>
+        <div class="line-meta r"><span>13:40</span></div>
+      </div>
+      <div class="line-row self">
+        <div class="line-meta l"><span>既読 11</span><span>13:48</span></div>
+        <div class="line-stack self">
+          <div class="line-bubble self gchat">ご確認ありがとうございました🙇 新規の○○さんを、情報サロンに招待します。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p style="font-size:0.82rem;color:var(--gry);margin:0.3rem 0">↓ 同時に個チャで新規さんにも連絡 ↓</p>
+  <div class="line-mock">
+    <div class="line-header">個チャット<span class="hd-icons">⌕ ☎ ⌑ ≡</span></div>
+    <div class="line-chat">
+      <div class="line-row self">
+        <div class="line-meta l"><span>既読</span><span>13:50</span></div>
+        <div class="line-stack self">
+          <div class="line-bubble self">○○さん、自己紹介のご確認が完了しました😊<br>これから情報サロンに招待させていただきますので、参加されましたら「参加しました」と書き込んでいただけますでしょうか🙏</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3>情報サロンでの「参加しました」書き込み</h3>
+  <div class="line-mock">
+    <div class="line-header">情報サロン<span class="hd-icons">⌕ ☎ ⌑ ≡</span></div>
+    <div class="line-chat sky-theme">
+      <div class="line-row other">
+        <div class="line-avatar"></div>
+        <div class="line-stack other">
+          <div class="line-name">新規さん</div>
+          <div class="line-bubble other">参加しました。よろしくお願いします🌸</div>
+        </div>
+        <div class="line-meta r"><span>14:08</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="card sage"><div class="card-title">ここで受付係の役割は一区切り</div><div class="card-body">新規さんが「参加しました」と書き込んだ時点で、案内係への引き継ぎが始まります。次フェーズ（PHASE 5）は案内係が主役です。</div></div>
+</section>
+<div class="pager">
+  <a class="prev" data-next="p10"><span class="nav-label">← 前へ</span><span class="nav-title">イレギュラー</span></a>
+  <a class="next" data-next="p12"><span class="nav-label">PHASE 5 →</span><span class="nav-title">案内係へ引継</span></a>
+</div>
+</div>
+
+<!-- ── 12. 案内係への引き継ぎ（PHASE 5） ── -->
+<div class="page" id="p12">
+<section id="s12">
+  <div class="sec-label">SECTION 12 &nbsp;<span class="phase-badge p5">PHASE 5 案内係</span></div>
+  <div class="sec-title">家族グループへの振り分け（案内係への引き継ぎ）</div>
+  <div class="sec-accent"></div>
+  <p class="sec-sub">新規さんが情報サロンで「参加しました」と書き込んだ後は、案内係が適切な家族グループへの振り分けを行います。受付係は進行を見守りつつ、必要に応じて情報共有や補助を行います。</p>
+
+  <h3>グループの種類</h3>
+  <div class="card"><div class="card-title">基本家族グループ（9つ）</div><div class="card-body">家族1〜家族9。各グループは独立したLINEチャットです。</div></div>
+  <div class="card laven"><div class="card-title">サブグループ</div><div class="card-body">きょうだいグループ（兄弟姉妹が当事者の場合）、混合グループ（複数の当事者を持つケアラー用）</div></div>
+
+  <h3>振り分けの流れ</h3>
+  <ul class="badge-list">
+    <li class="badge-item"><span class="badge-num rose">1</span><div class="badge-content"><div class="badge-title">情報サロンでの「参加しました」</div><div class="badge-desc">新規さんが情報サロンに参加し「参加しました」と書き込むことで、案内係への引き継ぎの合図になります。</div></div></li>
+    <li class="badge-item"><span class="badge-num coral">2</span><div class="badge-content"><div class="badge-title">案内係が反応 → 家族グループへ配置</div><div class="badge-desc">案内係が年齢・関係性・地域を考慮して最適なグループを選定し、家族グループへ招待します。</div></div></li>
+    <li class="badge-item"><span class="badge-num sage">3</span><div class="badge-content"><div class="badge-title">ノート投稿完了</div><div class="badge-desc">家族グループに自己紹介テキストをノートとして投稿すれば、受付の全工程が完了です。</div></div></li>
+  </ul>
+
+  <div class="line-mock">
+    <div class="line-header">情報サロン<span class="hd-icons">⌕ ☎ ⌑ ≡</span></div>
+    <div class="line-chat sky-theme">
+      <div class="line-row other">
+        <div class="line-avatar"></div>
+        <div class="line-stack other">
+          <div class="line-name">新規さん</div>
+          <div class="line-bubble other">参加しました。よろしくお願いします🌸</div>
+        </div>
+        <div class="line-meta r"><span>14:08</span></div>
+      </div>
+      <div class="line-row other">
+        <div class="line-avatar laven"></div>
+        <div class="line-stack other">
+          <div class="line-name">案内係</div>
+          <div class="line-bubble other">ようこそPureLightへ！ご案内させていただきますね😊</div>
+        </div>
+        <div class="line-meta r"><span>14:10</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card peach"><div class="card-title">複数当事者の場合</div><div class="card-body">同じケアラーが複数の当事者を持つ場合は、各当事者ごとに別々の自己紹介を作成してもらい、サロンへの招待も複数回行います。</div></div>
+
+  <h3>最終完了の報告</h3>
+  <div class="card sage"><div class="card-title">受付係グループへの完了報告</div><div class="card-body">ノート投稿が完了したら、受付係グループに「家族(○)の新規@○○さん、ノート投稿まで完了されました」と報告します。ここで受付係としての対応は完全に終了です。お疲れさまでした。</div></div>
+</section>
+<div class="pager">
+  <a class="prev" data-next="p11"><span class="nav-label">← 前へ</span><span class="nav-title">情報サロン招待</span></a>
+  <a class="next" data-next="p13"><span class="nav-label">次へ →</span><span class="nav-title">研修ガイド</span></a>
+</div>
+</div>
+
+<!-- ── 13. 研修ガイド ── -->
+<div class="page" id="p13">
+<section id="s13">
+  <div class="sec-label">SECTION 13</div>
+  <div class="sec-title">新任受付係の研修ガイド</div>
+  <div class="sec-accent"></div>
+
+  <div class="stage"><div class="stage-bg" style="width:25%;background:var(--rose)"></div><div class="stage-content"><div class="stage-name"><span class="stage-pill" style="background:var(--rose)">STAGE 1</span>環境整備と基礎学習</div><div class="stage-desc">インストール → ホーム画面確認 → 基本ドキュメント確認</div></div></div>
+  <div class="stage"><div class="stage-bg" style="width:50%;background:var(--coral)"></div><div class="stage-content"><div class="stage-name"><span class="stage-pill" style="background:var(--coral)">STAGE 2</span>見学と観察（1〜2週間）</div><div class="stage-desc">新規対応の見学 → チェック参加 → 質問ルール学習</div></div></div>
+  <div class="stage"><div class="stage-bg" style="width:75%;background:var(--laven)"></div><div class="stage-content"><div class="stage-name"><span class="stage-pill" style="background:var(--laven)">STAGE 3</span>実践開始（3週目〜）</div><div class="stage-desc">最初の質問から対応 → 経験者とペアで担当</div></div></div>
+  <div class="stage"><div class="stage-bg" style="width:100%;background:var(--sage)"></div><div class="stage-content"><div class="stage-name"><span class="stage-pill" style="background:var(--sage)">STAGE 4</span>独り立ち（1ヶ月以降）</div><div class="stage-desc">一人での対応 → 様々なケースを経験</div></div></div>
+
+  <div class="card sage" style="margin-top:0.8rem"><div class="card-title">忘れないでください</div><div class="card-body">「完璧でなくていい」。先輩も最初は相談しながら対応していました。エラーは学びのチャンスです。わからないことは、いつでも聞いてOK。受付グループは「見守り隊」です。</div></div>
+</section>
+<div class="pager">
+  <a class="prev" data-next="p12"><span class="nav-label">← 前へ</span><span class="nav-title">案内係へ引継</span></a>
+  <a class="next" data-next="p14"><span class="nav-label">次へ →</span><span class="nav-title">Q&amp;A</span></a>
+</div>
+</div>
+
+<!-- ── 14. Q&A ── -->
+<div class="page" id="p14">
+<section id="s14">
+  <div class="sec-label">SECTION 14</div>
+  <div class="sec-title">トラブルシューティング</div>
+  <div class="sec-accent"></div>
+
+  <div class="qa-item"><div class="qa-q rose">Q. 新規さんから返信がない場合は？</div><div class="qa-a">1週間〜10日待ちます。1回リマインドを送信し、さらに返信がなければ自然終了と判断。受付グループに報告。</div></div>
+  <div class="qa-item"><div class="qa-q coral">Q. 自己紹介の修正は何回まで？</div><div class="qa-a">複数回OK。「完璧」より「誤字なし・医師の診断明記」を優先。新規さんの負担にも配慮してください。</div></div>
+  <div class="qa-item"><div class="qa-q sky">Q. 医師の診断内容が判断できない</div><div class="qa-a">医学的判定は不要です。「医師から診断を受けている」という事実確認が目的。不明なら受付係のグループで相談。</div></div>
+  <div class="qa-item"><div class="qa-q peach">Q. 医学的な質問を受けたら？</div><div class="qa-a">PureLightは医学的アドバイスをする場ではありません。「薬のご質問は処方医にご相談ください」と伝えてください。</div></div>
+  <div class="qa-item"><div class="qa-q tomato">Q. 当事者本人から相談が来たら？</div><div class="qa-a">丁寧にお断り。「ご家族のための会です」と説明し、当事者向けの支援グループを紹介。</div></div>
+  <div class="qa-item"><div class="qa-q laven">Q. 受付係間で意見が対立したら？</div><div class="qa-a">両論を述べた後、受付係のグループで経験者の意見を求めます。判断が難しければ運営係に最終判定をゆだねることも。新規さんを傷つけない配慮が最優先。</div></div>
+  <div class="qa-item"><div class="qa-q sky">Q. 権限が足りず操作できない</div><div class="qa-a">受付係のグループ・運営係に報告。権限は運営係が調整します。公式アカウントの設定変更は絶対にしないでください。</div></div>
+</section>
+<div class="pager">
+  <a class="prev" data-next="p13"><span class="nav-label">← 前へ</span><span class="nav-title">研修ガイド</span></a>
+  <a class="next" data-next="p15"><span class="nav-label">次へ →</span><span class="nav-title">心構え</span></a>
+</div>
+</div>
+
+<!-- ── 15. 心構え ── -->
+<div class="page" id="p15">
+<section id="s15">
+  <div class="sec-label">SECTION 15</div>
+  <div class="sec-title">心構えとコツ</div>
+  <div class="sec-accent"></div>
+
+  <h3>受付係として大切な5つのこと</h3>
+  <ul class="badge-list">
+    <li class="badge-item"><span class="badge-num rose">1</span><div class="badge-content"><div class="badge-title">「最初の入口」の自覚</div><div class="badge-desc">受付係はPureLightとの最初の接点。丁寧な対応が「ここなら安心」というイメージを作ります。</div></div></li>
+    <li class="badge-item"><span class="badge-num sage">2</span><div class="badge-content"><div class="badge-title">共感と傾聴</div><div class="badge-desc">「わかります」ではなく「大変ですね」という共感。「話を聞きます」という姿勢を見せましょう。</div></div></li>
+    <li class="badge-item"><span class="badge-num coral">3</span><div class="badge-content"><div class="badge-title">焦らず、急かさず</div><div class="badge-desc">「時間のあるときで大丈夫です」— 必ず時間的余裕があることを伝えます。</div></div></li>
+    <li class="badge-item"><span class="badge-num peach">4</span><div class="badge-content"><div class="badge-title">チームの力を活用</div><div class="badge-desc">一人で判定しない。わからないことは相談。先輩や管理者に支えてもらいましょう。</div></div></li>
+    <li class="badge-item"><span class="badge-num laven">5</span><div class="badge-content"><div class="badge-title">自分の限界を知る</div><div class="badge-desc">「当事者不調により、お休みさせていただきます」— これはOK。無理は禁物です。</div></div></li>
+  </ul>
+
+  <h3>対応時のコツ</h3>
+  <div class="card"><div class="card-title">テンプレート活用</div><div class="card-body">コピペOK。ただし不自然な部分はアレンジ。新規さんに合わせた「ぬくもり」のある文章に。</div></div>
+  <div class="card sky"><div class="card-title">集団で判定</div><div class="card-body">自分だけで判定しない。複数人の「OK」を見守る忍耐力が大切。</div></div>
+  <div class="card peach"><div class="card-title">修正依頼は丁寧に</div><div class="card-body">「確認してもらえますか？」という表現で。「間違ってます」はNG。</div></div>
+  <div class="card sage"><div class="card-title">説明より経験</div><div class="card-body">医学的説明ではなく「同じ立場の親御さんたちが経験を話し合っています」と伝えましょう。</div></div>
+
+  <h3>個チャの実践テクニック</h3>
+  <div class="card"><div class="card-title">1メッセージは3〜4行程度</div><div class="card-body">スマホ画面での見やすさを意識しましょう。複数の内容がある場合は、メッセージを分けて送ります。</div></div>
+  <div class="card coral"><div class="card-title">絵文字は1〜2個に</div><div class="card-body">初回メッセージでは控えめに。プロフェッショナルさと温かみのバランスが大切です。</div></div>
+  <div class="card laven"><div class="card-title">修正依頼の言い回し例</div><div class="card-body">
+    良い例：「すみませんが、○番目の項目で一つ確認させていただきたいことがあります。ご確認いただけますか？」<br>
+    悪い例：「間違ってます。直してください」
+  </div></div>
+  <div class="card sky"><div class="card-title">心理的配慮のフレーズ</div><div class="card-body">
+    「大変ですね」（共感）、「ここにいていいんだ」（安心感）、「時間をかけてもいいんだ」（余裕）— この3つの感覚を伝えることを意識してください。
+  </div></div>
+</section>
+<div class="pager">
+  <a class="prev" data-next="p14"><span class="nav-label">← 前へ</span><span class="nav-title">Q&amp;A</span></a>
+  <a class="next" data-next="p16"><span class="nav-label">次へ →</span><span class="nav-title">用語集</span></a>
+</div>
+</div>
+
+<!-- ── 16. 用語集 ── -->
+<div class="page" id="p16">
+<section id="s16">
+  <div class="sec-label">SECTION 16</div>
+  <div class="sec-title">付録：用語集</div>
+  <div class="sec-accent"></div>
+  <div class="glossary-row"><div class="glossary-term">家族グループ</div><div class="glossary-def">PureLightの基本的な9つのグループ（家族1〜9）。各グループは独立したLINEチャット。</div></div>
+  <div class="glossary-row"><div class="glossary-term">情報サロン</div><div class="glossary-def">全体情報を共有するグループ。情報サロン1は全体共有用、情報サロン2は新規さん向け。受付係が新規さんを招待し、新規さんが「参加しました」と書き込むことで案内係への引き継ぎが始まる。</div></div>
+  <div class="glossary-row"><div class="glossary-term">きょうだいグループ</div><div class="glossary-def">兄弟姉妹が当事者の場合に参加するサブグループ。</div></div>
+  <div class="glossary-row"><div class="glossary-term">ノート機能</div><div class="glossary-def">グループ内で情報を記録するLINEの機能。自己紹介テキストはここに記録。</div></div>
+  <div class="glossary-row"><div class="glossary-term">自動応答の質問</div><div class="glossary-def">新規さんが公式LINEを友だち追加した直後に、LINEの「応答メッセージ」機能で自動配信される①〜⑦。受付係は手を動かさない。</div></div>
+  <div class="glossary-row"><div class="glossary-term">最初の質問</div><div class="glossary-def">受付係が新規さんに手動で送る🌟1〜4の質問（診断名・きっかけ・望むこと・診断変更時の了承）。自動応答の質問①〜⑦への回答が届いた後、受付係が手動で送信する。</div></div>
+  <div class="glossary-row"><div class="glossary-term">個チャ（個チャット）</div><div class="glossary-def">LINE個人メッセージ。新規さんと受付係の個別やりとり。「コチャ」とも。</div></div>
+  <div class="glossary-row"><div class="glossary-term">自己紹介</div><div class="glossary-def">新規さんが自己紹介作成ツールで作成する10項目のテキスト。新規さんが個チャにコピー＆貼り付けで送信し、受付係グループで複数人チェックを行う。</div></div>
+  <div class="glossary-row"><div class="glossary-term">自己紹介作成ツール</div><div class="glossary-def">新規さんの端末内で項目を埋めるためのもの。情報をどこかに送信したり、保存したりはしない。送信機能はなく、ツール内の「コピー」ボタンで完成文をクリップボードにコピーし、新規さんが個チャに貼り付けて送る。そのあたりの説明を求められたら、説明してあげてください。不明な点は受付係のグループで聞いてください。公開URL: https://chaipapa.github.io/purelight-intro-form/</div></div>
+  <div class="glossary-row"><div class="glossary-term">応答メッセージ</div><div class="glossary-def">公式LINEアカウントで事前に設定しておく自動返信機能。友だち追加時に「自動応答の質問」①〜⑦が自動配信される。</div></div>
+  <div class="glossary-row"><div class="glossary-term">ケアラー</div><div class="glossary-def">当事者の世話をする人。主に家族。</div></div>
+  <div class="glossary-row"><div class="glossary-term">当事者</div><div class="glossary-def">統合失調症の診断を受けた本人。</div></div>
+  <div class="glossary-row"><div class="glossary-term">発症</div><div class="glossary-def">病気の症状が初めて現れること。</div></div>
+  <div class="glossary-row"><div class="glossary-term">再燃</div><div class="glossary-def">一度落ち着いた症状が再び悪化すること。</div></div>
+  <div class="glossary-row"><div class="glossary-term">疑い段階</div><div class="glossary-def">医師が可能性を述べているが確定診断ではない段階。</div></div>
+  <div class="glossary-row"><div class="glossary-term">案内係</div><div class="glossary-def">新規さんを家族グループに配置しノート投稿までサポートする係。</div></div>
+  <div class="glossary-row"><div class="glossary-term">運営係</div><div class="glossary-def">PureLight全体の方針を決める係。</div></div>
+  <div class="glossary-row"><div class="glossary-term">受付係</div><div class="glossary-def">新規さんの初期対応を行う係（このマニュアルの対象）。</div></div>
+</section>
+<div class="pager">
+  <a class="prev" data-next="p15"><span class="nav-label">← 前へ</span><span class="nav-title">心構え</span></a>
+  <a class="next" data-next="p99"><span class="nav-label">次へ →</span><span class="nav-title">終</span></a>
+</div>
+</div>
+
+<!-- 最終ページ -->
+<div class="page" id="p99">
+<div class="closing">
+  <div class="accent-bar"></div>
+  <div class="highlight">お疲れさまでした。</div>
+  <p>わからないことは、いつでも受付係のグループで聞いてください。</p>
+  <p>完璧でなくて大丈夫です。一人で抱え込まず、みんなで対応していきましょう。</p>
+  <div class="sign">PureLight &nbsp;|&nbsp; 受付係チーム</div>
+</div>
+<div class="pager">
+  <a class="prev" data-next="p16"><span class="nav-label">← 前へ</span><span class="nav-title">用語集</span></a>
+  <a class="next disabled">&nbsp;</a>
+</div>
+</div>
+
+<script>
+(function(){
+  var pages = document.querySelectorAll('.page');
+  var tabs = document.querySelectorAll('.tab-btn');
+  function show(id){
+    pages.forEach(function(p){ p.classList.toggle('active', p.id === id); });
+    tabs.forEach(function(t){ t.classList.toggle('active', t.dataset.page === id); });
+    // activeタブを可視領域にスクロール
+    var activeTab = document.querySelector('.tab-btn.active');
+    if (activeTab) activeTab.scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'});
+    // 本文トップへ
+    window.scrollTo({top: 0, behavior: 'instant'});
+    // URLハッシュ同期
+    if (history.replaceState) history.replaceState(null, '', '#' + id);
+  }
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){ show(t.dataset.page); });
+  });
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('.pager a[data-next]');
+    if (!a) return;
+    e.preventDefault();
+    show(a.dataset.next);
+  });
+  // 初期表示（URLハッシュ優先、なければ表紙）
+  var initial = (location.hash || '#p00').replace('#','');
+  if (!document.getElementById(initial)) initial = 'p00';
+  show(initial);
+})();
+</script>
+
+</body>
+</html>
