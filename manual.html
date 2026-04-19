@@ -371,6 +371,240 @@ p { margin-bottom: 0.5rem; font-size: 0.9rem; }
   .cover, .closing { page-break-after: always; }
   .pager { display: none; }
 }
+
+/* ======================================================
+   DESIGN SYSTEM v2  ── ビジュアル強化プリミティブ
+   ====================================================== */
+
+/* ── セクション・ヒーロー（各ページ冒頭） ── */
+.hero {
+  background: linear-gradient(135deg, #fff8f1 0%, #ffffff 100%);
+  border-radius: 14px; padding: 1.1rem 1.1rem 1rem;
+  margin-bottom: 1rem; position: relative; overflow: hidden;
+  border: 1px solid #f4e8dc;
+}
+.hero::before {
+  content: ''; position: absolute; right: -40px; top: -40px;
+  width: 120px; height: 120px; border-radius: 50%;
+  background: linear-gradient(135deg, rgba(232,99,139,0.08), rgba(244,132,95,0.04));
+}
+.hero-eyebrow {
+  font-size: 0.65rem; letter-spacing: 0.15em; font-weight: 700;
+  color: var(--rose); margin-bottom: 0.35rem; position: relative;
+}
+.hero-title {
+  font-size: 1.35rem; font-weight: 700; color: var(--blk);
+  line-height: 1.3; margin-bottom: 0.5rem; position: relative; letter-spacing: -0.01em;
+}
+.hero-tldr {
+  font-size: 0.84rem; line-height: 1.6; color: var(--dk);
+  background: #fff; padding: 0.55rem 0.7rem; border-radius: 8px;
+  border-left: 3px solid var(--rose); position: relative;
+}
+.hero-tldr strong { color: var(--blk); }
+
+/* ── 数字ハイライトチップ ── */
+.stat-row {
+  display: flex; gap: 0.45rem; flex-wrap: wrap;
+  margin: 0.5rem 0 0.3rem;
+}
+.stat {
+  flex: 1 1 auto; background: #fff; border-radius: 10px;
+  padding: 0.55rem 0.7rem; border: 1px solid var(--gry-xlt);
+  min-width: 6.5rem;
+}
+.stat-val {
+  font-size: 1.3rem; font-weight: 700; color: var(--rose); line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.stat-lbl { font-size: 0.65rem; color: var(--gry); margin-top: 0.2rem; }
+
+/* ── 折りたたみ（＋詳しく） ── */
+details.more {
+  background: #fff; border: 1px solid var(--gry-xlt);
+  border-radius: 8px; padding: 0.55rem 0.75rem;
+  margin: 0.5rem 0; font-size: 0.82rem;
+}
+details.more > summary {
+  list-style: none; cursor: pointer; color: var(--rose); font-weight: 600;
+  font-size: 0.78rem; display: flex; align-items: center; gap: 0.3rem;
+}
+details.more > summary::-webkit-details-marker { display: none; }
+details.more > summary::before {
+  content: '＋'; display: inline-block; width: 1.1rem;
+  text-align: center; font-weight: 700;
+}
+details.more[open] > summary::before { content: '−'; }
+details.more[open] > summary { margin-bottom: 0.5rem; color: var(--dk); }
+details.more p, details.more li { font-size: 0.8rem; line-height: 1.6; }
+
+/* ── マトリクス表（誰が・どこで・何を） ── */
+.matrix {
+  display: grid; gap: 0.4rem;
+  background: #fff; border-radius: 10px; padding: 0.6rem;
+  border: 1px solid var(--gry-xlt); margin: 0.5rem 0;
+}
+.matrix-row {
+  display: grid; grid-template-columns: 3.2rem 4.5rem 1fr;
+  gap: 0.45rem; padding: 0.45rem 0; border-bottom: 1px solid #F3F3F5;
+  align-items: start; font-size: 0.78rem;
+}
+.matrix-row:last-child { border-bottom: none; }
+.matrix-row.head {
+  font-size: 0.6rem; color: var(--gry-lt); letter-spacing: 0.08em;
+  font-weight: 700; padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--gry-xlt);
+}
+.matrix-phase {
+  display: inline-block; padding: 0.15rem 0.35rem; border-radius: 3px;
+  font-size: 0.62rem; font-weight: 700; color: #fff; text-align: center;
+  letter-spacing: 0.03em;
+}
+.matrix-phase.p1 { background: var(--rose); }
+.matrix-phase.p2 { background: var(--coral); }
+.matrix-phase.p3 { background: var(--laven); }
+.matrix-phase.p4 { background: var(--sage); }
+.matrix-phase.p5 { background: var(--sky); }
+.matrix-who { color: var(--blk); font-weight: 600; }
+.matrix-what { color: var(--gry); line-height: 1.5; }
+
+/* ── スイムレーン（並行進行 可視化） ── */
+.swim {
+  background: #fff; border-radius: 10px; border: 1px solid var(--gry-xlt);
+  padding: 0.6rem; margin: 0.5rem 0;
+}
+.swim-row {
+  display: grid; grid-template-columns: 4.5rem 1fr;
+  gap: 0.55rem; padding: 0.45rem 0; align-items: center;
+  border-bottom: 1px dashed #EEE;
+}
+.swim-row:last-child { border-bottom: none; }
+.swim-lane {
+  font-size: 0.64rem; font-weight: 700; color: #fff;
+  padding: 0.25rem 0.4rem; border-radius: 4px; text-align: center;
+  line-height: 1.3; letter-spacing: 0.03em;
+}
+.swim-lane.p1 { background: var(--rose); }
+.swim-lane.p2 { background: var(--coral); }
+.swim-lane.p3 { background: var(--laven); }
+.swim-lane.p4 { background: var(--sage); }
+.swim-lane.p5 { background: var(--sky); }
+.swim-body { font-size: 0.8rem; color: var(--dk); line-height: 1.55; }
+.swim-body strong { color: var(--blk); }
+
+/* ── タイムラインステッパー（縦） ── */
+.timeline {
+  position: relative; margin: 0.5rem 0; padding-left: 1.5rem;
+}
+.timeline::before {
+  content: ''; position: absolute; top: 0.4rem; bottom: 0.4rem; left: 0.5rem;
+  width: 2px; background: linear-gradient(var(--rose), var(--laven), var(--sage));
+  border-radius: 2px;
+}
+.timeline-item {
+  position: relative; padding: 0.45rem 0 0.6rem 0.3rem;
+}
+.timeline-item::before {
+  content: ''; position: absolute; left: -1.15rem; top: 0.7rem;
+  width: 0.55rem; height: 0.55rem; border-radius: 50%;
+  background: var(--rose); border: 2px solid #fff;
+  box-shadow: 0 0 0 1px var(--rose);
+}
+.timeline-item.p3::before { background: var(--laven); box-shadow: 0 0 0 1px var(--laven); }
+.timeline-item.p4::before { background: var(--sage); box-shadow: 0 0 0 1px var(--sage); }
+.timeline-item.p5::before { background: var(--sky); box-shadow: 0 0 0 1px var(--sky); }
+.timeline-item.p2::before { background: var(--coral); box-shadow: 0 0 0 1px var(--coral); }
+.timeline-step-num {
+  font-size: 0.6rem; letter-spacing: 0.08em; font-weight: 700;
+  color: var(--gry-lt); text-transform: uppercase;
+}
+.timeline-step-title {
+  font-size: 0.88rem; font-weight: 700; color: var(--blk);
+  line-height: 1.35; margin-top: 0.1rem;
+}
+.timeline-step-desc {
+  font-size: 0.76rem; color: var(--gry); margin-top: 0.2rem; line-height: 1.55;
+}
+
+/* ── 強調ポイント（引用風） ── */
+.pullquote {
+  background: #fff; border-radius: 10px; padding: 0.8rem 1rem;
+  margin: 0.6rem 0; border-left: 3px solid var(--rose);
+  position: relative;
+}
+.pullquote-label {
+  font-size: 0.6rem; color: var(--rose); font-weight: 700;
+  letter-spacing: 0.1em; margin-bottom: 0.3rem;
+}
+.pullquote-text {
+  font-size: 0.92rem; line-height: 1.55; color: var(--blk); font-weight: 500;
+}
+
+/* ── 区切り装飾 ── */
+.divider {
+  display: flex; align-items: center; gap: 0.5rem;
+  margin: 1.2rem 0 0.6rem; color: var(--gry-lt); font-size: 0.68rem;
+  letter-spacing: 0.1em; font-weight: 600;
+}
+.divider::before, .divider::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gry-xlt), transparent);
+}
+
+/* ── チェックリスト ── */
+.checklist { list-style: none; margin: 0.3rem 0; padding: 0; }
+.checklist li {
+  padding: 0.4rem 0 0.4rem 1.5rem; position: relative;
+  font-size: 0.84rem; line-height: 1.55; color: var(--dk);
+  border-bottom: 1px solid #F3F3F5;
+}
+.checklist li:last-child { border-bottom: none; }
+.checklist li::before {
+  content: ''; position: absolute; left: 0.1rem; top: 0.6rem;
+  width: 0.9rem; height: 0.9rem; border-radius: 50%;
+  background: var(--sage);
+  box-shadow: inset 0 0 0 2px #fff;
+}
+.checklist li.no::before { background: var(--tomato); }
+.checklist li.maybe::before { background: var(--peach); }
+.checklist-strong { color: var(--blk); font-weight: 600; }
+
+/* ── グリッド（10項目等を2列カードに） ── */
+.grid2 {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.4rem;
+  margin: 0.5rem 0;
+}
+.grid-card {
+  background: #fff; border-radius: 8px; padding: 0.5rem 0.6rem;
+  border: 1px solid var(--gry-xlt);
+}
+.grid-card .num {
+  font-size: 0.6rem; color: var(--rose); font-weight: 700;
+  letter-spacing: 0.05em;
+}
+.grid-card .t {
+  font-size: 0.82rem; font-weight: 700; color: var(--blk);
+  line-height: 1.35; margin-top: 0.1rem;
+}
+.grid-card .d {
+  font-size: 0.7rem; color: var(--gry); margin-top: 0.2rem;
+  line-height: 1.5;
+}
+
+/* ── トーン調整：body文字色を少し濃く ── */
+p { color: var(--dk); }
+.sec-sub { color: var(--dk); }
+
+/* ── h3の装飾を少しだけリッチに ── */
+h3 {
+  position: relative; padding-left: 0.6rem;
+  border-left: 3px solid var(--rose);
+  line-height: 1.3;
+}
+
+/* ── カード内余白の微調整 ── */
+.card { padding: 0.7rem 0.85rem; }
+.card .card-body { font-size: 0.8rem; }
 </style>
 </head>
 <body>
@@ -383,6 +617,27 @@ p { margin-bottom: 0.5rem; font-size: 0.9rem; }
   <h1>PureLight</h1>
   <div class="manual-title">受付係マニュアル</div>
   <div class="tagline">新規さんを温かくお迎えするためのガイド</div>
+
+  <div style="margin-top:2rem; display:flex; gap:0.5rem; flex-wrap:wrap; position:relative; z-index:1;">
+    <div style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); border-radius:10px; padding:0.6rem 0.8rem; flex:1 1 6rem;">
+      <div style="font-size:1.4rem; font-weight:700; color:#fff;">5</div>
+      <div style="font-size:0.65rem; color:rgba(255,255,255,0.6);">フェーズで進行</div>
+    </div>
+    <div style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); border-radius:10px; padding:0.6rem 0.8rem; flex:1 1 6rem;">
+      <div style="font-size:1.4rem; font-weight:700; color:#fff;">18</div>
+      <div style="font-size:0.65rem; color:rgba(255,255,255,0.6);">ステップ</div>
+    </div>
+    <div style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); border-radius:10px; padding:0.6rem 0.8rem; flex:1 1 6rem;">
+      <div style="font-size:1.4rem; font-weight:700; color:#fff;">17</div>
+      <div style="font-size:0.65rem; color:rgba(255,255,255,0.6);">ページ構成</div>
+    </div>
+  </div>
+
+  <div style="margin-top:1.5rem; padding:0.7rem 0.9rem; background:rgba(232,99,139,0.15); border-left:3px solid var(--rose); border-radius:6px; position:relative; z-index:1;">
+    <div style="font-size:0.65rem; color:var(--rose); font-weight:700; letter-spacing:0.1em; margin-bottom:0.2rem;">KEY MESSAGE</div>
+    <div style="font-size:0.85rem; color:#fff; line-height:1.55;">完璧でなくて大丈夫。<br>わからないことは、受付係のグループで聞いてください。</div>
+  </div>
+
   <div class="footer">PureLight &nbsp;|&nbsp; 2025年2月版</div>
 </div>
 <div class="pager">
@@ -416,25 +671,43 @@ p { margin-bottom: 0.5rem; font-size: 0.9rem; }
 <!-- ── 1. 受付係の概要 ── -->
 <div class="page" id="p01">
 <section id="s01">
-  <div class="sec-label">SECTION 01</div>
-  <div class="sec-title">受付係の概要</div>
-  <div class="sec-accent"></div>
-  <p>受付係とは、PureLight（統合失調症の家族支援グループ）への入会希望の新規さんを受け入れ、適切な家族グループへの配置を行うボランティアです。</p>
-  <p>新規さんにとって、受付係はPureLightとの「最初の接点」です。その対応が新規さんの安心感を大きく左右します。</p>
+  <div class="hero">
+    <div class="hero-eyebrow">SECTION 01 &nbsp;・&nbsp; 概要</div>
+    <div class="hero-title">受付係は、PureLightの「最初の接点」です</div>
+    <div class="hero-tldr">
+      <strong>3秒で把握</strong>：新規さんを温かく迎え、医師の診断を確認して、適切なグループに橋渡しする役目。完璧は不要、<strong>困ったら受付係のグループで聞く</strong>のが鉄則です。
+    </div>
+  </div>
 
-  <h3>主な責務</h3>
-  <ul class="badge-list">
-    <li class="badge-item"><span class="badge-num rose">1</span><div class="badge-content"><div class="badge-title">初期相談対応</div><div class="badge-desc">新規さんからの問い合わせに最初に応答します。</div></div></li>
-    <li class="badge-item"><span class="badge-num coral">2</span><div class="badge-content"><div class="badge-title">入会資格の判定</div><div class="badge-desc">医師の診断の有無を確認し、入会可否を判断します。</div></div></li>
-    <li class="badge-item"><span class="badge-num laven">3</span><div class="badge-content"><div class="badge-title">家族グループへの振り分け</div><div class="badge-desc">適切なグループへの配置を案内係と連携して行います。</div></div></li>
-    <li class="badge-item"><span class="badge-num sage">4</span><div class="badge-content"><div class="badge-title">心理サポート</div><div class="badge-desc">不安を抱える新規さんに寄り添い、安心感を提供します。</div></div></li>
-    <li class="badge-item"><span class="badge-num sky">5</span><div class="badge-content"><div class="badge-title">他の係との連携</div><div class="badge-desc">案内係・運営係と情報共有し、スムーズな入会を実現します。</div></div></li>
-  </ul>
+  <h3>5つの責務</h3>
+  <div class="grid2">
+    <div class="grid-card"><div class="num">01</div><div class="t">初期相談対応</div><div class="d">新規さんからの問い合わせに最初に応答</div></div>
+    <div class="grid-card"><div class="num">02</div><div class="t">入会資格の判定</div><div class="d">医師の診断の有無を確認し、入会可否を判断</div></div>
+    <div class="grid-card"><div class="num">03</div><div class="t">グループ振り分け</div><div class="d">案内係と連携して最適なグループへ</div></div>
+    <div class="grid-card"><div class="num">04</div><div class="t">心理サポート</div><div class="d">不安を抱える新規さんに寄り添う</div></div>
+    <div class="grid-card" style="grid-column:span 2;"><div class="num">05</div><div class="t">他の係との連携</div><div class="d">案内係・運営係と情報共有し、スムーズな入会を実現</div></div>
+  </div>
 
-  <h3>求められるマインドセット</h3>
-  <div class="card"><div class="card-title">共感と傾聴</div><div class="card-body">新規さんは多くの場合、初めての状況で大きな不安を抱えています。「大変ですね」という一言が、相手の心を開きます。</div></div>
-  <div class="card sky"><div class="card-title">判断の公平性</div><div class="card-body">医師の診断が明確なケースと「疑い」の段階を厳密に区別する必要があります。</div></div>
-  <div class="card sage"><div class="card-title">チームワーク</div><div class="card-body">複数の受付係で支え合い、一人で抱え込まない姿勢が大切です。困ったら相談。それが基本です。</div></div>
+  <div class="divider">MINDSET</div>
+
+  <div class="pullquote">
+    <div class="pullquote-label">共感と傾聴</div>
+    <div class="pullquote-text">「大変ですね」の一言が、相手の心を開く。</div>
+  </div>
+  <div class="pullquote" style="border-left-color:var(--sky);">
+    <div class="pullquote-label" style="color:var(--sky);">判断の公平性</div>
+    <div class="pullquote-text">医師の診断と「本人・家族の疑いのみ」は、厳密に区別する。</div>
+  </div>
+  <div class="pullquote" style="border-left-color:var(--sage);">
+    <div class="pullquote-label" style="color:var(--sage);">チームワーク</div>
+    <div class="pullquote-text">一人で抱え込まない。困ったら受付係のグループで聞く。</div>
+  </div>
+
+  <details class="more">
+    <summary>受付係とは — もう少し詳しく</summary>
+    <p>受付係とは、PureLight（統合失調症の家族支援グループ）への入会希望の新規さんを受け入れ、適切な家族グループへの配置を行うボランティアです。</p>
+    <p>新規さんにとって、受付係はPureLightとの「最初の接点」です。その対応が新規さんの安心感を大きく左右します。</p>
+  </details>
 </section>
 <div class="pager">
   <a class="prev" data-next="p00"><span class="nav-label">← 前へ</span><span class="nav-title">表紙</span></a>
@@ -445,58 +718,81 @@ p { margin-bottom: 0.5rem; font-size: 0.9rem; }
 <!-- ── 2. 受付の全体フロー ── -->
 <div class="page" id="p02">
 <section id="s02">
-  <div class="sec-label">SECTION 02</div>
-  <div class="sec-title">受付の全体フロー</div>
-  <p class="sec-sub">新規さんが公式LINEに登録してから、家族グループ配置完了までの全プロセス。5つのフェーズに分かれています。</p>
-
-  <div class="card laven" style="margin-bottom:0.6rem"><div class="card-title">時間軸のポイント：PHASE 1 と PHASE 2 は<u>並行進行</u></div><div class="card-body">
-    公式LINE上で新規さんとやりとり（PHASE 1）を進めている間、<strong>裏では受付係グループで担当決め（PHASE 2）が並行して進行</strong>しています。担当が決まっていないと PHASE 1 のラスト（個人LINE誘導）に進めないので、PHASE 1 の「規約への了承」をもらう頃までに、PHASE 2 の担当決めを終えておくのが理想です。<br><br>
-    <strong>PHASE 3 以降</strong>（個チャ・情報サロン・案内係引き継ぎ）は、PHASE 1 と PHASE 2 が両方終わってから開始します。
-  </div></div>
-
-  <h3 style="margin-top:0.8rem"><span class="phase-badge p1">PHASE 1</span>公式LINE段階（新規さんとの初期やりとり）</h3>
-  <div class="flow">
-    <div class="flow-step" style="background:var(--rose)"><div class="step-num">STEP 01</div><div class="step-text">新規さんが公式LINEを友だち追加 → 自動応答の質問①〜⑦が飛ぶ</div></div><div class="flow-arrow"></div>
-    <div class="flow-step" style="background:var(--rose-dk)"><div class="step-num">STEP 02</div><div class="step-text">新規さんが①〜⑦に回答</div></div><div class="flow-arrow"></div>
-    <div class="flow-step" style="background:var(--rose-dk)"><div class="step-num">STEP 03</div><div class="step-text">受付係が🌟1〜4の「最初の質問」（診断名／きっかけ／望むこと／診断変更時の了承）を送付</div></div><div class="flow-arrow"></div>
-    <div class="flow-step" style="background:var(--rose-dk)"><div class="step-num">STEP 04</div><div class="step-text">🌟1「診断名」と🌟4「了承」の2点を確認（揃わない場合は次に進めない）</div></div><div class="flow-arrow"></div>
-    <div class="flow-step" style="background:var(--rose-dk)"><div class="step-num">STEP 05</div><div class="step-text">受付係が「規約」「注意事項」を送り、再度【了承】をもらう</div></div><div class="flow-arrow"></div>
-    <div class="flow-step" style="background:var(--rose-dk)"><div class="step-num">STEP 06</div><div class="step-text"><strong>★PHASE 2 で決まった担当者の</strong>個人LINE友だち追加URLを送付 → 個チャに移行</div></div>
+  <div class="hero">
+    <div class="hero-eyebrow">SECTION 02 &nbsp;・&nbsp; 全体フロー</div>
+    <div class="hero-title">受付は5フェーズで進みます</div>
+    <div class="hero-tldr">
+      <strong>ここだけ覚える</strong>：PHASE 1（公式LINEのやりとり）と PHASE 2（受付係内の担当決め）は<strong>並行して進行</strong>。両方終わってから PHASE 3〜5 に進む。
+    </div>
   </div>
 
-  <h3 style="margin-top:1.2rem"><span class="phase-badge p2">PHASE 2</span>受付係グループ段階（裏で<u>並行して</u>担当決め）</h3>
-  <p style="font-size:0.82rem;color:var(--gry);margin-bottom:0.4rem">⟵ PHASE 1 の STEP 02（新規さんからの回答到着）が合図。STEP 06（個人LINE誘導）までに担当を確定させる</p>
-  <div class="flow">
-    <div class="flow-step" style="background:var(--coral)"><div class="step-num">STEP α</div><div class="step-text">PHASE 1 STEP 02 の回答を受付係グループに共有</div></div><div class="flow-arrow"></div>
-    <div class="flow-step" style="background:var(--coral)"><div class="step-num">STEP β</div><div class="step-text">受付係同士で相談 → 担当者が名乗り出る</div></div><div class="flow-arrow"></div>
-    <div class="flow-step" style="background:var(--coral)"><div class="step-num">STEP γ</div><div class="step-text">担当確定 → PHASE 1 STEP 06 で誘導開始できる状態に</div></div>
+  <h3>誰が・どこで・何をする</h3>
+  <div class="matrix">
+    <div class="matrix-row head"><div>PHASE</div><div>場所</div><div>やること</div></div>
+    <div class="matrix-row"><div><span class="matrix-phase p1">1</span></div><div class="matrix-who">公式LINE</div><div class="matrix-what">自動応答→最初の質問→規約→個人LINE誘導</div></div>
+    <div class="matrix-row"><div><span class="matrix-phase p2">2</span></div><div class="matrix-who">受付係G</div><div class="matrix-what">P1と<strong>並行で</strong>担当決め</div></div>
+    <div class="matrix-row"><div><span class="matrix-phase p3">3</span></div><div class="matrix-who">個チャ</div><div class="matrix-what">挨拶・説明→自己紹介作成ツール→チェック</div></div>
+    <div class="matrix-row"><div><span class="matrix-phase p4">4</span></div><div class="matrix-who">情報サロン</div><div class="matrix-what">招待→「参加しました」書き込み</div></div>
+    <div class="matrix-row"><div><span class="matrix-phase p5">5</span></div><div class="matrix-who">案内係</div><div class="matrix-what">家族グループへ振り分け→ノート投稿</div></div>
   </div>
 
-  <h3 style="margin-top:1.2rem"><span class="phase-badge p3">PHASE 3</span>個チャ段階（個人LINE）</h3>
-  <p style="font-size:0.82rem;color:var(--gry);margin-bottom:0.4rem">⟵ PHASE 1 と PHASE 2 の両方が完了してから開始</p>
-  <div class="flow">
-    <div class="flow-step" style="background:var(--laven)"><div class="step-num">STEP 07</div><div class="step-text">担当者が個チャで挨拶・説明</div></div><div class="flow-arrow"></div>
-    <div class="flow-step" style="background:var(--laven)"><div class="step-num">STEP 08</div><div class="step-text">レターシーリングがONになっていることを受付係側の設定画面で確認</div></div><div class="flow-arrow"></div>
-    <div class="flow-step" style="background:var(--laven)"><div class="step-num">STEP 09</div><div class="step-text">自己紹介作成ツールのURLを送付</div></div><div class="flow-arrow"></div>
-    <div class="flow-step" style="background:var(--laven)"><div class="step-num">STEP 10</div><div class="step-text">新規さんがツールで作成 → コピー → 個チャに貼り付けて送信</div></div><div class="flow-arrow"></div>
-    <div class="flow-step" style="background:var(--laven)"><div class="step-num">STEP 11</div><div class="step-text">受付係グループで複数人チェック（目安3名）／必要なら修正依頼</div></div>
+  <h3>並行進行の時間軸</h3>
+  <div class="swim">
+    <div class="swim-row"><div class="swim-lane p1">PHASE 1<br>公式LINE</div><div class="swim-body">新規さんと、自動応答 → 最初の質問🌟1〜4 → 規約 →「了承」確認</div></div>
+    <div class="swim-row"><div class="swim-lane p2">PHASE 2<br>並行</div><div class="swim-body">P1の STEP 02（回答到着）を合図に、<strong>受付係グループで担当決め</strong>が始まる。P1の STEP 06（個人LINE誘導）までに担当を確定。</div></div>
+    <div class="swim-row"><div class="swim-lane p3">PHASE 3<br>個チャ</div><div class="swim-body"><strong>P1 と P2 の両方</strong>が終わってから、担当者が個チャで対応開始</div></div>
+    <div class="swim-row"><div class="swim-lane p4">PHASE 4<br>サロン</div><div class="swim-body">自己紹介のOKが出たら、情報サロンに招待</div></div>
+    <div class="swim-row"><div class="swim-lane p5">PHASE 5<br>案内係</div><div class="swim-body">「参加しました」で案内係に引き継ぎ、家族グループへ</div></div>
   </div>
 
-  <h3 style="margin-top:1.2rem"><span class="phase-badge p4">PHASE 4</span>情報サロン段階</h3>
-  <div class="flow">
-    <div class="flow-step" style="background:var(--sage)"><div class="step-num">STEP 12</div><div class="step-text">受付係がグループで「情報サロンに招待します」と宣言</div></div><div class="flow-arrow"></div>
-    <div class="flow-step" style="background:var(--sage)"><div class="step-num">STEP 13</div><div class="step-text">個チャで「参加したら『参加しました』と書いてください」とお願い</div></div><div class="flow-arrow"></div>
-    <div class="flow-step" style="background:var(--sage)"><div class="step-num">STEP 14</div><div class="step-text">情報サロンにグループ招待を送信</div></div><div class="flow-arrow"></div>
-    <div class="flow-step" style="background:var(--sage)"><div class="step-num">STEP 15</div><div class="step-text">新規さんが情報サロンで「参加しました」と書き込み</div></div>
-  </div>
+  <details class="more">
+    <summary>全18ステップのタイムラインを見る</summary>
 
-  <h3 style="margin-top:1.2rem"><span class="phase-badge p5">PHASE 5</span>案内係への引き継ぎ段階</h3>
-  <div class="flow">
-    <div class="flow-step" style="background:var(--sage-dk)"><div class="step-num">STEP 16</div><div class="step-text">案内係が反応 → 家族グループへ振り分け</div></div><div class="flow-arrow"></div>
-    <div class="flow-step" style="background:var(--sage-dk)"><div class="step-num">STEP 17</div><div class="step-text">ノート投稿完了 → 受付完了</div></div>
-  </div>
+    <div style="margin-top:0.6rem;font-size:0.7rem;color:var(--gry-lt);letter-spacing:0.08em;font-weight:700;">PHASE 1 &nbsp;公式LINE段階</div>
+    <div class="timeline">
+      <div class="timeline-item"><div class="timeline-step-num">STEP 01</div><div class="timeline-step-title">新規さんが公式LINEを友だち追加</div><div class="timeline-step-desc">自動応答の質問①〜⑦が飛ぶ</div></div>
+      <div class="timeline-item"><div class="timeline-step-num">STEP 02</div><div class="timeline-step-title">新規さんが①〜⑦に回答</div><div class="timeline-step-desc">※ここが PHASE 2（担当決め）開始の合図</div></div>
+      <div class="timeline-item"><div class="timeline-step-num">STEP 03</div><div class="timeline-step-title">最初の質問🌟1〜4を送る</div><div class="timeline-step-desc">診断名／きっかけ／望むこと／診断変更時の了承</div></div>
+      <div class="timeline-item"><div class="timeline-step-num">STEP 04</div><div class="timeline-step-title">🌟1「診断名」と🌟4「了承」を確認</div><div class="timeline-step-desc">揃わない場合は次に進めない</div></div>
+      <div class="timeline-item"><div class="timeline-step-num">STEP 05</div><div class="timeline-step-title">規約・注意事項を送り、再度【了承】</div></div>
+      <div class="timeline-item"><div class="timeline-step-num">STEP 06</div><div class="timeline-step-title">★担当者の個人LINE友だち追加URL</div><div class="timeline-step-desc">個チャに移行（PHASE 2 完了が前提）</div></div>
+    </div>
 
-  <div class="card peach" style="margin-top:0.8rem"><div class="card-title">各フェーズで意識すること</div><div class="card-body">「誰が、どこで、何をするか」を意識すると流れがつかみやすくなります。PHASE 1 は公式LINE、PHASE 2 は受付係グループ、PHASE 3 は個人LINE、PHASE 4 は情報サロン、PHASE 5 は案内係に主役が移っていきます。</div></div>
+    <div style="margin-top:0.6rem;font-size:0.7rem;color:var(--gry-lt);letter-spacing:0.08em;font-weight:700;">PHASE 2 &nbsp;受付係グループ（並行）</div>
+    <div class="timeline">
+      <div class="timeline-item p2"><div class="timeline-step-num">STEP α</div><div class="timeline-step-title">P1 STEP 02 の回答を受付係グループに共有</div></div>
+      <div class="timeline-item p2"><div class="timeline-step-num">STEP β</div><div class="timeline-step-title">受付係同士で相談 → 担当者が名乗り出る</div></div>
+      <div class="timeline-item p2"><div class="timeline-step-num">STEP γ</div><div class="timeline-step-title">担当確定 → P1 STEP 06 で誘導開始できる状態に</div></div>
+    </div>
+
+    <div style="margin-top:0.6rem;font-size:0.7rem;color:var(--gry-lt);letter-spacing:0.08em;font-weight:700;">PHASE 3 &nbsp;個チャ（個人LINE）</div>
+    <div class="timeline">
+      <div class="timeline-item p3"><div class="timeline-step-num">STEP 07</div><div class="timeline-step-title">担当者が個チャで挨拶・規約ノート投稿</div></div>
+      <div class="timeline-item p3"><div class="timeline-step-num">STEP 08</div><div class="timeline-step-title">このあとの流れを説明 → 質問受付</div></div>
+      <div class="timeline-item p3"><div class="timeline-step-num">STEP 09</div><div class="timeline-step-title">自己紹介作成ツールのURLを送付</div></div>
+      <div class="timeline-item p3"><div class="timeline-step-num">STEP 10</div><div class="timeline-step-title">新規さんがツールで作成 → 個チャに貼付</div></div>
+      <div class="timeline-item p3"><div class="timeline-step-num">STEP 11</div><div class="timeline-step-title">受付係グループで複数人チェック（目安3名）</div></div>
+    </div>
+
+    <div style="margin-top:0.6rem;font-size:0.7rem;color:var(--gry-lt);letter-spacing:0.08em;font-weight:700;">PHASE 4 &nbsp;情報サロン段階</div>
+    <div class="timeline">
+      <div class="timeline-item p4"><div class="timeline-step-num">STEP 12</div><div class="timeline-step-title">受付係Gで「情報サロンに招待します」宣言</div></div>
+      <div class="timeline-item p4"><div class="timeline-step-num">STEP 13</div><div class="timeline-step-title">個チャで「参加しました」書き込みを依頼</div></div>
+      <div class="timeline-item p4"><div class="timeline-step-num">STEP 14</div><div class="timeline-step-title">情報サロンにグループ招待を送信</div></div>
+      <div class="timeline-item p4"><div class="timeline-step-num">STEP 15</div><div class="timeline-step-title">新規さんが「参加しました」と書き込み</div></div>
+    </div>
+
+    <div style="margin-top:0.6rem;font-size:0.7rem;color:var(--gry-lt);letter-spacing:0.08em;font-weight:700;">PHASE 5 &nbsp;案内係への引き継ぎ</div>
+    <div class="timeline">
+      <div class="timeline-item p5"><div class="timeline-step-num">STEP 16</div><div class="timeline-step-title">案内係が反応 → 家族グループへ振り分け</div></div>
+      <div class="timeline-item p5"><div class="timeline-step-num">STEP 17</div><div class="timeline-step-title">ノート投稿完了 → 受付完了</div></div>
+    </div>
+  </details>
+
+  <div class="pullquote" style="margin-top:1rem;">
+    <div class="pullquote-label">意識すること</div>
+    <div class="pullquote-text">「誰が、どこで、何をするか」。主役はフェーズごとに移ります。</div>
+  </div>
 </section>
 <div class="pager">
   <a class="prev" data-next="p01"><span class="nav-label">← 前へ</span><span class="nav-title">受付係の概要</span></a>
@@ -507,9 +803,15 @@ p { margin-bottom: 0.5rem; font-size: 0.9rem; }
 <!-- ── 3. 公式LINE ── -->
 <div class="page" id="p03">
 <section id="s03">
-  <div class="sec-label">SECTION 03</div>
-  <div class="sec-title">公式LINEアカウントの操作方法</div>
-  <div class="sec-accent"></div>
+  <div class="hero">
+    <div class="hero-eyebrow">SECTION 03 &nbsp;・&nbsp; <span class="phase-badge p1">PHASE 1</span></div>
+    <div class="hero-title">公式LINEアカウントの操作</div>
+    <div class="hero-tldr">
+      <strong>基本</strong>：スマホで公式LINEアプリに入り、新規さんとの個チャで対応するだけ。<strong>設定は絶対に触らない</strong>（応答メッセージの自動配信は既に設定済み）。
+    </div>
+  </div>
+
+  <h3>画面キャプチャで見る</h3>
 
   <div class="line-mock">
     <div class="line-header">ホーム<span class="hd-icons">≡ ⋮</span></div>
@@ -574,19 +876,24 @@ p { margin-bottom: 0.5rem; font-size: 0.9rem; }
   </div>
   <p style="font-size:0.75rem;color:var(--gry);margin-top:0.3rem">↑ 対応完了後は、表示名の頭に「家族〇 参加済」を付けて、振り分け先を明示する運用になっています。</p>
 
-  <h3>アカウント設定</h3>
-  <p>公式LINE：PureLightの公式アカウント（営業日に対応）</p>
-  <p>スマートフォンへのインストールが必須です</p>
-  <p>受付係になった時点で権限を確認してもらう必要があります</p>
+  <h3>基本操作の3ポイント</h3>
+  <div class="grid2">
+    <div class="grid-card"><div class="num">01</div><div class="t">ホーム画面で確認</div><div class="d">新規さんは「トーク一覧」に自動で並びます</div></div>
+    <div class="grid-card"><div class="num">02</div><div class="t">メッセージ送信</div><div class="d">テンプレートをコピペ、送信取り消しも可能</div></div>
+    <div class="grid-card" style="grid-column:span 2;"><div class="num">03</div><div class="t">まずは見学から</div><div class="d">最初は2〜3人の実対応を見守って学習 → 徐々に担当へ</div></div>
+  </div>
 
-  <h3>基本操作</h3>
-  <ul class="badge-list">
-    <li class="badge-item"><span class="badge-num rose">1</span><div class="badge-content"><div class="badge-title">ホーム画面の確認</div><div class="badge-desc">新規さんは「公式アカウントのホーム」に表示されます。丸いエリアに新規さんがやってきます。</div></div></li>
-    <li class="badge-item"><span class="badge-num coral">2</span><div class="badge-content"><div class="badge-title">メッセージのやりとり</div><div class="badge-desc">前回のテンプレートをコピー＆ペースト。細かいアレンジも可能。送信取り消し機能もあります。</div></div></li>
-    <li class="badge-item"><span class="badge-num sage">3</span><div class="badge-content"><div class="badge-title">モック練習</div><div class="badge-desc">初期段階では実際の新規対応を見学して学習。2〜3人の事例を見守ってから徐々に試してみましょう。</div></div></li>
-  </ul>
+  <div class="pullquote" style="border-left-color:var(--tomato); margin-top:0.8rem;">
+    <div class="pullquote-label" style="color:var(--tomato);">⚠️ 絶対にやってはいけないこと</div>
+    <div class="pullquote-text">公式アカウントの設定は<strong>一切変更しない</strong>。権限や設定の疑問は受付係グループで確認。</div>
+  </div>
 
-  <div class="card tomato"><div class="card-title">重要な禁止事項</div><div class="card-body">公式アカウントの設定はいかなる場合も変更してはいけません。権限設定に問題がある場合は、受付係のグループ内で必ず確認してください。</div></div>
+  <details class="more">
+    <summary>アカウント設定について</summary>
+    <p>公式LINE：PureLightの公式アカウント（営業日に対応）</p>
+    <p>スマートフォンへのインストールが必須です。</p>
+    <p>受付係になった時点で権限を確認してもらう必要があります。</p>
+  </details>
 </section>
 <div class="pager">
   <a class="prev" data-next="p02"><span class="nav-label">← 前へ</span><span class="nav-title">受付の全体フロー</span></a>
@@ -597,10 +904,24 @@ p { margin-bottom: 0.5rem; font-size: 0.9rem; }
 <!-- ── 4. 最初の質問と回答（PHASE 1） ── -->
 <div class="page" id="p04">
 <section id="s04">
-  <div class="sec-label">SECTION 04 &nbsp;<span class="phase-badge p1">PHASE 1 公式LINE</span></div>
-  <div class="sec-title">公式LINEでの受付フロー</div>
-  <div class="sec-accent"></div>
-  <p class="sec-sub">新規さんが公式LINEを友だち追加してから、担当者の個人LINEへ誘導するまでの全6ステップ。個別対応（自己紹介作成ツールなど）は、ここが完了してから個チャで進めます。</p>
+  <div class="hero">
+    <div class="hero-eyebrow">SECTION 04 &nbsp;・&nbsp; <span class="phase-badge p1">PHASE 1</span></div>
+    <div class="hero-title">公式LINEでの受付フロー</div>
+    <div class="hero-tldr">
+      <strong>全6ステップ</strong>：友だち追加 → 自動応答①〜⑦ → 最初の質問🌟1〜4 → 診断名・了承確認 → 規約送付・再了承 → 担当の個人LINEへ誘導。ここが完了してから個チャへ。
+    </div>
+  </div>
+
+  <div class="swim">
+    <div class="swim-row"><div class="swim-lane p1">STEP 1</div><div class="swim-body">友だち追加 → <strong>自動応答①〜⑦</strong>が飛ぶ（受付係は何もしない）</div></div>
+    <div class="swim-row"><div class="swim-lane p1">STEP 2</div><div class="swim-body">新規さんが①〜⑦に回答</div></div>
+    <div class="swim-row"><div class="swim-lane p1">STEP 3</div><div class="swim-body">受付係が<strong>🌟1〜4の「最初の質問」</strong>を手動で送る</div></div>
+    <div class="swim-row"><div class="swim-lane p1">STEP 4</div><div class="swim-body">🌟1「診断名」・🌟4「了承」の2点確認 ⚠️</div></div>
+    <div class="swim-row"><div class="swim-lane p1">STEP 5</div><div class="swim-body">規約・注意事項を送り、再度【了承】</div></div>
+    <div class="swim-row"><div class="swim-lane p1">STEP 6</div><div class="swim-body">担当の個人LINE友だち追加URLで個チャへ誘導</div></div>
+  </div>
+
+  <div class="divider">STEP 詳細</div>
 
   <h3 style="margin-top:0.6rem">STEP 1 ── 友だち追加で「自動応答の質問」①〜⑦が配信</h3>
   <p>新規さんが公式LINEを友だち追加した瞬間、LINEの「応答メッセージ」機能で①〜⑦の質問が自動で飛びます。受付係はまだ何もしません。<strong>これは自動配信であり、受付係が手動で送る「最初の質問」（STEP 3）とは別物です</strong>のでご注意ください。</p>
@@ -838,10 +1159,15 @@ p { margin-bottom: 0.5rem; font-size: 0.9rem; }
 <!-- ── 5. 受付係グループでの担当決め（PHASE 2） ── -->
 <div class="page" id="p05">
 <section id="s05">
-  <div class="sec-label">SECTION 05 &nbsp;<span class="phase-badge p2">PHASE 2 受付係グループ</span></div>
-  <div class="sec-title">受付係グループでの担当決め・連携</div>
-  <div class="sec-accent"></div>
-  <p class="sec-sub">新規さんの回答が届いたら、受付係グループで報告し、担当者を決めます。個別対応はここから先、個チャ（LINE個人メッセージ）で進みます。</p>
+  <div class="hero">
+    <div class="hero-eyebrow">SECTION 05 &nbsp;・&nbsp; <span class="phase-badge p2">PHASE 2</span></div>
+    <div class="hero-title">担当決めは、公式LINE対応と並行して</div>
+    <div class="hero-tldr">
+      <strong>並行進行</strong>：公式LINEでやりとりが進んでいる間、受付係グループでは別の誰かが担当名乗りを上げる。公式LINE STEP 6（個人LINE誘導）までに担当が決まっていればOK。
+    </div>
+  </div>
+
+  <h3>やりとりの例</h3>
 
   <div class="line-mock">
     <div class="line-header">☆受付☆PureLight☆ (13)<span class="hd-icons">⌕ ☎ ⌑ ≡</span></div>
@@ -880,15 +1206,21 @@ p { margin-bottom: 0.5rem; font-size: 0.9rem; }
     </div>
   </div>
 
-  <h3>基本の報告・連絡・相談（担当決めまで）</h3>
-  <ul class="badge-list">
-    <li class="badge-item"><span class="badge-num rose">1</span><div class="badge-content"><div class="badge-title">新規さんからの着信</div><div class="badge-desc">「新規さんからメッセージきました」と受付係グループに報告。</div></div></li>
-    <li class="badge-item"><span class="badge-num coral">2</span><div class="badge-content"><div class="badge-title">回答受信時</div><div class="badge-desc">「お返事きました。どなたか担当いかがでしょうか？」と呼びかけ。</div></div></li>
-    <li class="badge-item"><span class="badge-num sage">3</span><div class="badge-content"><div class="badge-title">担当決定時</div><div class="badge-desc">「私が対応します」「こちらが担当します」と名乗り出る。</div></div></li>
-  </ul>
+  <h3>基本の報連相</h3>
+  <div class="grid2">
+    <div class="grid-card"><div class="num">01</div><div class="t">着信</div><div class="d">「新規さんからメッセージきました」とグループに報告</div></div>
+    <div class="grid-card"><div class="num">02</div><div class="t">回答受信</div><div class="d">「お返事きました。どなたか担当いかがでしょうか？」</div></div>
+    <div class="grid-card" style="grid-column:span 2;"><div class="num">03</div><div class="t">担当決定</div><div class="d">「私が対応します」「こちらが担当します」で名乗り出る</div></div>
+  </div>
 
-  <div class="card peach"><div class="card-title">担当者交代</div><div class="card-body">途中で手が離せなくなった場合は、事前に「代わります」とグループに報告。引き継ぎ時は「見守りをありがとうございました」と公式に報告。</div></div>
-  <div class="card sage"><div class="card-title">見守りと応援</div><div class="card-body">「お疲れさまです」「ありがとうございます」「ゆっくりペースでお願いします」— こうした一言が受付係同士の支え合いになります。</div></div>
+  <div class="pullquote" style="border-left-color:var(--peach); margin-top:0.8rem;">
+    <div class="pullquote-label" style="color:var(--peach);">担当者交代</div>
+    <div class="pullquote-text">手が離せなくなったら「代わります」と事前に報告。引き継ぎ時は「見守りをありがとうございました」。</div>
+  </div>
+  <div class="pullquote" style="border-left-color:var(--sage);">
+    <div class="pullquote-label" style="color:var(--sage);">見守りと応援</div>
+    <div class="pullquote-text">「お疲れさまです」「ゆっくりペースで」の一言が、受付係同士の支え合いになる。</div>
+  </div>
 </section>
 <div class="pager">
   <a class="prev" data-next="p04"><span class="nav-label">← 前へ</span><span class="nav-title">最初の質問</span></a>
@@ -899,22 +1231,24 @@ p { margin-bottom: 0.5rem; font-size: 0.9rem; }
 <!-- ── 6. 個チャでの説明と自己紹介作成ツールの送付（PHASE 3前半） ── -->
 <div class="page" id="p06">
 <section id="s06">
-  <div class="sec-label">SECTION 06 &nbsp;<span class="phase-badge p3">PHASE 3 個チャ</span></div>
-  <div class="sec-title">個チャでの説明と自己紹介作成ツールの送付</div>
-  <div class="sec-accent"></div>
-  <p class="sec-sub">新規さんが担当者の個人LINEを友だち追加し、個チャが始まったところから。<strong>ノートで規約を再確認 → 流れの説明 → 質問受付 → OKなら自己紹介作成ツール案内</strong>の順で進めます。</p>
-
-  <div class="card tomato">
-    <div class="card-title">個チャでの進行順</div>
-    <div class="card-body">
-      <strong>Step 1</strong>：挨拶 → 規約をノートに投稿（いつでも見返せるように）<br>
-      <strong>Step 2</strong>：このあとの流れを説明<br>
-      <strong>Step 3</strong>：ここで一度区切って、質問を受け付ける<br>
-      <strong>Step 4</strong>：質問がなければ（OKなら）、自己紹介作成ツールを案内<br>
-      <strong>Step 5</strong>：新規さんがツールで作成 → コピー → 個チャに貼り付けて送信<br>
-      <strong>Step 6</strong>：受付係グループで複数人チェック（目安3名）／必要なら修正依頼
+  <div class="hero">
+    <div class="hero-eyebrow">SECTION 06 &nbsp;・&nbsp; <span class="phase-badge p3">PHASE 3</span></div>
+    <div class="hero-title">個チャで説明 → 自己紹介作成ツール案内</div>
+    <div class="hero-tldr">
+      <strong>進行順</strong>：挨拶＋規約ノート投稿 → 流れを説明 → 質問受付 → OKならツール案内 → 作成＆貼り付け → 受付係Gで複数人チェック
     </div>
   </div>
+
+  <div class="swim">
+    <div class="swim-row"><div class="swim-lane p3">Step 1</div><div class="swim-body">挨拶 + 規約をノートに投稿</div></div>
+    <div class="swim-row"><div class="swim-lane p3">Step 2</div><div class="swim-body">このあとの流れを説明</div></div>
+    <div class="swim-row"><div class="swim-lane p3">Step 3</div><div class="swim-body">一度区切って、質問を受け付ける</div></div>
+    <div class="swim-row"><div class="swim-lane p3">Step 4</div><div class="swim-body">OKなら自己紹介作成ツールを案内</div></div>
+    <div class="swim-row"><div class="swim-lane p3">Step 5</div><div class="swim-body">新規さんがツールで作成 → コピー → 個チャに貼付</div></div>
+    <div class="swim-row"><div class="swim-lane p3">Step 6</div><div class="swim-body">受付係Gで複数人チェック（目安3名）</div></div>
+  </div>
+
+  <div class="divider">STEP 詳細</div>
 
   <h4>Step 1：挨拶と規約のノート投稿</h4>
   <p>担当者が自己紹介を兼ねて挨拶し、<strong>規約（と注意事項）を個チャのノートに投稿</strong>します。公式LINEで一度送っているものと同じ内容ですが、個チャのノートにあると新規さんがいつでも見返せるので、ここで改めて置いておくのがポイントです。</p>
@@ -1082,21 +1416,32 @@ p { margin-bottom: 0.5rem; font-size: 0.9rem; }
 <!-- ── 7. 10項目チェック（PHASE 3） ── -->
 <div class="page" id="p07">
 <section id="s07">
-  <div class="sec-label">SECTION 07 &nbsp;<span class="phase-badge p3">PHASE 3 個チャ</span></div>
-  <div class="sec-title">自己紹介テキストの確認項目（10項目）</div>
-  <p class="sec-sub">自己紹介作成ツールで作成される項目（全10項目）。新規さんから個チャで貼り付けが届いたら、受付係グループに共有して複数人でチェックします。</p>
-  <ul class="badge-list">
-    <li class="badge-item"><span class="badge-num rose">1</span><div class="badge-content"><div class="badge-title">①ライン名</div><div class="badge-desc">LINEのアカウント名と完全に一致しているか確認。</div></div></li>
-    <li class="badge-item"><span class="badge-num coral">2</span><div class="badge-content"><div class="badge-title">②お住まいの都道府県</div><div class="badge-desc">都道府県が正確に記入されているか。海外の方は国名。</div></div></li>
-    <li class="badge-item"><span class="badge-num rose">3</span><div class="badge-content"><div class="badge-title">③当事者からみた立場</div><div class="badge-desc">親、妻、夫、きょうだい、祖母など。「パートナー」など曖昧な場合は要確認。</div></div></li>
-    <li class="badge-item"><span class="badge-num coral">4</span><div class="badge-content"><div class="badge-title">④当事者の性別</div><div class="badge-desc">「男性」「女性」「男の子」「女の子」いずれもOK。</div></div></li>
-    <li class="badge-item"><span class="badge-num rose">5</span><div class="badge-content"><div class="badge-title">⑤当事者の年齢</div><div class="badge-desc">「23歳」「20代前半」など。曖昧でない限りOK。</div></div></li>
-    <li class="badge-item"><span class="badge-num tomato">6</span><div class="badge-content"><div class="badge-title">⑥発症年齢・再発回数等</div><div class="badge-desc">最重要。医師の診断と「疑い」段階の区別が必要。</div></div></li>
-    <li class="badge-item"><span class="badge-num rose">7</span><div class="badge-content"><div class="badge-title">⑦発症からの現在の状況</div><div class="badge-desc">経過、症状、服薬状況、家族の困りごと。医師の診断記載を確認。</div></div></li>
-    <li class="badge-item"><span class="badge-num coral">8</span><div class="badge-content"><div class="badge-title">⑧薬歴・サプリ・漢方等</div><div class="badge-desc">薬剤名の正確性を確認。（例：シプレキサ→ジプレキサ）</div></div></li>
-    <li class="badge-item"><span class="badge-num rose">9</span><div class="badge-content"><div class="badge-title">⑨PureLight内の所属グループ</div><div class="badge-desc">初回入会時は「未所属」が通常。</div></div></li>
-    <li class="badge-item"><span class="badge-num coral">10</span><div class="badge-content"><div class="badge-title">⑩所属している地域の家族会</div><div class="badge-desc">「なし」「○○家族会に所属」など。任意項目。</div></div></li>
-  </ul>
+  <div class="hero">
+    <div class="hero-eyebrow">SECTION 07 &nbsp;・&nbsp; <span class="phase-badge p3">PHASE 3</span></div>
+    <div class="hero-title">自己紹介テキスト 10項目のチェック</div>
+    <div class="hero-tldr">
+      <strong>重要度の強弱</strong>：⑥⑦は<u>最重要</u>（医師の診断）、①〜⑤は<u>正確性</u>、⑧〜⑩は<u>補足</u>。受付係グループに共有し、目安3名でOKを取る。
+    </div>
+  </div>
+
+  <div class="pullquote" style="border-left-color:var(--tomato);">
+    <div class="pullquote-label" style="color:var(--tomato);">⑥⑦がコア</div>
+    <div class="pullquote-text">医師の診断と「疑い」段階の区別、現在の状況に医師の診断記載があるかが最重要。</div>
+  </div>
+
+  <h3>10項目 一覧</h3>
+  <div class="grid2">
+    <div class="grid-card"><div class="num">01</div><div class="t">ライン名</div><div class="d">LINEアカウント名と完全一致</div></div>
+    <div class="grid-card"><div class="num">02</div><div class="t">お住まい</div><div class="d">都道府県（海外は国名）</div></div>
+    <div class="grid-card"><div class="num">03</div><div class="t">立場</div><div class="d">親・妻・夫・きょうだい等。「パートナー」等曖昧なら要確認</div></div>
+    <div class="grid-card"><div class="num">04</div><div class="t">性別</div><div class="d">男性/女性/男の子/女の子</div></div>
+    <div class="grid-card"><div class="num">05</div><div class="t">年齢</div><div class="d">「23歳」「20代前半」等でOK</div></div>
+    <div class="grid-card" style="border-left:3px solid var(--tomato);"><div class="num" style="color:var(--tomato);">06 最重要</div><div class="t">発症年齢・再発回数</div><div class="d">診断と「疑い」段階の区別を確認</div></div>
+    <div class="grid-card" style="border-left:3px solid var(--tomato);"><div class="num" style="color:var(--tomato);">07 最重要</div><div class="t">現在の状況</div><div class="d">経過・症状・服薬・困りごと／医師の診断記載あり</div></div>
+    <div class="grid-card"><div class="num">08</div><div class="t">薬歴・サプリ</div><div class="d">薬剤名の正確性（例：シプレキサ→ジプレキサ）</div></div>
+    <div class="grid-card"><div class="num">09</div><div class="t">所属グループ</div><div class="d">初回入会時は「未所属」が通常</div></div>
+    <div class="grid-card"><div class="num">10</div><div class="t">地域の家族会</div><div class="d">「なし」／任意項目</div></div>
+  </div>
 </section>
 <div class="pager">
   <a class="prev" data-next="p06"><span class="nav-label">← 前へ</span><span class="nav-title">個チャ・ツール送付</span></a>
@@ -1107,15 +1452,22 @@ p { margin-bottom: 0.5rem; font-size: 0.9rem; }
 <!-- ── 8. 入会判断（PHASE 3） ── -->
 <div class="page" id="p08">
 <section id="s08">
-  <div class="sec-label">SECTION 08 &nbsp;<span class="phase-badge p3">PHASE 3 個チャ</span></div>
-  <div class="sec-title">入会判断の基準</div>
-  <div class="sec-accent"></div>
+  <div class="hero">
+    <div class="hero-eyebrow">SECTION 08 &nbsp;・&nbsp; <span class="phase-badge p3">PHASE 3</span></div>
+    <div class="hero-title">入会判断の基準</div>
+    <div class="hero-tldr">
+      <strong>たった1つのルール</strong>：医師の診断が最優先。疑いでもOK、本人の主観だけは見送り。判定は1人ではなく<strong>3人で</strong>。
+    </div>
+  </div>
 
   <div class="zone"><div class="zone-header sage">○ &nbsp;入会OK</div><ul class="zone-body"><li>医師による確定診断がある</li><li>当事者とケアラーの関係が明確</li><li>統合失調症関連の具体的な困りごとがある</li></ul></div>
   <div class="zone"><div class="zone-header peach">△ &nbsp;要相談</div><ul class="zone-body"><li>診断が最近（1〜2ヶ月以内）</li><li>子ども（小学生等）が当事者で「疑い」段階</li><li>入院中の方（基本OKだが急性期は退院後を勧めることも）</li></ul></div>
   <div class="zone"><div class="zone-header tomato">× &nbsp;入会見送り</div><ul class="zone-body"><li>医師の診断がなく本人や家族の「疑い」のみ</li><li>当事者がケアラーを攻撃している段階（医療介入優先）</li><li>当事者本人の参加希望（PureLightは家族会）</li><li>カウンセラー的立場を求めている</li></ul></div>
 
-  <div class="card peach"><div class="card-title">判定の最重要ルール</div><div class="card-body">「医師の診断」が最優先。「〜の疑いあり」でも医師の見立てがあればOK。本人の主観のみの場合は見送り検討。判定は1人ではなく複数人で確認（目安3人）。困ったら受付係のグループで経験者に相談。</div></div>
+  <div class="pullquote" style="border-left-color:var(--peach); margin-top:0.8rem;">
+    <div class="pullquote-label" style="color:var(--peach);">判定の最重要ルール</div>
+    <div class="pullquote-text">医師の診断が最優先。「〜の疑い」でも医師の見立てがあればOK。迷ったら<strong>受付係のグループで経験者に相談</strong>。</div>
+  </div>
 </section>
 <div class="pager">
   <a class="prev" data-next="p07"><span class="nav-label">← 前へ</span><span class="nav-title">10項目チェック</span></a>
@@ -1126,29 +1478,31 @@ p { margin-bottom: 0.5rem; font-size: 0.9rem; }
 <!-- ── 9. よくあるケース（PHASE 3） ── -->
 <div class="page" id="p09">
 <section id="s09">
-  <div class="sec-label">SECTION 09 &nbsp;<span class="phase-badge p3">PHASE 3 個チャ</span></div>
-  <div class="sec-title">よくあるケースと対応例</div>
-  <div class="sec-accent"></div>
+  <div class="hero">
+    <div class="hero-eyebrow">SECTION 09 &nbsp;・&nbsp; <span class="phase-badge p3">PHASE 3</span></div>
+    <div class="hero-title">よくあるケースと対応例</div>
+    <div class="hero-tldr">
+      過去の実例をベースに、<strong>OK／要相談／特別検討</strong>の3区分で対応指針を整理。
+    </div>
+  </div>
 
-  <h4 style="color:var(--sage)">初めて診断を受けたばかりの方</h4>
-  <p>数ヶ月前に突然症状が出現。仕事を休職。本人も家族も病気を理解しきれていない段階。</p>
-  <p style="color:var(--blk)">【OK判定】「わからないことばかりで大変ですよね。ここでは同じ立場の親御さんたちとお話しできます」と伝える。</p><hr style="border:none;border-top:1px solid var(--gry-xlt);margin:0.6rem 0">
+  <div class="matrix">
+    <div class="matrix-row head"><div>判定</div><div>ケース</div><div>対応のひとこと</div></div>
+    <div class="matrix-row"><div><span class="matrix-phase" style="background:var(--sage);">OK</span></div><div class="matrix-who">初めて診断</div><div class="matrix-what">数ヶ月前に発症・休職。病気を理解しきれていない段階 → <strong>「わからないことばかりで大変ですよね」</strong></div></div>
+    <div class="matrix-row"><div><span class="matrix-phase" style="background:var(--sage);">OK</span></div><div class="matrix-who">受験期発症</div><div class="matrix-what">緊急措置入院、親が責任感・罪悪感 → <strong>「受験のストレスが引き金になることもあります」</strong></div></div>
+    <div class="matrix-row"><div><span class="matrix-phase" style="background:var(--peach);">△</span></div><div class="matrix-who">小学生「疑い」</div><div class="matrix-what">医師の見立てありならOK、親の主観のみなら見送り</div></div>
+    <div class="matrix-row"><div><span class="matrix-phase" style="background:var(--sage);">OK</span></div><div class="matrix-who">治療拒否中</div><div class="matrix-what">診断が確定していれば入会可 → <strong>「親御さんは本当に大変ですね」</strong></div></div>
+    <div class="matrix-row"><div><span class="matrix-phase" style="background:var(--laven);">特別</span></div><div class="matrix-who">グリーフケア</div><div class="matrix-what">当事者を亡くされた方。運営係と要協議、「わかちあいの会」等の紹介検討</div></div>
+  </div>
 
-  <h4 style="color:var(--rose)">受験期に発症した若い当事者の親</h4>
-  <p>高3の受験期に発症、緊急措置入院。親が強い責任感と罪悪感を感じている。</p>
-  <p style="color:var(--blk)">【OK判定】「受験のストレスが引き金になることもあります。親御さんご自身の気持ちもとても大事です」と共感。</p><hr style="border:none;border-top:1px solid var(--gry-xlt);margin:0.6rem 0">
-
-  <h4 style="color:var(--peach)">子ども（小学生）が「疑い」段階</h4>
-  <p>11歳。不登校。発達検査予定中。幻覚や緊張状態があるが確定診断なし。</p>
-  <p style="color:var(--blk)">【要相談】医師が「統合失調症の可能性あり」と述べていればOK。親の主観的疑いのみの場合は見送り。</p><hr style="border:none;border-top:1px solid var(--gry-xlt);margin:0.6rem 0">
-
-  <h4 style="color:var(--sky)">薬を飲まない・治療拒否中</h4>
-  <p>確定診断あり。現在は自己断薬、不眠、激痩せなど。</p>
-  <p style="color:var(--blk)">【OK判定】診断は確定しているため入会可。「治療拒否の状況で親御さんは本当に大変ですね」と共感。</p><hr style="border:none;border-top:1px solid var(--gry-xlt);margin:0.6rem 0">
-
-  <h4 style="color:var(--laven)">グリーフケア（当事者を亡くされた方）</h4>
-  <p>娘さんが心不全で亡くなられた。グリーフケアグループがあるか相談。</p>
-  <p style="color:var(--blk)">【特別検討】運営係との協議が必要。非公式グループの提案や「わかちあいの会」等の紹介を検討。</p>
+  <details class="more">
+    <summary>各ケースの詳細</summary>
+    <p><strong>初めて診断を受けたばかり</strong>：数ヶ月前に突然症状が出現。仕事を休職。本人も家族も病気を理解しきれていない段階。【OK判定】「わからないことばかりで大変ですよね。ここでは同じ立場の親御さんたちとお話しできます」。</p>
+    <p><strong>受験期に発症した若い当事者の親</strong>：高3の受験期に発症、緊急措置入院。親が強い責任感と罪悪感を感じている。【OK判定】「受験のストレスが引き金になることもあります。親御さんご自身の気持ちもとても大事です」。</p>
+    <p><strong>子ども（小学生）が「疑い」段階</strong>：11歳。不登校。発達検査予定中。幻覚や緊張状態があるが確定診断なし。【要相談】医師が「統合失調症の可能性あり」と述べていればOK。親の主観的疑いのみの場合は見送り。</p>
+    <p><strong>薬を飲まない・治療拒否中</strong>：確定診断あり。現在は自己断薬、不眠、激痩せなど。【OK判定】診断は確定しているため入会可。「治療拒否の状況で親御さんは本当に大変ですね」と共感。</p>
+    <p><strong>グリーフケア</strong>：当事者を亡くされた方。【特別検討】運営係との協議が必要。非公式グループの提案や「わかちあいの会」等の紹介を検討。</p>
+  </details>
 </section>
 <div class="pager">
   <a class="prev" data-next="p08"><span class="nav-label">← 前へ</span><span class="nav-title">入会判断</span></a>
@@ -1159,14 +1513,22 @@ p { margin-bottom: 0.5rem; font-size: 0.9rem; }
 <!-- ── 10. イレギュラー（PHASE 3） ── -->
 <div class="page" id="p10">
 <section id="s10">
-  <div class="sec-label">SECTION 10 &nbsp;<span class="phase-badge p3">PHASE 3 個チャ</span></div>
-  <div class="sec-title">イレギュラーケースへの対応</div>
-  <div class="sec-accent"></div>
-  <div class="card coral"><div class="card-title">複数の当事者を持つケアラー</div><div class="card-body">自己紹介は参加するケアラー1人につき1つが原則（ノート管理の観点から）。複数の当事者を抱える場合は、自己紹介の中にまとめて記載してもらい、必要に応じて複数の家族グループに所属してもらいます。</div></div>
-  <div class="card tomato"><div class="card-title">当事者がケアラーを攻撃中</div><div class="card-body">医学的介入が優先。「まず医療機関でのご相談を」と伝え、地域の支援先を紹介。</div></div>
-  <div class="card peach"><div class="card-title">当事者本人が入会希望</div><div class="card-body">丁寧にお断り。「家族のための会です」と説明し、当事者会やデイケアを紹介。</div></div>
-  <div class="card sky"><div class="card-title">退会時にノート未削除</div><div class="card-body">事前に「ノートはご本人でないと削除できません」と説明。退会後に未削除の場合は受付係のグループで共有して対応を相談。</div></div>
-  <div class="card"><div class="card-title">アカウント名の変更</div><div class="card-body">新規さんや既存メンバーがLINEアカウント名を変更した場合は、受付係グループに報告し、案内係にも情報共有してください。</div></div>
+  <div class="hero">
+    <div class="hero-eyebrow">SECTION 10 &nbsp;・&nbsp; <span class="phase-badge p3">PHASE 3</span></div>
+    <div class="hero-title">イレギュラーケース</div>
+    <div class="hero-tldr">
+      想定外のケースでは<strong>一人で判断しない</strong>。まず受付係のグループに投げて経験者の意見を聞く。
+    </div>
+  </div>
+
+  <div class="matrix">
+    <div class="matrix-row head"><div>種別</div><div>ケース</div><div>対応</div></div>
+    <div class="matrix-row"><div><span class="matrix-phase" style="background:var(--coral);">事務</span></div><div class="matrix-who">複数の当事者</div><div class="matrix-what">自己紹介は1人につき1つが原則。自己紹介内でまとめて記載／必要に応じ複数グループ所属</div></div>
+    <div class="matrix-row"><div><span class="matrix-phase" style="background:var(--tomato);">医療</span></div><div class="matrix-who">ケアラー攻撃中</div><div class="matrix-what">医学的介入優先。「まず医療機関でのご相談を」と伝え、地域の支援先を紹介</div></div>
+    <div class="matrix-row"><div><span class="matrix-phase" style="background:var(--peach);">対象外</span></div><div class="matrix-who">当事者本人の入会希望</div><div class="matrix-what">丁寧にお断り。「家族のための会です」と説明、当事者会・デイケア紹介</div></div>
+    <div class="matrix-row"><div><span class="matrix-phase" style="background:var(--sky);">退会</span></div><div class="matrix-who">ノート未削除</div><div class="matrix-what">事前案内「ご本人でないと削除できません」。残っていたら受付係Gで共有して対応相談</div></div>
+    <div class="matrix-row"><div><span class="matrix-phase" style="background:var(--laven);">運用</span></div><div class="matrix-who">アカウント名変更</div><div class="matrix-what">受付係Gに報告 → 案内係にも情報共有</div></div>
+  </div>
 </section>
 <div class="pager">
   <a class="prev" data-next="p09"><span class="nav-label">← 前へ</span><span class="nav-title">よくあるケース</span></a>
@@ -1177,10 +1539,22 @@ p { margin-bottom: 0.5rem; font-size: 0.9rem; }
 <!-- ── 11. 情報サロン招待（PHASE 4） ── -->
 <div class="page" id="p11">
 <section id="s11">
-  <div class="sec-label">SECTION 11 &nbsp;<span class="phase-badge p4">PHASE 4 情報サロン</span></div>
-  <div class="sec-title">情報サロンへの招待手順</div>
-  <div class="sec-accent"></div>
-  <p class="sec-sub">自己紹介テキストが受付係3名のOK確認を得たら、いよいよ情報サロンへの招待です。<strong>情報サロンへの招待は受付係が行います</strong>（案内係ではありません）。以下の手順を必ず守ってください。</p>
+  <div class="hero">
+    <div class="hero-eyebrow">SECTION 11 &nbsp;・&nbsp; <span class="phase-badge p4">PHASE 4</span></div>
+    <div class="hero-title">情報サロンへの招待</div>
+    <div class="hero-tldr">
+      自己紹介の3名OKが出たら、招待へ。<strong>招待は受付係が行う</strong>（案内係ではない）。4ステップで確実に。
+    </div>
+  </div>
+
+  <div class="swim">
+    <div class="swim-row"><div class="swim-lane p4">Step 1</div><div class="swim-body">受付係Gで「○○さんを情報サロンに招待します」宣言</div></div>
+    <div class="swim-row"><div class="swim-lane p4">Step 2</div><div class="swim-body">個チャで「参加したら『参加しました』と書いてください」依頼</div></div>
+    <div class="swim-row"><div class="swim-lane p4">Step 3</div><div class="swim-body">情報サロンにグループ招待を送信</div></div>
+    <div class="swim-row"><div class="swim-lane p4">Step 4</div><div class="swim-body">新規さんが「参加しました」と書き込む → 案内係へバトンタッチ</div></div>
+  </div>
+
+  <div class="divider">STEP 詳細</div>
 
   <div class="card tomato">
     <div class="card-title">Step 1：受付係グループで宣言</div>
@@ -1280,21 +1654,26 @@ p { margin-bottom: 0.5rem; font-size: 0.9rem; }
 <!-- ── 12. 案内係への引き継ぎ（PHASE 5） ── -->
 <div class="page" id="p12">
 <section id="s12">
-  <div class="sec-label">SECTION 12 &nbsp;<span class="phase-badge p5">PHASE 5 案内係</span></div>
-  <div class="sec-title">家族グループへの振り分け（案内係への引き継ぎ）</div>
-  <div class="sec-accent"></div>
-  <p class="sec-sub">新規さんが情報サロンで「参加しました」と書き込んだ後は、案内係が適切な家族グループへの振り分けを行います。受付係は進行を見守りつつ、必要に応じて情報共有や補助を行います。</p>
+  <div class="hero">
+    <div class="hero-eyebrow">SECTION 12 &nbsp;・&nbsp; <span class="phase-badge p5">PHASE 5</span></div>
+    <div class="hero-title">案内係への引き継ぎ</div>
+    <div class="hero-tldr">
+      「参加しました」の書き込みが引き継ぎの合図。<strong>以降は案内係が主役</strong>、受付係は進行を見守る。
+    </div>
+  </div>
 
   <h3>グループの種類</h3>
-  <div class="card"><div class="card-title">基本家族グループ（9つ）</div><div class="card-body">家族1〜家族9。各グループは独立したLINEチャットです。</div></div>
-  <div class="card laven"><div class="card-title">サブグループ</div><div class="card-body">きょうだいグループ（兄弟姉妹が当事者の場合）、混合グループ（複数の当事者を持つケアラー用）</div></div>
+  <div class="grid2">
+    <div class="grid-card"><div class="num">基本</div><div class="t">家族グループ 9つ</div><div class="d">家族1〜家族9。独立したLINEチャット</div></div>
+    <div class="grid-card"><div class="num">サブ</div><div class="t">きょうだい / 混合</div><div class="d">兄弟姉妹が当事者／複数当事者を持つケアラー用</div></div>
+  </div>
 
   <h3>振り分けの流れ</h3>
-  <ul class="badge-list">
-    <li class="badge-item"><span class="badge-num rose">1</span><div class="badge-content"><div class="badge-title">情報サロンでの「参加しました」</div><div class="badge-desc">新規さんが情報サロンに参加し「参加しました」と書き込むことで、案内係への引き継ぎの合図になります。</div></div></li>
-    <li class="badge-item"><span class="badge-num coral">2</span><div class="badge-content"><div class="badge-title">案内係が反応 → 家族グループへ配置</div><div class="badge-desc">案内係が年齢・関係性・地域を考慮して最適なグループを選定し、家族グループへ招待します。</div></div></li>
-    <li class="badge-item"><span class="badge-num sage">3</span><div class="badge-content"><div class="badge-title">ノート投稿完了</div><div class="badge-desc">家族グループに自己紹介テキストをノートとして投稿すれば、受付の全工程が完了です。</div></div></li>
-  </ul>
+  <div class="swim">
+    <div class="swim-row"><div class="swim-lane p4">合図</div><div class="swim-body">情報サロンで新規さんが「参加しました」と書き込み</div></div>
+    <div class="swim-row"><div class="swim-lane p5">配置</div><div class="swim-body">案内係が年齢・関係性・地域を考慮 → 家族グループに招待</div></div>
+    <div class="swim-row"><div class="swim-lane p5">完了</div><div class="swim-body">ノート投稿完了 → <strong>受付の全工程が完了</strong></div></div>
+  </div>
 
   <div class="line-mock">
     <div class="line-header">情報サロン<span class="hd-icons">⌕ ☎ ⌑ ≡</span></div>
@@ -1318,10 +1697,15 @@ p { margin-bottom: 0.5rem; font-size: 0.9rem; }
     </div>
   </div>
 
-  <div class="card peach"><div class="card-title">複数当事者の場合</div><div class="card-body">同じケアラーが複数の当事者を持つ場合は、各当事者ごとに別々の自己紹介を作成してもらい、サロンへの招待も複数回行います。</div></div>
+  <div class="pullquote" style="border-left-color:var(--peach);">
+    <div class="pullquote-label" style="color:var(--peach);">複数当事者の場合</div>
+    <div class="pullquote-text">各当事者ごとに別々の自己紹介を作成、サロン招待も複数回。</div>
+  </div>
 
-  <h3>最終完了の報告</h3>
-  <div class="card sage"><div class="card-title">受付係グループへの完了報告</div><div class="card-body">ノート投稿が完了したら、受付係グループに「家族(○)の新規@○○さん、ノート投稿まで完了されました」と報告します。ここで受付係としての対応は完全に終了です。お疲れさまでした。</div></div>
+  <div class="pullquote" style="border-left-color:var(--sage);">
+    <div class="pullquote-label" style="color:var(--sage);">最終完了の報告</div>
+    <div class="pullquote-text">ノート投稿完了後、受付係グループに「家族(○)の新規@○○さん、ノート投稿まで完了されました」と報告。お疲れさまでした。</div>
+  </div>
 </section>
 <div class="pager">
   <a class="prev" data-next="p11"><span class="nav-label">← 前へ</span><span class="nav-title">情報サロン招待</span></a>
@@ -1332,16 +1716,23 @@ p { margin-bottom: 0.5rem; font-size: 0.9rem; }
 <!-- ── 13. 研修ガイド ── -->
 <div class="page" id="p13">
 <section id="s13">
-  <div class="sec-label">SECTION 13</div>
-  <div class="sec-title">新任受付係の研修ガイド</div>
-  <div class="sec-accent"></div>
+  <div class="hero">
+    <div class="hero-eyebrow">SECTION 13 &nbsp;・&nbsp; 研修</div>
+    <div class="hero-title">新任受付係の研修ガイド</div>
+    <div class="hero-tldr">
+      <strong>4ステージで独り立ち</strong>：環境整備 → 見学（1〜2週間）→ 実践開始（ペア） → 独り立ち（1ヶ月以降）。完璧でなくていい。
+    </div>
+  </div>
 
   <div class="stage"><div class="stage-bg" style="width:25%;background:var(--rose)"></div><div class="stage-content"><div class="stage-name"><span class="stage-pill" style="background:var(--rose)">STAGE 1</span>環境整備と基礎学習</div><div class="stage-desc">インストール → ホーム画面確認 → 基本ドキュメント確認</div></div></div>
   <div class="stage"><div class="stage-bg" style="width:50%;background:var(--coral)"></div><div class="stage-content"><div class="stage-name"><span class="stage-pill" style="background:var(--coral)">STAGE 2</span>見学と観察（1〜2週間）</div><div class="stage-desc">新規対応の見学 → チェック参加 → 質問ルール学習</div></div></div>
   <div class="stage"><div class="stage-bg" style="width:75%;background:var(--laven)"></div><div class="stage-content"><div class="stage-name"><span class="stage-pill" style="background:var(--laven)">STAGE 3</span>実践開始（3週目〜）</div><div class="stage-desc">最初の質問から対応 → 経験者とペアで担当</div></div></div>
   <div class="stage"><div class="stage-bg" style="width:100%;background:var(--sage)"></div><div class="stage-content"><div class="stage-name"><span class="stage-pill" style="background:var(--sage)">STAGE 4</span>独り立ち（1ヶ月以降）</div><div class="stage-desc">一人での対応 → 様々なケースを経験</div></div></div>
 
-  <div class="card sage" style="margin-top:0.8rem"><div class="card-title">忘れないでください</div><div class="card-body">「完璧でなくていい」。先輩も最初は相談しながら対応していました。エラーは学びのチャンスです。わからないことは、いつでも聞いてOK。受付グループは「見守り隊」です。</div></div>
+  <div class="pullquote" style="border-left-color:var(--sage); margin-top:0.8rem;">
+    <div class="pullquote-label" style="color:var(--sage);">忘れないで</div>
+    <div class="pullquote-text">完璧でなくていい。先輩も最初は相談しながら対応していました。受付グループは「見守り隊」。</div>
+  </div>
 </section>
 <div class="pager">
   <a class="prev" data-next="p12"><span class="nav-label">← 前へ</span><span class="nav-title">案内係へ引継</span></a>
@@ -1352,9 +1743,13 @@ p { margin-bottom: 0.5rem; font-size: 0.9rem; }
 <!-- ── 14. Q&A ── -->
 <div class="page" id="p14">
 <section id="s14">
-  <div class="sec-label">SECTION 14</div>
-  <div class="sec-title">トラブルシューティング</div>
-  <div class="sec-accent"></div>
+  <div class="hero">
+    <div class="hero-eyebrow">SECTION 14 &nbsp;・&nbsp; Q&amp;A</div>
+    <div class="hero-title">トラブルシューティング</div>
+    <div class="hero-tldr">
+      困ったときのFAQ。迷ったら<strong>受付係のグループで経験者に相談</strong>が鉄則。
+    </div>
+  </div>
 
   <div class="qa-item"><div class="qa-q rose">Q. 新規さんから返信がない場合は？</div><div class="qa-a">1週間〜10日待ちます。1回リマインドを送信し、さらに返信がなければ自然終了と判断。受付グループに報告。</div></div>
   <div class="qa-item"><div class="qa-q coral">Q. 自己紹介の修正は何回まで？</div><div class="qa-a">複数回OK。「完璧」より「誤字なし・医師の診断明記」を優先。新規さんの負担にも配慮してください。</div></div>
@@ -1373,18 +1768,22 @@ p { margin-bottom: 0.5rem; font-size: 0.9rem; }
 <!-- ── 15. 心構え ── -->
 <div class="page" id="p15">
 <section id="s15">
-  <div class="sec-label">SECTION 15</div>
-  <div class="sec-title">心構えとコツ</div>
-  <div class="sec-accent"></div>
+  <div class="hero">
+    <div class="hero-eyebrow">SECTION 15 &nbsp;・&nbsp; 心構え</div>
+    <div class="hero-title">大切な5つのこと</div>
+    <div class="hero-tldr">
+      「最初の入口」「共感と傾聴」「焦らず急かさず」「チームの力」「自分の限界」。<strong>完璧は不要</strong>。
+    </div>
+  </div>
 
   <h3>受付係として大切な5つのこと</h3>
-  <ul class="badge-list">
-    <li class="badge-item"><span class="badge-num rose">1</span><div class="badge-content"><div class="badge-title">「最初の入口」の自覚</div><div class="badge-desc">受付係はPureLightとの最初の接点。丁寧な対応が「ここなら安心」というイメージを作ります。</div></div></li>
-    <li class="badge-item"><span class="badge-num sage">2</span><div class="badge-content"><div class="badge-title">共感と傾聴</div><div class="badge-desc">「わかります」ではなく「大変ですね」という共感。「話を聞きます」という姿勢を見せましょう。</div></div></li>
-    <li class="badge-item"><span class="badge-num coral">3</span><div class="badge-content"><div class="badge-title">焦らず、急かさず</div><div class="badge-desc">「時間のあるときで大丈夫です」— 必ず時間的余裕があることを伝えます。</div></div></li>
-    <li class="badge-item"><span class="badge-num peach">4</span><div class="badge-content"><div class="badge-title">チームの力を活用</div><div class="badge-desc">一人で判定しない。わからないことは相談。先輩や管理者に支えてもらいましょう。</div></div></li>
-    <li class="badge-item"><span class="badge-num laven">5</span><div class="badge-content"><div class="badge-title">自分の限界を知る</div><div class="badge-desc">「当事者不調により、お休みさせていただきます」— これはOK。無理は禁物です。</div></div></li>
-  </ul>
+  <div class="grid2">
+    <div class="grid-card"><div class="num">01</div><div class="t">「最初の入口」の自覚</div><div class="d">丁寧な対応が「ここなら安心」を作る</div></div>
+    <div class="grid-card"><div class="num">02</div><div class="t">共感と傾聴</div><div class="d">「わかります」ではなく「大変ですね」</div></div>
+    <div class="grid-card"><div class="num">03</div><div class="t">焦らず、急かさず</div><div class="d">「時間のあるときで大丈夫です」を必ず伝える</div></div>
+    <div class="grid-card"><div class="num">04</div><div class="t">チームの力を活用</div><div class="d">一人で判定しない。わからないことは相談</div></div>
+    <div class="grid-card" style="grid-column:span 2;"><div class="num">05</div><div class="t">自分の限界を知る</div><div class="d">「お休みさせていただきます」はOK。無理は禁物</div></div>
+  </div>
 
   <h3>対応時のコツ</h3>
   <div class="card"><div class="card-title">テンプレート活用</div><div class="card-body">コピペOK。ただし不自然な部分はアレンジ。新規さんに合わせた「ぬくもり」のある文章に。</div></div>
@@ -1412,9 +1811,14 @@ p { margin-bottom: 0.5rem; font-size: 0.9rem; }
 <!-- ── 16. 用語集 ── -->
 <div class="page" id="p16">
 <section id="s16">
-  <div class="sec-label">SECTION 16</div>
-  <div class="sec-title">付録：用語集</div>
-  <div class="sec-accent"></div>
+  <div class="hero">
+    <div class="hero-eyebrow">SECTION 16 &nbsp;・&nbsp; 付録</div>
+    <div class="hero-title">用語集</div>
+    <div class="hero-tldr">
+      マニュアル内で使う専門用語の辞書。迷ったら戻ってきてください。
+    </div>
+  </div>
+
   <div class="glossary-row"><div class="glossary-term">家族グループ</div><div class="glossary-def">PureLightの基本的な9つのグループ（家族1〜9）。各グループは独立したLINEチャット。</div></div>
   <div class="glossary-row"><div class="glossary-term">情報サロン</div><div class="glossary-def">全体情報を共有するグループ。情報サロン1は全体共有用、情報サロン2は新規さん向け。受付係が新規さんを招待し、新規さんが「参加しました」と書き込むことで案内係への引き継ぎが始まる。</div></div>
   <div class="glossary-row"><div class="glossary-term">きょうだいグループ</div><div class="glossary-def">兄弟姉妹が当事者の場合に参加するサブグループ。</div></div>
