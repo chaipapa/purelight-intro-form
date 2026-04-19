@@ -591,6 +591,40 @@ details.more p, details.more li { font-size: 0.8rem; line-height: 1.6; }
   line-height: 1.5;
 }
 
+/* ── コピー可能テンプレートブロック ── */
+.copy-block {
+  background: #fff; border-radius: 10px; border: 1px solid var(--gry-xlt);
+  padding: 0.7rem 0.85rem 0.8rem; margin: 0.5rem 0; position: relative;
+}
+.copy-block-head {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 0.45rem; gap: 0.5rem;
+}
+.copy-block-label {
+  font-size: 0.68rem; color: var(--rose); font-weight: 700;
+  letter-spacing: 0.08em;
+}
+.copy-btn {
+  background: var(--rose); color: #fff; border: none;
+  padding: 0.3rem 0.65rem; border-radius: 5px; font-size: 0.7rem;
+  font-weight: 600; cursor: pointer; font-family: inherit;
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  transition: background 0.15s, transform 0.05s;
+  white-space: nowrap;
+}
+.copy-btn:hover { background: var(--rose-dk); }
+.copy-btn:active { transform: translateY(1px); }
+.copy-btn.copied { background: var(--sage); }
+.copy-btn::before {
+  content: '📋'; font-size: 0.72rem;
+}
+.copy-btn.copied::before { content: '✓'; }
+.copy-block-body {
+  font-size: 0.82rem; line-height: 1.65; color: var(--dk);
+  white-space: pre-wrap; word-break: break-word;
+}
+.copy-block-body strong { color: var(--blk); }
+
 /* ── トーン調整：body文字色を少し濃く ── */
 p { color: var(--dk); }
 .sec-sub { color: var(--dk); }
@@ -621,7 +655,7 @@ h3 {
   <div style="margin-top:2rem; display:flex; gap:0.5rem; flex-wrap:wrap; position:relative; z-index:1;">
     <div style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); border-radius:10px; padding:0.6rem 0.8rem; flex:1 1 6rem;">
       <div style="font-size:1.4rem; font-weight:700; color:#fff;">5</div>
-      <div style="font-size:0.65rem; color:rgba(255,255,255,0.6);">フェーズで進行</div>
+      <div style="font-size:0.65rem; color:rgba(255,255,255,0.6);">パートで進行</div>
     </div>
     <div style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); border-radius:10px; padding:0.6rem 0.8rem; flex:1 1 6rem;">
       <div style="font-size:1.4rem; font-weight:700; color:#fff;">18</div>
@@ -720,15 +754,15 @@ h3 {
 <section id="s02">
   <div class="hero">
     <div class="hero-eyebrow">SECTION 02 &nbsp;・&nbsp; 全体フロー</div>
-    <div class="hero-title">受付は5フェーズで進みます</div>
+    <div class="hero-title">受付は5パートで進みます</div>
     <div class="hero-tldr">
-      <strong>ここだけ覚える</strong>：PHASE 1（公式LINEのやりとり）と PHASE 2（受付係内の担当決め）は<strong>並行して進行</strong>。両方終わってから PHASE 3〜5 に進む。
+      <strong>ここだけ覚える</strong>：パート 1（公式LINEのやりとり）と パート 2（受付係内の担当決め）は<strong>並行して進行</strong>。両方終わってから パート 3〜5 に進む。
     </div>
   </div>
 
   <h3>誰が・どこで・何をする</h3>
   <div class="matrix">
-    <div class="matrix-row head"><div>PHASE</div><div>場所</div><div>やること</div></div>
+    <div class="matrix-row head"><div>パート</div><div>場所</div><div>やること</div></div>
     <div class="matrix-row"><div><span class="matrix-phase p1">1</span></div><div class="matrix-who">公式LINE</div><div class="matrix-what">自動応答→最初の質問→規約→個人LINE誘導</div></div>
     <div class="matrix-row"><div><span class="matrix-phase p2">2</span></div><div class="matrix-who">受付係G</div><div class="matrix-what">P1と<strong>並行で</strong>担当決め</div></div>
     <div class="matrix-row"><div><span class="matrix-phase p3">3</span></div><div class="matrix-who">個チャ</div><div class="matrix-what">挨拶・説明→自己紹介作成ツール→チェック</div></div>
@@ -738,34 +772,34 @@ h3 {
 
   <h3>並行進行の時間軸</h3>
   <div class="swim">
-    <div class="swim-row"><div class="swim-lane p1">PHASE 1<br>公式LINE</div><div class="swim-body">新規さんと、自動応答 → 最初の質問🌟1〜4 → 規約 →「了承」確認</div></div>
-    <div class="swim-row"><div class="swim-lane p2">PHASE 2<br>並行</div><div class="swim-body">P1の STEP 02（回答到着）を合図に、<strong>受付係グループで担当決め</strong>が始まる。P1の STEP 06（個人LINE誘導）までに担当を確定。</div></div>
-    <div class="swim-row"><div class="swim-lane p3">PHASE 3<br>個チャ</div><div class="swim-body"><strong>P1 と P2 の両方</strong>が終わってから、担当者が個チャで対応開始</div></div>
-    <div class="swim-row"><div class="swim-lane p4">PHASE 4<br>サロン</div><div class="swim-body">自己紹介のOKが出たら、情報サロンに招待</div></div>
-    <div class="swim-row"><div class="swim-lane p5">PHASE 5<br>案内係</div><div class="swim-body">「参加しました」で案内係に引き継ぎ、家族グループへ</div></div>
+    <div class="swim-row"><div class="swim-lane p1">パート 1<br>公式LINE</div><div class="swim-body">新規さんと、自動応答 → 最初の質問🌟1〜4 → 規約 →「了承」確認</div></div>
+    <div class="swim-row"><div class="swim-lane p2">パート 2<br>並行</div><div class="swim-body">P1の STEP 02（回答到着）を合図に、<strong>受付係グループで担当決め</strong>が始まる。P1の STEP 06（個人LINE誘導）までに担当を確定。</div></div>
+    <div class="swim-row"><div class="swim-lane p3">パート 3<br>個チャ</div><div class="swim-body"><strong>P1 と P2 の両方</strong>が終わってから、担当者が個チャで対応開始</div></div>
+    <div class="swim-row"><div class="swim-lane p4">パート 4<br>サロン</div><div class="swim-body">自己紹介のOKが出たら、情報サロンに招待</div></div>
+    <div class="swim-row"><div class="swim-lane p5">パート 5<br>案内係</div><div class="swim-body">「参加しました」で案内係に引き継ぎ、家族グループへ</div></div>
   </div>
 
   <details class="more">
     <summary>全18ステップのタイムラインを見る</summary>
 
-    <div style="margin-top:0.6rem;font-size:0.7rem;color:var(--gry-lt);letter-spacing:0.08em;font-weight:700;">PHASE 1 &nbsp;公式LINE段階</div>
+    <div style="margin-top:0.6rem;font-size:0.7rem;color:var(--gry-lt);letter-spacing:0.08em;font-weight:700;">パート 1 &nbsp;公式LINE段階</div>
     <div class="timeline">
       <div class="timeline-item"><div class="timeline-step-num">STEP 01</div><div class="timeline-step-title">新規さんが公式LINEを友だち追加</div><div class="timeline-step-desc">自動応答の質問①〜⑦が飛ぶ</div></div>
-      <div class="timeline-item"><div class="timeline-step-num">STEP 02</div><div class="timeline-step-title">新規さんが①〜⑦に回答</div><div class="timeline-step-desc">※ここが PHASE 2（担当決め）開始の合図</div></div>
+      <div class="timeline-item"><div class="timeline-step-num">STEP 02</div><div class="timeline-step-title">新規さんが①〜⑦に回答</div><div class="timeline-step-desc">※ここが パート 2（担当決め）開始の合図</div></div>
       <div class="timeline-item"><div class="timeline-step-num">STEP 03</div><div class="timeline-step-title">最初の質問🌟1〜4を送る</div><div class="timeline-step-desc">診断名／きっかけ／望むこと／診断変更時の了承</div></div>
       <div class="timeline-item"><div class="timeline-step-num">STEP 04</div><div class="timeline-step-title">🌟1「診断名」と🌟4「了承」を確認</div><div class="timeline-step-desc">揃わない場合は次に進めない</div></div>
       <div class="timeline-item"><div class="timeline-step-num">STEP 05</div><div class="timeline-step-title">規約・注意事項を送り、再度【了承】</div></div>
-      <div class="timeline-item"><div class="timeline-step-num">STEP 06</div><div class="timeline-step-title">★担当者の個人LINE友だち追加URL</div><div class="timeline-step-desc">個チャに移行（PHASE 2 完了が前提）</div></div>
+      <div class="timeline-item"><div class="timeline-step-num">STEP 06</div><div class="timeline-step-title">★担当者の個人LINE友だち追加URL</div><div class="timeline-step-desc">個チャに移行（パート 2 完了が前提）</div></div>
     </div>
 
-    <div style="margin-top:0.6rem;font-size:0.7rem;color:var(--gry-lt);letter-spacing:0.08em;font-weight:700;">PHASE 2 &nbsp;受付係グループ（並行）</div>
+    <div style="margin-top:0.6rem;font-size:0.7rem;color:var(--gry-lt);letter-spacing:0.08em;font-weight:700;">パート 2 &nbsp;受付係グループ（並行）</div>
     <div class="timeline">
       <div class="timeline-item p2"><div class="timeline-step-num">STEP α</div><div class="timeline-step-title">P1 STEP 02 の回答を受付係グループに共有</div></div>
       <div class="timeline-item p2"><div class="timeline-step-num">STEP β</div><div class="timeline-step-title">受付係同士で相談 → 担当者が名乗り出る</div></div>
       <div class="timeline-item p2"><div class="timeline-step-num">STEP γ</div><div class="timeline-step-title">担当確定 → P1 STEP 06 で誘導開始できる状態に</div></div>
     </div>
 
-    <div style="margin-top:0.6rem;font-size:0.7rem;color:var(--gry-lt);letter-spacing:0.08em;font-weight:700;">PHASE 3 &nbsp;個チャ（個人LINE）</div>
+    <div style="margin-top:0.6rem;font-size:0.7rem;color:var(--gry-lt);letter-spacing:0.08em;font-weight:700;">パート 3 &nbsp;個チャ（個人LINE）</div>
     <div class="timeline">
       <div class="timeline-item p3"><div class="timeline-step-num">STEP 07</div><div class="timeline-step-title">担当者が個チャで挨拶・規約ノート投稿</div></div>
       <div class="timeline-item p3"><div class="timeline-step-num">STEP 08</div><div class="timeline-step-title">このあとの流れを説明 → 質問受付</div></div>
@@ -774,7 +808,7 @@ h3 {
       <div class="timeline-item p3"><div class="timeline-step-num">STEP 11</div><div class="timeline-step-title">受付係グループで複数人チェック（目安3名）</div></div>
     </div>
 
-    <div style="margin-top:0.6rem;font-size:0.7rem;color:var(--gry-lt);letter-spacing:0.08em;font-weight:700;">PHASE 4 &nbsp;情報サロン段階</div>
+    <div style="margin-top:0.6rem;font-size:0.7rem;color:var(--gry-lt);letter-spacing:0.08em;font-weight:700;">パート 4 &nbsp;情報サロン段階</div>
     <div class="timeline">
       <div class="timeline-item p4"><div class="timeline-step-num">STEP 12</div><div class="timeline-step-title">受付係Gで「情報サロンに招待します」宣言</div></div>
       <div class="timeline-item p4"><div class="timeline-step-num">STEP 13</div><div class="timeline-step-title">個チャで「参加しました」書き込みを依頼</div></div>
@@ -782,7 +816,7 @@ h3 {
       <div class="timeline-item p4"><div class="timeline-step-num">STEP 15</div><div class="timeline-step-title">新規さんが「参加しました」と書き込み</div></div>
     </div>
 
-    <div style="margin-top:0.6rem;font-size:0.7rem;color:var(--gry-lt);letter-spacing:0.08em;font-weight:700;">PHASE 5 &nbsp;案内係への引き継ぎ</div>
+    <div style="margin-top:0.6rem;font-size:0.7rem;color:var(--gry-lt);letter-spacing:0.08em;font-weight:700;">パート 5 &nbsp;案内係への引き継ぎ</div>
     <div class="timeline">
       <div class="timeline-item p5"><div class="timeline-step-num">STEP 16</div><div class="timeline-step-title">案内係が反応 → 家族グループへ振り分け</div></div>
       <div class="timeline-item p5"><div class="timeline-step-num">STEP 17</div><div class="timeline-step-title">ノート投稿完了 → 受付完了</div></div>
@@ -791,12 +825,12 @@ h3 {
 
   <div class="pullquote" style="margin-top:1rem;">
     <div class="pullquote-label">意識すること</div>
-    <div class="pullquote-text">「誰が、どこで、何をするか」。主役はフェーズごとに移ります。</div>
+    <div class="pullquote-text">「誰が、どこで、何をするか」。主役はパートごとに移ります。</div>
   </div>
 </section>
 <div class="pager">
   <a class="prev" data-next="p01"><span class="nav-label">← 前へ</span><span class="nav-title">受付係の概要</span></a>
-  <a class="next" data-next="p03"><span class="nav-label">PHASE 1 →</span><span class="nav-title">公式LINE操作</span></a>
+  <a class="next" data-next="p03"><span class="nav-label">パート 1 →</span><span class="nav-title">公式LINE操作</span></a>
 </div>
 </div>
 
@@ -804,7 +838,7 @@ h3 {
 <div class="page" id="p03">
 <section id="s03">
   <div class="hero">
-    <div class="hero-eyebrow">SECTION 03 &nbsp;・&nbsp; <span class="phase-badge p1">PHASE 1</span></div>
+    <div class="hero-eyebrow">SECTION 03 &nbsp;・&nbsp; <span class="phase-badge p1">パート 1</span></div>
     <div class="hero-title">公式LINEアカウントの操作</div>
     <div class="hero-tldr">
       <strong>基本</strong>：スマホで公式LINEアプリに入り、新規さんとの個チャで対応するだけ。<strong>設定は絶対に触らない</strong>（応答メッセージの自動配信は既に設定済み）。
@@ -897,15 +931,15 @@ h3 {
 </section>
 <div class="pager">
   <a class="prev" data-next="p02"><span class="nav-label">← 前へ</span><span class="nav-title">受付の全体フロー</span></a>
-  <a class="next" data-next="p04"><span class="nav-label">PHASE 1 →</span><span class="nav-title">最初の質問</span></a>
+  <a class="next" data-next="p04"><span class="nav-label">パート 1 →</span><span class="nav-title">最初の質問</span></a>
 </div>
 </div>
 
-<!-- ── 4. 最初の質問と回答（PHASE 1） ── -->
+<!-- ── 4. 最初の質問と回答（パート 1） ── -->
 <div class="page" id="p04">
 <section id="s04">
   <div class="hero">
-    <div class="hero-eyebrow">SECTION 04 &nbsp;・&nbsp; <span class="phase-badge p1">PHASE 1</span></div>
+    <div class="hero-eyebrow">SECTION 04 &nbsp;・&nbsp; <span class="phase-badge p1">パート 1</span></div>
     <div class="hero-title">公式LINEでの受付フロー</div>
     <div class="hero-tldr">
       <strong>全6ステップ</strong>：友だち追加 → 自動応答①〜⑦ → 最初の質問🌟1〜4 → 診断名・了承確認 → 規約送付・再了承 → 担当の個人LINEへ誘導。ここが完了してから個チャへ。
@@ -955,7 +989,7 @@ h3 {
   </div>
 
   <h3>STEP 2 ── 新規さんが①〜⑦に回答</h3>
-  <p>新規さん側から①〜⑦への回答が届きます。受付係は回答を確認し、受付係グループに共有します（担当決めはPHASE 2で扱います）。</p>
+  <p>新規さん側から①〜⑦への回答が届きます。受付係は回答を確認し、受付係グループに共有します（担当決めはパート 2で扱います）。</p>
 
   <div class="line-mock">
     <div class="line-header">新規さん<span class="hd-icons">⌕ ☎ ⋮</span></div>
@@ -983,14 +1017,30 @@ h3 {
     </div>
   </div>
 
-  <div class="card tomato">
-    <div class="card-title">デフォルトで送る4点の質問</div>
-    <div class="card-body">
-      🌟<strong>1. 現在の医師からの診断名は何でしょうか？</strong><br>
-      🌟<strong>2. PureLightはどんなきっかけでお知りになりましたか？</strong><br>
-      🌟<strong>3. PureLightに望むことはどんなことでしょうか？</strong><br>
-      🌟<strong>4.</strong> PureLightは統合失調症、またはその疑いと診断されたご家族のための家族会です。今後、診断名が変わった場合にはご退出をお願いする事もございますこと、ご了承いただけますか？ 【了承】して頂ける場合のお返事もお願いいたします。
+  <div class="copy-block">
+    <div class="copy-block-head">
+      <div class="copy-block-label">デフォルトで送る4点の質問</div>
+      <button class="copy-btn" type="button">コピー</button>
     </div>
+    <div class="copy-block-body">PureLightへのご参加希望、ありがとうございます😊
+ご参加前にもう少し質問を重ねさせてくださいませ。
+
+🌟1. 現在の医師から何と診断されていますでしょうか？
+
+🌟2. PureLightはどんなきっかけでお知りになりましたか？
+
+🌟3. PureLightに望むことはどんなことでしょうか？
+
+PureLightは統合失調症、
+またはその疑いと診断された
+ご家族の為の家族会となっております。
+
+今後、診断名が変わった場合にはご退出をお願いする事もございますこと、ご了承いただけますか？
+
+🌟4.【了承】して頂ける場合のお返事もお願いいたします。
+
+ご自身のタイミングで構いませんので、
+ご返信をお願いします🙏</div>
   </div>
 
   <div class="line-mock">
@@ -1107,14 +1157,17 @@ h3 {
 
   <div class="card laven"><div class="card-title">レターシーリング設定依頼は廃止</div><div class="card-body">以前はこの段階で「レターシーリングをONにしてください」と新規さんに依頼していましたが、<strong>最近のLINE仕様変更に伴い廃止</strong>になりました。代わりに、個チャに移行したあと受付係側で設定画面からレターシーリングがONになっていることを確認する運用に変わっています（詳細は次の個チャ段階で）。</div></div>
 
-  <div class="card">
-    <div class="card-title">誘導メッセージのテンプレート</div>
-    <div class="card-body">
-      この後、グループ招待の流れなど個人トークで対応させていただきます。<br><br>
-      以下⬇のURLから、ご都合の良い時に、友達申請をお願いします。<br>
-      アカウント名は、〇〇です。<br><br>
-      https://line.me/ti/p/xxxxxxxxx
+  <div class="copy-block">
+    <div class="copy-block-head">
+      <div class="copy-block-label">誘導メッセージのテンプレート</div>
+      <button class="copy-btn" type="button">コピー</button>
     </div>
+    <div class="copy-block-body">この後、グループ招待の流れなど個人トークで対応させていただきます。
+
+以下⬇のURLから、ご都合の良い時に、友達申請をお願いします。
+アカウント名は、〇〇です。
+
+https://line.me/ti/p/xxxxxxxxx</div>
   </div>
 
   <div class="line-mock">
@@ -1152,15 +1205,15 @@ h3 {
 </section>
 <div class="pager">
   <a class="prev" data-next="p03"><span class="nav-label">← 前へ</span><span class="nav-title">公式LINE操作</span></a>
-  <a class="next" data-next="p05"><span class="nav-label">PHASE 2 →</span><span class="nav-title">担当決め</span></a>
+  <a class="next" data-next="p05"><span class="nav-label">パート 2 →</span><span class="nav-title">担当決め</span></a>
 </div>
 </div>
 
-<!-- ── 5. 受付係グループでの担当決め（PHASE 2） ── -->
+<!-- ── 5. 受付係グループでの担当決め（パート 2） ── -->
 <div class="page" id="p05">
 <section id="s05">
   <div class="hero">
-    <div class="hero-eyebrow">SECTION 05 &nbsp;・&nbsp; <span class="phase-badge p2">PHASE 2</span></div>
+    <div class="hero-eyebrow">SECTION 05 &nbsp;・&nbsp; <span class="phase-badge p2">パート 2</span></div>
     <div class="hero-title">担当決めは、公式LINE対応と並行して</div>
     <div class="hero-tldr">
       <strong>並行進行</strong>：公式LINEでやりとりが進んでいる間、受付係グループでは別の誰かが担当名乗りを上げる。公式LINE STEP 6（個人LINE誘導）までに担当が決まっていればOK。
@@ -1224,15 +1277,15 @@ h3 {
 </section>
 <div class="pager">
   <a class="prev" data-next="p04"><span class="nav-label">← 前へ</span><span class="nav-title">最初の質問</span></a>
-  <a class="next" data-next="p06"><span class="nav-label">PHASE 3 →</span><span class="nav-title">個チャ・ツール送付</span></a>
+  <a class="next" data-next="p06"><span class="nav-label">パート 3 →</span><span class="nav-title">個チャ・ツール送付</span></a>
 </div>
 </div>
 
-<!-- ── 6. 個チャでの説明と自己紹介作成ツールの送付（PHASE 3前半） ── -->
+<!-- ── 6. 個チャでの説明と自己紹介作成ツールの送付（パート 3前半） ── -->
 <div class="page" id="p06">
 <section id="s06">
   <div class="hero">
-    <div class="hero-eyebrow">SECTION 06 &nbsp;・&nbsp; <span class="phase-badge p3">PHASE 3</span></div>
+    <div class="hero-eyebrow">SECTION 06 &nbsp;・&nbsp; <span class="phase-badge p3">パート 3</span></div>
     <div class="hero-title">個チャで説明 → 自己紹介作成ツール案内</div>
     <div class="hero-tldr">
       <strong>進行順</strong>：挨拶＋規約ノート投稿 → 流れを説明 → 質問受付 → OKならツール案内 → 作成＆貼り付け → 受付係Gで複数人チェック
@@ -1278,16 +1331,19 @@ h3 {
   <h4>Step 2：このあとの流れを説明</h4>
   <p>個チャで何をするのか、どう進んでいくのかを、先に全体像として伝えます。見通しが立つと新規さんも安心して次に進めます。</p>
 
-  <div class="card">
-    <div class="card-title">流れ説明テンプレート</div>
-    <div class="card-body">
-      この後、入会の流れは以下のとおりです📝<br><br>
-      ① 自己紹介の作成（専用ツールをお送りします）<br>
-      ② 受付係でその内容を確認<br>
-      ③ 情報サロンというグループにご招待<br>
-      ④ その後、案内係から家族グループへのご案内<br><br>
-      ご自身のペースで大丈夫ですので、ゆっくり進めていきましょう😊
+  <div class="copy-block">
+    <div class="copy-block-head">
+      <div class="copy-block-label">流れ説明テンプレート</div>
+      <button class="copy-btn" type="button">コピー</button>
     </div>
+    <div class="copy-block-body">この後、入会の流れは以下のとおりです📝
+
+① 自己紹介の作成（専用ツールをお送りします）
+② 受付係でその内容を確認
+③ 情報サロンというグループにご招待
+④ その後、案内係から家族グループへのご案内
+
+ご自身のペースで大丈夫ですので、ゆっくり進めていきましょう😊</div>
   </div>
 
   <h4>Step 3：ここで一度区切って、質問を受け付ける</h4>
@@ -1345,18 +1401,22 @@ h3 {
     </div>
   </div>
 
-  <div class="card">
-    <div class="card-title">ツールURL送付時のテンプレート例</div>
-    <div class="card-body">
-      ○○さん、よろしくお願いします。<br><br>
-      入会に向けて、自己紹介のご作成をお願いしております。<br>
-      以下の「自己紹介作成ツール」で項目を埋めていただくと、最後に完成した自己紹介文をコピーできます。<br>
-      コピーしたものをそのまま、このトークに貼り付けて送っていただけますでしょうか？<br><br>
-      ▼自己紹介作成ツール▼<br>
-      [ツールURL]<br><br>
-      全部で10項目ありますが、お時間のあるときにゆっくりご入力いただければ大丈夫です。<br>
-      わからないところがあれば、お気軽にお聞きくださいね。
+  <div class="copy-block">
+    <div class="copy-block-head">
+      <div class="copy-block-label">ツールURL送付時のテンプレート例</div>
+      <button class="copy-btn" type="button">コピー</button>
     </div>
+    <div class="copy-block-body">○○さん、よろしくお願いします。
+
+入会に向けて、自己紹介のご作成をお願いしております。
+以下の「自己紹介作成ツール」で項目を埋めていただくと、最後に完成した自己紹介文をコピーできます。
+コピーしたものをそのまま、このトークに貼り付けて送っていただけますでしょうか？
+
+▼自己紹介作成ツール▼
+https://chaipapa.github.io/purelight-intro-form/
+
+全部で10項目ありますが、お時間のあるときにゆっくりご入力いただければ大丈夫です。
+わからないところがあれば、お気軽にお聞きくださいね。</div>
   </div>
 
   <h4>Step 2：入力のフォロー</h4>
@@ -1399,25 +1459,32 @@ h3 {
     </div>
   </div>
 
-  <div class="card laven">
-    <div class="card-title">注意事項の案内を忘れずに</div>
-    <div class="card-body">
-      自己紹介の受け取り後または入会確定時に、以下の注意事項を新規さんに伝えてください。<br><br>
-      「❗ご注意❗ 完全退会される際はくれぐれも、家族グループ内のノートの削除を忘れないようにしてください。ノートはご本人でないと削除できません❗」
+  <div class="pullquote" style="border-left-color:var(--laven);">
+    <div class="pullquote-label" style="color:var(--laven);">注意事項の案内を忘れずに</div>
+    <div class="pullquote-text">自己紹介の受け取り後または入会確定時に、下の定型文を新規さんに伝えます。</div>
+  </div>
+
+  <div class="copy-block">
+    <div class="copy-block-head">
+      <div class="copy-block-label">ノート削除のご注意 定型文</div>
+      <button class="copy-btn" type="button">コピー</button>
     </div>
+    <div class="copy-block-body">❗ご注意❗
+完全退会される際はくれぐれも、家族グループ内のノートの削除を忘れないようにしてください。
+ノートはご本人でないと削除できません❗</div>
   </div>
 </section>
 <div class="pager">
   <a class="prev" data-next="p05"><span class="nav-label">← 前へ</span><span class="nav-title">担当決め</span></a>
-  <a class="next" data-next="p07"><span class="nav-label">PHASE 3 →</span><span class="nav-title">10項目チェック</span></a>
+  <a class="next" data-next="p07"><span class="nav-label">パート 3 →</span><span class="nav-title">10項目チェック</span></a>
 </div>
 </div>
 
-<!-- ── 7. 10項目チェック（PHASE 3） ── -->
+<!-- ── 7. 10項目チェック（パート 3） ── -->
 <div class="page" id="p07">
 <section id="s07">
   <div class="hero">
-    <div class="hero-eyebrow">SECTION 07 &nbsp;・&nbsp; <span class="phase-badge p3">PHASE 3</span></div>
+    <div class="hero-eyebrow">SECTION 07 &nbsp;・&nbsp; <span class="phase-badge p3">パート 3</span></div>
     <div class="hero-title">自己紹介テキスト 10項目のチェック</div>
     <div class="hero-tldr">
       <strong>重要度の強弱</strong>：⑥⑦は<u>最重要</u>（医師の診断）、①〜⑤は<u>正確性</u>、⑧〜⑩は<u>補足</u>。受付係グループに共有し、目安3名でOKを取る。
@@ -1445,15 +1512,15 @@ h3 {
 </section>
 <div class="pager">
   <a class="prev" data-next="p06"><span class="nav-label">← 前へ</span><span class="nav-title">個チャ・ツール送付</span></a>
-  <a class="next" data-next="p08"><span class="nav-label">PHASE 3 →</span><span class="nav-title">入会判断</span></a>
+  <a class="next" data-next="p08"><span class="nav-label">パート 3 →</span><span class="nav-title">入会判断</span></a>
 </div>
 </div>
 
-<!-- ── 8. 入会判断（PHASE 3） ── -->
+<!-- ── 8. 入会判断（パート 3） ── -->
 <div class="page" id="p08">
 <section id="s08">
   <div class="hero">
-    <div class="hero-eyebrow">SECTION 08 &nbsp;・&nbsp; <span class="phase-badge p3">PHASE 3</span></div>
+    <div class="hero-eyebrow">SECTION 08 &nbsp;・&nbsp; <span class="phase-badge p3">パート 3</span></div>
     <div class="hero-title">入会判断の基準</div>
     <div class="hero-tldr">
       <strong>たった1つのルール</strong>：医師の診断が最優先。疑いでもOK、本人の主観だけは見送り。判定は1人ではなく<strong>3人で</strong>。
@@ -1471,15 +1538,15 @@ h3 {
 </section>
 <div class="pager">
   <a class="prev" data-next="p07"><span class="nav-label">← 前へ</span><span class="nav-title">10項目チェック</span></a>
-  <a class="next" data-next="p09"><span class="nav-label">PHASE 3 →</span><span class="nav-title">よくあるケース</span></a>
+  <a class="next" data-next="p09"><span class="nav-label">パート 3 →</span><span class="nav-title">よくあるケース</span></a>
 </div>
 </div>
 
-<!-- ── 9. よくあるケース（PHASE 3） ── -->
+<!-- ── 9. よくあるケース（パート 3） ── -->
 <div class="page" id="p09">
 <section id="s09">
   <div class="hero">
-    <div class="hero-eyebrow">SECTION 09 &nbsp;・&nbsp; <span class="phase-badge p3">PHASE 3</span></div>
+    <div class="hero-eyebrow">SECTION 09 &nbsp;・&nbsp; <span class="phase-badge p3">パート 3</span></div>
     <div class="hero-title">よくあるケースと対応例</div>
     <div class="hero-tldr">
       過去の実例をベースに、<strong>OK／要相談／特別検討</strong>の3区分で対応指針を整理。
@@ -1506,15 +1573,15 @@ h3 {
 </section>
 <div class="pager">
   <a class="prev" data-next="p08"><span class="nav-label">← 前へ</span><span class="nav-title">入会判断</span></a>
-  <a class="next" data-next="p10"><span class="nav-label">PHASE 3 →</span><span class="nav-title">イレギュラー</span></a>
+  <a class="next" data-next="p10"><span class="nav-label">パート 3 →</span><span class="nav-title">イレギュラー</span></a>
 </div>
 </div>
 
-<!-- ── 10. イレギュラー（PHASE 3） ── -->
+<!-- ── 10. イレギュラー（パート 3） ── -->
 <div class="page" id="p10">
 <section id="s10">
   <div class="hero">
-    <div class="hero-eyebrow">SECTION 10 &nbsp;・&nbsp; <span class="phase-badge p3">PHASE 3</span></div>
+    <div class="hero-eyebrow">SECTION 10 &nbsp;・&nbsp; <span class="phase-badge p3">パート 3</span></div>
     <div class="hero-title">イレギュラーケース</div>
     <div class="hero-tldr">
       想定外のケースでは<strong>一人で判断しない</strong>。まず受付係のグループに投げて経験者の意見を聞く。
@@ -1532,15 +1599,15 @@ h3 {
 </section>
 <div class="pager">
   <a class="prev" data-next="p09"><span class="nav-label">← 前へ</span><span class="nav-title">よくあるケース</span></a>
-  <a class="next" data-next="p11"><span class="nav-label">PHASE 4 →</span><span class="nav-title">情報サロン招待</span></a>
+  <a class="next" data-next="p11"><span class="nav-label">パート 4 →</span><span class="nav-title">情報サロン招待</span></a>
 </div>
 </div>
 
-<!-- ── 11. 情報サロン招待（PHASE 4） ── -->
+<!-- ── 11. 情報サロン招待（パート 4） ── -->
 <div class="page" id="p11">
 <section id="s11">
   <div class="hero">
-    <div class="hero-eyebrow">SECTION 11 &nbsp;・&nbsp; <span class="phase-badge p4">PHASE 4</span></div>
+    <div class="hero-eyebrow">SECTION 11 &nbsp;・&nbsp; <span class="phase-badge p4">パート 4</span></div>
     <div class="hero-title">情報サロンへの招待</div>
     <div class="hero-tldr">
       自己紹介の3名OKが出たら、招待へ。<strong>招待は受付係が行う</strong>（案内係ではない）。4ステップで確実に。
@@ -1643,19 +1710,19 @@ h3 {
       </div>
     </div>
   </div>
-  <div class="card sage"><div class="card-title">ここで受付係の役割は一区切り</div><div class="card-body">新規さんが「参加しました」と書き込んだ時点で、案内係への引き継ぎが始まります。次フェーズ（PHASE 5）は案内係が主役です。</div></div>
+  <div class="card sage"><div class="card-title">ここで受付係の役割は一区切り</div><div class="card-body">新規さんが「参加しました」と書き込んだ時点で、案内係への引き継ぎが始まります。次パート（パート 5）は案内係が主役です。</div></div>
 </section>
 <div class="pager">
   <a class="prev" data-next="p10"><span class="nav-label">← 前へ</span><span class="nav-title">イレギュラー</span></a>
-  <a class="next" data-next="p12"><span class="nav-label">PHASE 5 →</span><span class="nav-title">案内係へ引継</span></a>
+  <a class="next" data-next="p12"><span class="nav-label">パート 5 →</span><span class="nav-title">案内係へ引継</span></a>
 </div>
 </div>
 
-<!-- ── 12. 案内係への引き継ぎ（PHASE 5） ── -->
+<!-- ── 12. 案内係への引き継ぎ（パート 5） ── -->
 <div class="page" id="p12">
 <section id="s12">
   <div class="hero">
-    <div class="hero-eyebrow">SECTION 12 &nbsp;・&nbsp; <span class="phase-badge p5">PHASE 5</span></div>
+    <div class="hero-eyebrow">SECTION 12 &nbsp;・&nbsp; <span class="phase-badge p5">パート 5</span></div>
     <div class="hero-title">案内係への引き継ぎ</div>
     <div class="hero-tldr">
       「参加しました」の書き込みが引き継ぎの合図。<strong>以降は案内係が主役</strong>、受付係は進行を見守る。
@@ -1887,6 +1954,42 @@ h3 {
   var initial = (location.hash || '#p00').replace('#','');
   if (!document.getElementById(initial)) initial = 'p00';
   show(initial);
+
+  // ── コピーボタン ──
+  document.addEventListener('click', function(e){
+    var btn = e.target.closest('.copy-btn');
+    if (!btn) return;
+    var block = btn.closest('.copy-block');
+    if (!block) return;
+    var body = block.querySelector('.copy-block-body');
+    if (!body) return;
+    // HTMLから改行・リンク装飾を剥がして平文化
+    var txt = body.innerText.replace(/\u00A0/g, ' ');
+    var done = function(){
+      var orig = btn.dataset.origLabel || btn.textContent.trim() || 'コピー';
+      btn.dataset.origLabel = orig;
+      btn.classList.add('copied');
+      btn.textContent = 'コピーしました';
+      setTimeout(function(){
+        btn.classList.remove('copied');
+        btn.textContent = orig;
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(txt).then(done, function(){
+        // フォールバック
+        var ta = document.createElement('textarea');
+        ta.value = txt; document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); } catch(err) {}
+        document.body.removeChild(ta); done();
+      });
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = txt; document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); } catch(err) {}
+      document.body.removeChild(ta); done();
+    }
+  });
 })();
 </script>
 
