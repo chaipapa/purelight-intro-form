@@ -1971,6 +1971,55 @@ https://chaipapa.github.io/purelight-intro-form/
   if (!document.getElementById(initial)) initial = 'p00';
   show(initial);
 
+  // ── スワイプでページ移動 ──
+  (function(){
+    var pageOrder = Array.prototype.map.call(tabs, function(t){ return t.dataset.page; });
+    var currentIndex = function(){
+      var active = document.querySelector('.page.active');
+      return active ? pageOrder.indexOf(active.id) : 0;
+    };
+    var goTo = function(delta){
+      var idx = currentIndex();
+      var next = idx + delta;
+      if (next < 0 || next >= pageOrder.length) return;
+      show(pageOrder[next]);
+    };
+
+    var startX = 0, startY = 0, startT = 0, tracking = false;
+    var THRESHOLD_X = 60;  // 60px以上
+    var MAX_Y = 50;        // 縦移動は50px以内
+    var MAX_TIME = 600;    // 600ms以内
+
+    document.addEventListener('touchstart', function(e){
+      if (e.touches.length !== 1) { tracking = false; return; }
+      var t = e.target;
+      // スクロール可能な要素内のスワイプは無視（タブナビ、コードブロック等）
+      if (t.closest('.tab-nav') || t.closest('.copy-block-body') || t.closest('.line-chat') || t.closest('details.more[open]')) {
+        tracking = false;
+        return;
+      }
+      tracking = true;
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      startT = Date.now();
+    }, { passive: true });
+
+    document.addEventListener('touchend', function(e){
+      if (!tracking) return;
+      tracking = false;
+      if (!e.changedTouches || e.changedTouches.length !== 1) return;
+      var dx = e.changedTouches[0].clientX - startX;
+      var dy = e.changedTouches[0].clientY - startY;
+      var dt = Date.now() - startT;
+      if (dt > MAX_TIME) return;
+      if (Math.abs(dy) > MAX_Y) return;
+      if (Math.abs(dx) < THRESHOLD_X) return;
+      if (Math.abs(dx) < Math.abs(dy) * 1.5) return;  // 横の動きが縦より明確に大きい
+      // 左スワイプ（dx<0）→次のページ／右スワイプ（dx>0）→前のページ
+      goTo(dx < 0 ? 1 : -1);
+    }, { passive: true });
+  })();
+
   // ── コピーボタン ──
   document.addEventListener('click', function(e){
     var btn = e.target.closest('.copy-btn');
