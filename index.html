@@ -88,7 +88,7 @@
   <h1>PureLightの自己紹介作成ツール</h1>
   <div id="form-container"></div>
   <div class="progress-container">
-    <progress id="progress" value="0" max="8"></progress>
+    <progress id="progress" value="0" max="9"></progress>
     <div id="percent">0%</div>
   </div>
   <div class="button-container">
@@ -151,7 +151,7 @@
         if (q.required && document.getElementById(q.id).value.trim() !== "") filled++;
       });
       document.getElementById("progress").value = filled;
-      document.getElementById("percent").innerText = Math.round((filled / 8) * 100) + "%";
+      document.getElementById("percent").innerText = Math.round((filled / 9) * 100) + "%";
     }
 
     function toHalfWidth(str) {
