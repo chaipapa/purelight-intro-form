@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PureLightの自己紹介作成ツール</title>
+  <style>
+    :root {
+      --blk: #1B2A4A; --dk: #1B2A4A;
+      --gry: rgba(27,42,74,0.7); --gry-lt: rgba(27,42,74,0.45);
+      --gry-xlt: rgba(27,42,74,0.1);
+      --card-bg: rgba(27,42,74,0.03); --warm-bg: #F6F2EC;
+      --rose: #E86A4E; --rose-dk: #B03A4E; --rose-lt: rgba(232,106,78,0.15);
+      --peach: #C48A1B; --sage: #2F7A58; --sky: #3D5A8A; --laven: #6B5B8E;
+      --tomato: #B03A4E;
+      --line-grn: #2F7A58;
+      --line-strong: rgba(27,42,74,0.35);
+      --line-mid: rgba(27,42,74,0.2);
+      --line-soft: rgba(27,42,74,0.1);
+      --paper-2: rgba(27,42,74,0.03);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 15px; -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+      color: var(--blk); background: var(--warm-bg); line-height: 1.7;
+      max-width: 520px; margin: 0 auto; padding: 0;
+      letter-spacing: 0.005em;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── 表紙（エディトリアル調・明るい紙） ── */
+    .cover {
+      background: var(--warm-bg); color: var(--blk);
+      padding: 3rem 1.5rem 2rem;
+      position: relative;
+    }
+    .cover .org {
+      font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--gry-lt); margin-bottom: 1rem; font-weight: 700;
+      font-family: ui-monospace, "SF Mono", monospace;
+    }
+    .cover h1 {
+      font-size: 2.6rem; font-weight: 900; line-height: 1.05;
+      margin-bottom: 0.3rem; letter-spacing: -0.03em; color: var(--blk);
+    }
+    .cover .tool-title {
+      font-size: 1.4rem; color: var(--rose); font-weight: 900;
+      margin-bottom: 1.3rem; letter-spacing: -0.02em; line-height: 1.15;
+    }
+    .cover .tagline {
+      font-size: 13px; color: var(--gry); line-height: 1.7;
+    }
+    .cover .rule {
+      border-top: 1px solid var(--line-mid);
+      margin-top: 1.8rem; padding-top: 0.9rem;
+      font-size: 10.5px; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--gry-lt); font-weight: 700;
+      font-family: ui-monospace, "SF Mono", monospace;
+    }
+
+    /* ── ヘッダー ── */
+    .page-header {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(246,242,236,0.95);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      padding: 0.55rem 1.5rem;
+      border-bottom: 1px solid var(--line-mid);
+      font-size: 11px; color: var(--gry); font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── 本体 ── */
+    main { padding: 1.8rem 1.5rem 2rem; }
+
+    .hero {
+      border-bottom: 1px solid var(--line-mid);
+      padding-bottom: 1rem; margin-bottom: 1.5rem;
+    }
+    .hero-eyebrow {
+      font-size: 11px; letter-spacing: 0.22em; font-weight: 700;
+      color: var(--rose); margin-bottom: 0.5rem; text-transform: uppercase;
+      font-family: ui-monospace, "SF Mono", monospace;
+    }
+    .hero-title {
+      font-size: 1.6rem; font-weight: 900; color: var(--blk);
+      line-height: 1.2; margin-bottom: 0.6rem; letter-spacing: -0.025em;
+    }
+    .hero-tldr {
+      font-size: 13px; line-height: 1.7; color: var(--blk);
+      padding: 0 0 0 12px; border-left: 2px solid var(--rose);
+    }
+    .hero-tldr strong { color: var(--blk); font-weight: 800; }
+
+    /* ── フォーム ── */
+    #form-container {
+      counter-reset: qn;
+    }
+    #form-container label {
+      display: block;
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--blk);
+      margin: 1.4rem 0 0.5rem;
+      line-height: 1.55;
+      white-space: pre-line;
+      letter-spacing: -0.005em;
+      position: relative;
+    }
+    #form-container label small {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--rose);
+      background: #fff;
+      border: 1px solid var(--rose);
+      padding: 1px 6px;
+      border-radius: 3px;
+      margin-left: 0.45rem;
+      vertical-align: 2px;
+    }
+    #form-container label small.optional {
+      color: var(--gry);
+      border-color: var(--line-mid);
+    }
+    #form-container input[type="text"],
+    #form-container textarea {
+      width: 100%;
+      padding: 0.7rem 0.85rem;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--blk);
+      background: #fff;
+      border: 1px solid var(--line-mid);
+      border-radius: 8px;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      -webkit-appearance: none;
+      letter-spacing: 0.005em;
+    }
+    #form-container input[type="text"]:focus,
+    #form-container textarea:focus {
+      outline: none;
+      border-color: var(--rose);
+      box-shadow: 0 0 0 3px var(--rose-lt);
+    }
+    #form-container textarea {
+      resize: vertical;
+      min-height: 5.4rem;
+      line-height: 1.65;
+    }
+
+    /* ── プログレス（エディトリアル調） ── */
+    .progress-container {
+      margin-top: 2rem;
+      padding: 0.8rem 0.95rem;
+      background: #fff;
+      border: 1px solid var(--line-mid);
+      border-radius: 8px;
+    }
+    .progress-label {
+      display: flex; justify-content: space-between; align-items: baseline;
+      font-size: 10.5px; color: var(--gry); margin-bottom: 0.5rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      font-family: ui-monospace, "SF Mono", monospace;
+      font-weight: 700;
+    }
+    .progress-label .label-text { color: var(--blk); }
+    .progress-bar {
+      width: 100%; height: 0.4rem;
+      background: var(--gry-xlt); border-radius: 999px; overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--rose);
+      border-radius: 999px;
+      transition: width 0.25s ease;
+    }
+    #percent {
+      font-variant-numeric: tabular-nums;
+      color: var(--rose);
+      letter-spacing: 0.02em;
+    }
+    progress { display: none; }
+
+    /* ── ボタン ── */
+    .button-container {
+      display: flex;
+      gap: 0.6rem;
+      margin-top: 1.1rem;
+      flex-wrap: wrap;
+    }
+    button {
+      padding: 0.78rem 1.1rem;
+      font-size: 13.5px;
+      font-family: inherit;
+      font-weight: 800;
+      letter-spacing: -0.005em;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.15s ease, transform 0.05s ease, border-color 0.15s ease;
+      flex: 1 1 auto;
+    }
+    button:active { transform: translateY(1px); }
+    #confirmBtn {
+      background-color: var(--rose);
+      color: #fff;
+      border-color: var(--rose);
+    }
+    #confirmBtn:hover { background-color: var(--rose-dk); border-color: var(--rose-dk); }
+    #resetBtn {
+      background-color: #fff;
+      color: var(--blk);
+      border: 1px solid var(--line-mid);
+      flex: 0 0 auto;
+      font-weight: 700;
+    }
+    #resetBtn:hover { border-color: var(--blk); background-color: var(--paper-2); }
+    #copyBtn {
+      background-color: var(--line-grn);
+      color: #fff;
+      border-color: var(--line-grn);
+      display: none;
+      width: 100%;
+    }
+    #copyBtn:hover { background-color: #24603f; border-color: #24603f; }
+
+    /* ── エラー ── */
+    .error {
+      color: var(--tomato);
+      font-size: 12.5px;
+      margin-top: 1rem;
+      white-space: pre-line;
+      line-height: 1.7;
+    }
+    .error:not(:empty) {
+      padding: 0.7rem 0.9rem;
+      background: rgba(176,58,78,0.06);
+      border: 1px solid rgba(176,58,78,0.25);
+      border-radius: 6px;
+    }
+
+    /* ── 出力（プレビュー） ── */
+    .output-wrap {
+      margin-top: 1.3rem;
+    }
+    .output-wrap:empty { display: none; }
+    .output-label {
+      font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--rose); font-weight: 700;
+      font-family: ui-monospace, "SF Mono", monospace;
+      margin-bottom: 0.4rem;
+    }
+    #output {
+      white-space: pre-wrap;
+      background: #fff;
+      border: 1px solid var(--line-mid);
+      border-left: 3px solid var(--rose);
+      border-radius: 8px;
+      padding: 1rem 1.15rem;
+      font-size: 13px;
+      line-height: 1.8;
+      color: var(--blk);
+      font-family: inherit;
+    }
+    #output:empty { display: none; }
+
+    /* ── フッター ── */
+    .page-footer {
+      padding: 1.8rem 1.5rem 2rem;
+      border-top: 1px solid var(--line-mid);
+      text-align: left;
+      font-size: 10.5px;
+      color: var(--gry-lt);
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 700;
+      font-family: ui-monospace, "SF Mono", monospace;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 表紙（エディトリアル） -->
+  <div class="cover">
+    <div class="org">PURELIGHT ― FAMILY SUPPORT GROUP</div>
+    <h1>PureLight</h1>
+    <div class="tool-title">自己紹介作成ツール</div>
+    <div class="tagline">
+      ご家族グループに参加される方が、<br>
+      自己紹介のテキストを整えるためのツールです。
+    </div>
+    <div class="rule">INTRO FORM ・ 2026</div>
+  </div>
+
+  <!-- ヘッダー -->
+  <div class="page-header">PureLight &nbsp;/&nbsp; 自己紹介作成ツール</div>
+
+  <!-- 本体 -->
+  <main>
+    <div class="hero">
+      <div class="hero-eyebrow">HOW TO USE</div>
+      <div class="hero-title">記入 → 確認 → コピー</div>
+      <div class="hero-tldr">
+        各項目にご入力後、<strong>「確認する」</strong>を押してください。内容を確認したら <strong>「LINEに貼り付けるためにコピーする」</strong> でコピーし、LINEのトークに貼り付けて送信してください。
+      </div>
+    </div>
+
+    <div id="form-container"></div>
+
+    <div class="progress-container">
+      <div class="progress-label">
+        <span class="label-text">INPUT PROGRESS</span>
+        <span id="percent">0%</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+      <progress id="progress" value="0" max="9"></progress>
+    </div>
+
+    <div class="button-container">
+      <button id="confirmBtn">確認する</button>
+      <button id="resetBtn">やりなおす</button>
+      <button id="copyBtn">LINEに貼り付けるためにコピーする</button>
+    </div>
+
+    <div id="errors" class="error"></div>
+
+    <div class="output-wrap" id="outputWrap">
+      <div id="output"></div>
+    </div>
+  </main>
+
+  <div class="page-footer">PURELIGHT &nbsp; INTRO FORM &nbsp; 2026</div>
+
+  <script>
+    const questions = [
+      { id: "lineName", label: "①ライン名（LINEのアカウント名と同じお名前でお願いします）", required: true, multi: false },
+      { id: "location", label: "②ご家族（ケアラー）自身のお住まいの都道府県（海外の方は国名）", required: true, multi: false },
+      { id: "relation", label: "③当事者からみたあなたの立場", required: true, multi: false },
+      { id: "gender", label: "④当事者の性別", required: true, multi: false },
+      { id: "age", label: "⑤当事者の年齢（数字だけを入力してください）", required: true, multi: false },
+      { id: "onset", label: "⑥-①発症年齢（数字だけを入力してください）", required: true, multi: false },
+      { id: "relapse", label: "⑥-②再発回数（数字だけを入力してください。再発歴がない場合は0を入れてください）", required: true, multi: false },
+      { id: "status", label: "⑦発症から現在の状況（ざっくりでも盛り沢山でもOK）悩み、相談、気になっていることなど", required: true, multi: true },
+      { id: "meds", label: "⑧現在、過去のお薬歴、サプリ、漢方、栄養療法など", required: true, multi: false },
+      { id: "group", label: "⑨PureLight内の所属グループ\n（基本の家族グループ以外）サブグループ、混合グループ", required: false, multi: false },
+      { id: "regional", label: "⑩所属している地域の家族会（任意）", required: false, multi: false }
+    ];
+
+    const shortLabels = {
+      lineName: "①ライン名",
+      location: "②お住まいの都道府県/国名",
+      relation: "③当事者からみた立場",
+      gender: "④当事者の性別",
+      age: "⑤当事者の年齢",
+      onset: "⑥-①発症年齢",
+      relapse: "⑥-②再発回数",
+      status: "⑦現在の状況・悩みなど",
+      meds: "⑧お薬歴など",
+      group: "⑨PureLight内の所属グループ",
+      regional: "⑩地域の家族会（任意）"
+    };
+
+    const formContainer = document.getElementById("form-container");
+    questions.forEach(q => {
+      const label = document.createElement("label");
+      label.innerText = q.label;
+      const tag = document.createElement("small");
+      if (q.required) {
+        tag.innerText = "必須";
+      } else {
+        tag.innerText = "任意";
+        tag.className = "optional";
+      }
+      label.appendChild(tag);
+      const input = q.multi ? document.createElement("textarea") : document.createElement("input");
+      input.type = "text";
+      input.id = q.id;
+      input.rows = q.multi ? 4 : 1;
+      input.addEventListener("input", updateProgress);
+      formContainer.appendChild(label);
+      formContainer.appendChild(input);
+    });
+
+    function updateProgress() {
+      let filled = 0;
+      questions.forEach(q => {
+        if (q.required && document.getElementById(q.id).value.trim() !== "") filled++;
+      });
+      document.getElementById("progress").value = filled;
+      const pct = Math.round((filled / 9) * 100);
+      document.getElementById("percent").innerText = pct + "%";
+      document.getElementById("progressFill").style.width = pct + "%";
+    }
+
+    function toHalfWidth(str) {
+      return str.replace(/[０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xfee0))
+                .replace(/[Ａ-Ｚａ-ｚ]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xfee0));
+    }
+
+    document.getElementById("confirmBtn").addEventListener("click", () => {
+      const errors = [];
+      const values = {};
+      questions.forEach(q => {
+        const val = document.getElementById(q.id).value.trim();
+        const clean = (q.id === "lineName") ? val : toHalfWidth(val);
+        if (q.required && clean === "") {
+          errors.push(`${shortLabels[q.id]}を入力してください。`);
+        }
+        values[q.id] = clean;
+      });
+
+      const errBox = document.getElementById("errors");
+      const output = document.getElementById("output");
+      const copyBtn = document.getElementById("copyBtn");
+
+      if (errors.length > 0) {
+        errBox.innerText = errors.join("\n");
+        output.innerText = "";
+        copyBtn.style.display = "none";
+        return;
+      } else {
+        errBox.innerText = "";
+      }
+
+      localStorage.setItem("plForm", JSON.stringify(values));
+
+      const ageStr = values.age ? `${values.age}歳` : "";
+      const onsetStr = values.onset ? `発症${values.onset}歳` : "";
+      const relapseStr = values.relapse === "0" ? "再発なし" : `再発${values.relapse}回`;
+      const relapseBlock = onsetStr || relapseStr ? `${onsetStr}、${relapseStr}` : "";
+
+      const outputText = `①ライン名\n【${values.lineName}】\n\n②お住まいの都道府県/国名\n【${values.location}】\n\n③当事者からみた立場\n【${values.relation}】\n\n④当事者の性別\n【${values.gender}】\n\n⑤当事者の年齢\n【${ageStr}】\n\n⑥発症年齢、再発回数等\n【${relapseBlock}】\n\n⑦現在の状況・悩みなど\n【${values.status}】\n\n⑧お薬歴など\n【${values.meds}】\n\n⑨PureLight内の所属グループ\n【${values.group}】\n\n⑩地域の家族会（任意）\n【${values.regional}】\n\n❗ご注意❗\n完全退会される際はくれぐれも、家族グループ内のノートの削除を忘れないようにしてください。\nノートはご本人でないと削除できません❗`;
+
+      output.innerText = outputText;
+      copyBtn.style.display = "inline-block";
+    });
+
+    document.getElementById("copyBtn").addEventListener("click", async () => {
+      const text = document.getElementById("output").innerText;
+      await navigator.clipboard.writeText(text);
+      alert("コピーしました。LINEのトークで「ペースト」「貼り付け」できます");
+    });
+
+    document.getElementById("resetBtn").addEventListener("click", () => {
+      if (confirm("入力内容をすべて消しても良いですか？")) {
+        questions.forEach(q => document.getElementById(q.id).value = "");
+        localStorage.removeItem("plForm");
+        updateProgress();
+        document.getElementById("output").innerText = "";
+        document.getElementById("errors").innerText = "";
+        document.getElementById("copyBtn").style.display = "none";
+      }
+    });
+
+    // LocalStorageからの復元
+    window.onload = () => {
+      const saved = JSON.parse(localStorage.getItem("plForm") || "{}");
+      questions.forEach(q => {
+        if (saved[q.id]) document.getElementById(q.id).value = saved[q.id];
+      });
+      updateProgress();
+    }
+  </script>
+</body>
+</html>
