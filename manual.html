@@ -290,14 +290,39 @@ p { margin-bottom: 0.5rem; font-size: 0.9rem; }
 
 /* ── 最終ページ ── */
 .closing {
-  background: var(--cover-bg); color: rgba(255,255,255,0.6); padding: 3rem 1.5rem 2rem;
+  background: var(--cover-bg); color: rgba(255,255,255,0.92);
+  padding: 3rem 1.5rem 2rem;
   min-height: calc(80vh - 2.5rem); display: flex; flex-direction: column; justify-content: center;
+  position: relative; overflow: hidden;
 }
-.closing .accent-bar { width: 2.5rem; height: 2px; background: var(--rose); margin-bottom: 2rem; }
-.closing .lead { font-size: 0.9rem; color: var(--gry-lt); margin-bottom: 1rem; }
-.closing .highlight { font-size: 1.5rem; color: var(--rose); font-weight: 700; margin-bottom: 1.5rem; line-height: 1.3; }
-.closing p { font-size: 0.85rem; line-height: 1.7; margin-bottom: 0.3rem; }
-.closing .sign { margin-top: 2rem; font-size: 0.7rem; color: var(--gry-lt); }
+.closing::before {
+  content: ''; position: absolute; top: -4rem; right: -6rem;
+  width: 16rem; height: 16rem; border-radius: 50%;
+  background: rgba(232,99,139,0.08);
+}
+.closing .accent-bar { width: 2.5rem; height: 2px; background: var(--rose); margin-bottom: 2rem; position: relative; }
+.closing .lead { font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-bottom: 1rem; position: relative; }
+.closing .highlight {
+  font-size: 1.75rem; color: #fff; font-weight: 700;
+  margin-bottom: 1.6rem; line-height: 1.3;
+  letter-spacing: -0.01em; position: relative;
+}
+.closing .highlight::after {
+  content: ''; display: block; width: 2.2rem; height: 2px;
+  background: var(--rose); margin-top: 0.8rem; border-radius: 1px;
+}
+.closing p {
+  font-size: 0.95rem; line-height: 1.85;
+  color: rgba(255,255,255,0.92); font-weight: 400;
+  margin-bottom: 0.7rem; position: relative;
+}
+.closing p strong { color: #fff; font-weight: 600; }
+.closing .sign {
+  margin-top: 2.2rem; font-size: 0.7rem;
+  color: rgba(255,255,255,0.45); letter-spacing: 0.05em;
+  position: relative;
+  padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.12);
+}
 
 /* ── ヘッダー ── */
 .page-header {
@@ -346,6 +371,20 @@ p { margin-bottom: 0.5rem; font-size: 0.9rem; }
   from { opacity: 0; transform: translateY(4px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+/* スワイプ中のページ（指に追従） */
+.page.dragging { animation: none; will-change: transform; }
+.page.peek {
+  display: block !important;
+  position: fixed; top: 2.5rem; left: 0; right: 0;
+  margin: 0 auto; max-width: 520px;
+  background: var(--warm-bg); z-index: 5;
+  min-height: calc(100vh - 2.5rem);
+  overflow-x: hidden;
+  will-change: transform;
+  animation: none;
+  box-shadow: -6px 0 18px rgba(0,0,0,0.04);
+}
+.page.snapping { transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1); }
 .pager {
   display: flex; justify-content: space-between; align-items: center;
   gap: 0.5rem; padding: 1.2rem 1.5rem 1.8rem;
@@ -1931,9 +1970,9 @@ https://chaipapa.github.io/purelight-intro-form/
 <div class="page" id="p99">
 <div class="closing">
   <div class="accent-bar"></div>
-  <div class="highlight">お疲れさまでした。</div>
-  <p>わからないことは、いつでも受付係のグループで聞いてください。</p>
-  <p>完璧でなくて大丈夫です。一人で抱え込まず、みんなで対応していきましょう。</p>
+  <div class="highlight">お疲れさまでした</div>
+  <p>わからないことは、いつでも<strong>受付係のグループ</strong>で聞いてください。</p>
+  <p>完璧でなくて大丈夫。<br>一人で抱え込まず、みんなで対応していきましょう。</p>
   <div class="sign">PureLight &nbsp;|&nbsp; 受付係チーム</div>
 </div>
 <div class="pager">
@@ -1971,52 +2010,157 @@ https://chaipapa.github.io/purelight-intro-form/
   if (!document.getElementById(initial)) initial = 'p00';
   show(initial);
 
-  // ── スワイプでページ移動 ──
+  // ── スワイプでページ移動（指追従＋ピーク）──
   (function(){
     var pageOrder = Array.prototype.map.call(tabs, function(t){ return t.dataset.page; });
-    var currentIndex = function(){
-      var active = document.querySelector('.page.active');
-      return active ? pageOrder.indexOf(active.id) : 0;
-    };
-    var goTo = function(delta){
-      var idx = currentIndex();
-      var next = idx + delta;
-      if (next < 0 || next >= pageOrder.length) return;
-      show(pageOrder[next]);
+    var touch = null;
+    var COMMIT_RATIO = 0.22;       // ページ幅の22%以上ドラッグで確定
+    var COMMIT_VELOCITY = 0.45;    // またはこれ以上の速度(px/ms)
+    var MIN_QUICK_DX = 24;         // 速度ベースでも最低これだけは動かす必要
+
+    var isExcluded = function(t){
+      return !!(t.closest('.tab-nav') || t.closest('.copy-block-body') ||
+                t.closest('.line-chat') || t.closest('.line-mock') ||
+                (t.closest('details.more') && t.closest('details.more').open) ||
+                t.closest('button'));
     };
 
-    var startX = 0, startY = 0, startT = 0, tracking = false;
-    var THRESHOLD_X = 60;  // 60px以上
-    var MAX_Y = 50;        // 縦移動は50px以内
-    var MAX_TIME = 600;    // 600ms以内
+    var cleanup = function(state){
+      if (!state) return;
+      if (state.currentPage) {
+        state.currentPage.style.transform = '';
+        state.currentPage.classList.remove('dragging','snapping');
+      }
+      if (state.peekPage) {
+        state.peekPage.style.transform = '';
+        state.peekPage.classList.remove('peek','dragging','snapping');
+      }
+    };
 
     document.addEventListener('touchstart', function(e){
-      if (e.touches.length !== 1) { tracking = false; return; }
-      var t = e.target;
-      // スクロール可能な要素内のスワイプは無視（タブナビ、コードブロック等）
-      if (t.closest('.tab-nav') || t.closest('.copy-block-body') || t.closest('.line-chat') || t.closest('details.more[open]')) {
-        tracking = false;
-        return;
-      }
-      tracking = true;
-      startX = e.touches[0].clientX;
-      startY = e.touches[0].clientY;
-      startT = Date.now();
+      if (e.touches.length !== 1) { touch = null; return; }
+      if (isExcluded(e.target)) { touch = null; return; }
+      var cp = document.querySelector('.page.active');
+      if (!cp) return;
+      var idx = pageOrder.indexOf(cp.id);
+      touch = {
+        startX: e.touches[0].clientX,
+        startY: e.touches[0].clientY,
+        startT: Date.now(),
+        dx: 0, dy: 0,
+        currentPage: cp,
+        currentIndex: idx,
+        peekPage: null,
+        peekDir: 0,
+        width: Math.min(cp.getBoundingClientRect().width, window.innerWidth),
+        decided: false,
+        cancelled: false
+      };
     }, { passive: true });
 
-    document.addEventListener('touchend', function(e){
-      if (!tracking) return;
-      tracking = false;
-      if (!e.changedTouches || e.changedTouches.length !== 1) return;
-      var dx = e.changedTouches[0].clientX - startX;
-      var dy = e.changedTouches[0].clientY - startY;
-      var dt = Date.now() - startT;
-      if (dt > MAX_TIME) return;
-      if (Math.abs(dy) > MAX_Y) return;
-      if (Math.abs(dx) < THRESHOLD_X) return;
-      if (Math.abs(dx) < Math.abs(dy) * 1.5) return;  // 横の動きが縦より明確に大きい
-      // 左スワイプ（dx<0）→次のページ／右スワイプ（dx>0）→前のページ
-      goTo(dx < 0 ? 1 : -1);
+    document.addEventListener('touchmove', function(e){
+      if (!touch || e.touches.length !== 1) return;
+      touch.dx = e.touches[0].clientX - touch.startX;
+      touch.dy = e.touches[0].clientY - touch.startY;
+
+      if (!touch.decided) {
+        var ax = Math.abs(touch.dx), ay = Math.abs(touch.dy);
+        if (ax < 8 && ay < 8) return;
+        if (ay > ax * 0.9) {
+          // 縦スクロール優先
+          touch.cancelled = true;
+          touch.decided = true;
+          return;
+        }
+        touch.decided = true;
+        touch.peekDir = touch.dx < 0 ? 1 : -1;
+        var peekIdx = touch.currentIndex + touch.peekDir;
+        if (peekIdx < 0 || peekIdx >= pageOrder.length) {
+          // 端で空振り（戻すだけ）
+          touch.peekPage = null;
+        } else {
+          touch.peekPage = document.getElementById(pageOrder[peekIdx]);
+          if (touch.peekPage) {
+            touch.peekPage.classList.add('peek','dragging');
+            // 初期位置：画面外に控えておく
+            var off = touch.peekDir > 0 ? touch.width : -touch.width;
+            touch.peekPage.style.transform = 'translateX(' + off + 'px)';
+          }
+        }
+        touch.currentPage.classList.add('dragging');
+      }
+
+      if (touch.cancelled) return;
+
+      // 端ではゴムバンド効果で抵抗
+      var dx = touch.dx;
+      if (!touch.peekPage) {
+        dx = dx / 3;  // 強い抵抗
+      }
+      // 横方向のスクロールをキャンセル（passive:falseが必要）
+      if (e.cancelable) e.preventDefault();
+
+      touch.currentPage.style.transform = 'translateX(' + dx + 'px)';
+      if (touch.peekPage) {
+        var peekOffset = touch.peekDir > 0 ? touch.width : -touch.width;
+        touch.peekPage.style.transform = 'translateX(' + (peekOffset + dx) + 'px)';
+      }
+    }, { passive: false });
+
+    var finish = function(){
+      if (!touch) return;
+      var state = touch;
+      touch = null;
+
+      if (state.cancelled || !state.decided) {
+        cleanup(state);
+        return;
+      }
+
+      var dx = state.dx;
+      var dt = Date.now() - state.startT;
+      var velocity = Math.abs(dx) / Math.max(dt, 1);
+
+      if (!state.peekPage) {
+        // 端から戻す
+        state.currentPage.classList.remove('dragging');
+        state.currentPage.classList.add('snapping');
+        state.currentPage.style.transform = 'translateX(0)';
+        setTimeout(function(){ cleanup(state); }, 320);
+        return;
+      }
+
+      var shouldCommit =
+        Math.abs(dx) > state.width * COMMIT_RATIO ||
+        (velocity > COMMIT_VELOCITY && Math.abs(dx) > MIN_QUICK_DX);
+
+      state.currentPage.classList.remove('dragging');
+      state.peekPage.classList.remove('dragging');
+      state.currentPage.classList.add('snapping');
+      state.peekPage.classList.add('snapping');
+
+      if (shouldCommit) {
+        // 吸い込む：現ページは画面外へ、peekは0へ
+        var outX = state.peekDir > 0 ? -state.width : state.width;
+        state.currentPage.style.transform = 'translateX(' + outX + 'px)';
+        state.peekPage.style.transform = 'translateX(0)';
+        var peekId = state.peekPage.id;
+        setTimeout(function(){
+          cleanup(state);
+          show(peekId);
+        }, 300);
+      } else {
+        // 戻す
+        var back = state.peekDir > 0 ? state.width : -state.width;
+        state.currentPage.style.transform = 'translateX(0)';
+        state.peekPage.style.transform = 'translateX(' + back + 'px)';
+        setTimeout(function(){ cleanup(state); }, 300);
+      }
+    };
+
+    document.addEventListener('touchend', finish, { passive: true });
+    document.addEventListener('touchcancel', function(){
+      if (touch) { var s = touch; touch = null; cleanup(s); }
     }, { passive: true });
   })();
 
