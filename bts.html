@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>編集提案 BTS — PureLight 受付係マニュアル</title>
+<style>
+:root {
+  --blk: #1B2A4A; --gry: rgba(27,42,74,0.7); --gry-lt: rgba(27,42,74,0.45);
+  --gry-xlt: rgba(27,42,74,0.1); --warm-bg: #F6F2EC; --card-bg: rgba(27,42,74,0.03);
+  --rose: #E86A4E; --sage: #2F7A58; --sage-dk: #1F5A40;
+  --peach: #C48A1B; --laven: #6B5B8E; --sky: #3D5A8A;
+  --line-mid: rgba(27,42,74,0.2); --line-soft: rgba(27,42,74,0.1);
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+  color: var(--blk); background: var(--warm-bg); line-height: 1.7;
+}
+.wrap { max-width: 720px; margin: 0 auto; padding: 1.75rem 1.25rem 5rem; }
+
+/* Header */
+.header { padding-top: 1rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--gry-xlt); margin-bottom: 1.5rem; }
+.header .label {
+  font-size: 10.5px; color: var(--rose); letter-spacing: 0.22em;
+  font-weight: 700; text-transform: uppercase; margin-bottom: 0.45rem;
+  font-family: ui-monospace, "SF Mono", monospace;
+}
+.header h1 { font-size: 1.55rem; font-weight: 900; letter-spacing: -0.02em; margin: 0 0 0.4rem; color: var(--blk); }
+.header .sub { font-size: 13px; color: var(--gry); }
+.header .back { display: inline-block; font-size: 12px; color: var(--gry); margin-top: 0.6rem; text-decoration: none; }
+.header .back:hover { color: var(--rose); }
+
+/* PIN screen */
+.pin-screen {
+  max-width: 360px; margin: 4rem auto; padding: 1.75rem 1.5rem;
+  background: white; border: 1px solid var(--gry-xlt); border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(27,42,74,0.06);
+}
+.pin-screen .label {
+  font-size: 10px; color: var(--rose); letter-spacing: 0.22em; font-weight: 700;
+  font-family: ui-monospace, "SF Mono", monospace; margin-bottom: 0.5rem;
+}
+.pin-screen h2 { font-size: 1.25rem; font-weight: 800; margin: 0 0 0.4rem; }
+.pin-screen p { font-size: 13px; color: var(--gry); margin: 0 0 1.25rem; line-height: 1.7; }
+.pin-screen input[type="password"] {
+  width: 100%; padding: 0.7rem 0.85rem; font-size: 15px;
+  border: 1px solid var(--line-mid); border-radius: 4px;
+  background: var(--warm-bg); color: var(--blk); margin-bottom: 0.6rem;
+  font-family: ui-monospace, "SF Mono", monospace; letter-spacing: 0.1em;
+}
+.pin-screen input[type="password"]:focus { outline: none; border-color: var(--rose); background: white; }
+.pin-screen button {
+  width: 100%; padding: 0.7rem; background: var(--blk); color: white;
+  border: none; border-radius: 4px; font-size: 14px; font-weight: 700;
+  cursor: pointer; letter-spacing: 0.05em;
+}
+.pin-screen button:hover { background: var(--rose); }
+.pin-screen .err { color: var(--rose); font-size: 12px; margin-top: 0.4rem; min-height: 1.2em; }
+
+/* Filters */
+.filters { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.filter-btn {
+  padding: 0.4rem 0.85rem; border: 1px solid var(--line-mid);
+  background: transparent; color: var(--gry); font-size: 12px;
+  border-radius: 999px; cursor: pointer; font-weight: 600;
+  font-family: inherit; letter-spacing: 0.02em;
+}
+.filter-btn:hover { color: var(--rose); border-color: var(--rose); }
+.filter-btn.active { background: var(--blk); color: white; border-color: var(--blk); }
+
+.search-box {
+  width: 100%; padding: 0.55rem 0.85rem; font-size: 13px;
+  border: 1px solid var(--line-mid); border-radius: 4px;
+  background: white; color: var(--blk); margin-bottom: 1rem;
+  font-family: inherit;
+}
+.search-box:focus { outline: none; border-color: var(--rose); }
+
+.summary { font-size: 11px; color: var(--gry-lt); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem; font-family: ui-monospace, "SF Mono", monospace; }
+
+/* Issue list */
+.issue-list { display: flex; flex-direction: column; gap: 0.85rem; }
+.issue {
+  background: white; border: 1px solid var(--gry-xlt); border-radius: 6px;
+  padding: 0.95rem 1rem; transition: border-color 0.15s;
+}
+.issue:hover { border-color: var(--line-mid); }
+.issue-head { display: flex; align-items: baseline; gap: 0.5rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
+.issue-num {
+  font-family: ui-monospace, "SF Mono", monospace; font-size: 11px;
+  color: var(--gry-lt); font-weight: 600;
+}
+.issue-state {
+  font-size: 9.5px; padding: 0.15rem 0.45rem; border-radius: 3px;
+  letter-spacing: 0.08em; font-weight: 700; text-transform: uppercase;
+  font-family: ui-monospace, "SF Mono", monospace;
+}
+.issue-state.open { background: rgba(47,122,88,0.12); color: var(--sage-dk); }
+.issue-state.closed { background: rgba(27,42,74,0.08); color: var(--gry); }
+.issue-date { font-size: 11px; color: var(--gry-lt); margin-left: auto; }
+.issue-title {
+  font-size: 14.5px; font-weight: 700; line-height: 1.5;
+  color: var(--blk); margin-bottom: 0.4rem;
+}
+.issue-meta { font-size: 11.5px; color: var(--gry); margin-bottom: 0.5rem; }
+.issue-meta strong { color: var(--blk); font-weight: 700; }
+.issue-body {
+  font-size: 13px; color: var(--blk); line-height: 1.65;
+  background: var(--card-bg); padding: 0.6rem 0.75rem; border-radius: 4px;
+  white-space: pre-wrap; word-break: break-word; margin-bottom: 0.6rem;
+}
+.issue-labels { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-bottom: 0.5rem; }
+.label-chip {
+  font-size: 10px; padding: 0.1rem 0.5rem; border-radius: 3px;
+  font-family: ui-monospace, "SF Mono", monospace; letter-spacing: 0.03em;
+  background: rgba(27,42,74,0.06); color: var(--gry); font-weight: 600;
+}
+.label-chip.section { background: rgba(232,106,78,0.1); color: var(--rose); }
+.label-chip.test { background: rgba(196,138,27,0.12); color: var(--peach); }
+.issue-foot {
+  display: flex; gap: 0.75rem; padding-top: 0.5rem;
+  border-top: 1px solid var(--line-soft); font-size: 11.5px;
+}
+.issue-foot a {
+  color: var(--gry); text-decoration: none; font-weight: 600;
+  letter-spacing: 0.03em;
+}
+.issue-foot a:hover { color: var(--rose); }
+
+.empty { text-align: center; color: var(--gry-lt); font-size: 13px; padding: 3rem 1rem; }
+.loading { text-align: center; color: var(--gry); font-size: 13px; padding: 2rem 1rem; }
+
+/* Logout */
+.logout-btn {
+  margin-left: auto; padding: 0.3rem 0.7rem; font-size: 11px;
+  background: transparent; border: 1px solid var(--line-mid);
+  color: var(--gry); border-radius: 999px; cursor: pointer;
+  font-family: inherit;
+}
+.logout-btn:hover { color: var(--rose); border-color: var(--rose); }
+
+@media (max-width: 540px) {
+  .header h1 { font-size: 1.3rem; }
+  .issue-date { margin-left: 0; width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<div id="pinScreen" class="pin-screen">
+  <div class="label">PURELIGHT BTS</div>
+  <h2>編集提案ボード</h2>
+  <p>受付係マニュアルへの編集提案一覧です。閲覧 PIN を入力してください。<br>PIN は受付係グループで共有されています。</p>
+  <input type="password" id="pinInput" inputmode="text" autocomplete="off" placeholder="PIN を入力" autofocus>
+  <button id="pinSubmit">閲覧する</button>
+  <div class="err" id="pinErr"></div>
+</div>
+
+<div id="mainScreen" class="wrap" style="display:none;">
+  <div class="header">
+    <div style="display:flex; align-items:center;">
+      <div>
+        <div class="label">PURELIGHT BTS</div>
+        <h1>編集提案ボード</h1>
+        <div class="sub">受付係マニュアルへの提案一覧（PureLightマニュアル提案Bot 経由で投稿された全件）</div>
+      </div>
+      <button class="logout-btn" id="logoutBtn">ログアウト</button>
+    </div>
+    <a href="manual.html" class="back">← 受付係マニュアルへ戻る</a>
+  </div>
+
+  <input type="text" class="search-box" id="searchBox" placeholder="🔍 タイトル・本文・提案者で検索">
+
+  <div class="filters" id="filters">
+    <button class="filter-btn active" data-state="open">未対応 (open)</button>
+    <button class="filter-btn" data-state="closed">対応済 (closed)</button>
+    <button class="filter-btn" data-state="all">すべて</button>
+  </div>
+
+  <div class="summary" id="summary"></div>
+
+  <div id="issueList" class="issue-list"></div>
+</div>
+
+<script>
+const ENDPOINT = "https://purelight-suggest.pop-701.workers.dev/bts/list";
+const STORAGE_KEY = "purelight-bts-pin";
+
+const $ = (s) => document.querySelector(s);
+const pinScreen = $("#pinScreen");
+const mainScreen = $("#mainScreen");
+const pinInput = $("#pinInput");
+const pinSubmit = $("#pinSubmit");
+const pinErr = $("#pinErr");
+const filters = $("#filters");
+const searchBox = $("#searchBox");
+const issueList = $("#issueList");
+const summary = $("#summary");
+const logoutBtn = $("#logoutBtn");
+
+let allIssues = [];
+let currentState = "open";
+let currentSearch = "";
+let cachedPin = "";
+
+function showError(msg) {
+  pinErr.textContent = msg;
+}
+
+async function fetchIssues(pin, state) {
+  const res = await fetch(ENDPOINT, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ pin, state }),
+  });
+  if (res.status === 401) throw new Error("PIN が違います");
+  if (!res.ok) throw new Error(`サーバーエラー (${res.status})`);
+  const data = await res.json();
+  return data.issues || [];
+}
+
+function renderIssues() {
+  const q = currentSearch.trim().toLowerCase();
+  const filtered = allIssues.filter(i => {
+    if (!q) return true;
+    const haystack = `${i.title} ${i.body || ""} ${(i.labels || []).join(" ")}`.toLowerCase();
+    return haystack.includes(q);
+  });
+
+  summary.textContent = `${filtered.length} / ${allIssues.length} 件`;
+
+  if (!filtered.length) {
+    issueList.innerHTML = '<div class="empty">該当する提案はありません</div>';
+    return;
+  }
+
+  issueList.innerHTML = filtered.map(i => renderIssue(i)).join("");
+}
+
+function renderIssue(i) {
+  const date = formatDate(i.created_at);
+  const stateClass = i.state === "open" ? "open" : "closed";
+  const stateLabel = i.state === "open" ? "未対応" : "対応済";
+
+  const labels = (i.labels || []).filter(l => l !== "proposal" && l !== "imported").map(l => {
+    let cls = "label-chip";
+    if (l.startsWith("section:")) cls += " section";
+    if (l === "テスト") cls += " test";
+    return `<span class="${cls}">${escapeHtml(l.replace(/^section:/, ""))}</span>`;
+  }).join("");
+
+  const meta = parseMeta(i.body || "");
+  const bodyText = parseSuggestion(i.body || "");
+
+  return `
+    <div class="issue">
+      <div class="issue-head">
+        <span class="issue-num">#${i.number}</span>
+        <span class="issue-state ${stateClass}">${stateLabel}</span>
+        <span class="issue-date">${date}</span>
+      </div>
+      <div class="issue-title">${escapeHtml(i.title)}</div>
+      ${meta ? `<div class="issue-meta">${meta}</div>` : ""}
+      ${labels ? `<div class="issue-labels">${labels}</div>` : ""}
+      ${bodyText ? `<div class="issue-body">${escapeHtml(bodyText)}</div>` : ""}
+      <div class="issue-foot">
+        <a href="${i.html_url}" target="_blank" rel="noopener">GitHub で開く →</a>
+        ${i.comments > 0 ? `<span style="color:var(--gry-lt)">💬 ${i.comments}</span>` : ""}
+      </div>
+    </div>
+  `;
+}
+
+function parseMeta(body) {
+  const submitterMatch = body.match(/\*\*提案者\*\*:\s*(.+)/);
+  const dateMatch = body.match(/\*\*受信日時\*\*:\s*(.+)/);
+  const parts = [];
+  if (submitterMatch) parts.push(`<strong>${escapeHtml(submitterMatch[1])}</strong>`);
+  if (dateMatch) parts.push(escapeHtml(dateMatch[1]));
+  return parts.join(" ・ ");
+}
+
+function parseSuggestion(body) {
+  const m = body.match(/## 提案内容\s*\n([\s\S]*?)(?:\n##|\n---|\n_\(|$)/);
+  if (!m) return "";
+  return m[1].trim();
+}
+
+function formatDate(iso) {
+  if (!iso) return "";
+  const d = new Date(iso);
+  const Y = d.getFullYear();
+  const M = String(d.getMonth() + 1).padStart(2, "0");
+  const D = String(d.getDate()).padStart(2, "0");
+  const h = String(d.getHours()).padStart(2, "0");
+  const m = String(d.getMinutes()).padStart(2, "0");
+  return `${Y}/${M}/${D} ${h}:${m}`;
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+async function loadAndRender(pin, state) {
+  cachedPin = pin;
+  currentState = state;
+  issueList.innerHTML = '<div class="loading">読み込み中…</div>';
+  summary.textContent = "";
+  try {
+    allIssues = await fetchIssues(pin, state);
+    renderIssues();
+  } catch (e) {
+    if (e.message.includes("PIN")) {
+      logout();
+      showError(e.message);
+    } else {
+      issueList.innerHTML = `<div class="empty">読み込みに失敗しました: ${escapeHtml(e.message)}</div>`;
+    }
+  }
+}
+
+function showMain() {
+  pinScreen.style.display = "none";
+  mainScreen.style.display = "block";
+}
+
+function logout() {
+  sessionStorage.removeItem(STORAGE_KEY);
+  cachedPin = "";
+  pinScreen.style.display = "block";
+  mainScreen.style.display = "none";
+  pinInput.value = "";
+  pinInput.focus();
+}
+
+async function handleSubmit() {
+  const pin = pinInput.value.trim();
+  if (!pin) { showError("PIN を入力してください"); return; }
+  pinSubmit.disabled = true;
+  showError("");
+  try {
+    allIssues = await fetchIssues(pin, "open");
+    sessionStorage.setItem(STORAGE_KEY, pin);
+    cachedPin = pin;
+    showMain();
+    renderIssues();
+  } catch (e) {
+    showError(e.message);
+  } finally {
+    pinSubmit.disabled = false;
+  }
+}
+
+pinSubmit.addEventListener("click", handleSubmit);
+pinInput.addEventListener("keydown", e => { if (e.key === "Enter") handleSubmit(); });
+
+filters.addEventListener("click", e => {
+  const btn = e.target.closest(".filter-btn");
+  if (!btn) return;
+  const state = btn.dataset.state;
+  if (state === currentState) return;
+  filters.querySelectorAll(".filter-btn").forEach(b => b.classList.toggle("active", b === btn));
+  loadAndRender(cachedPin, state);
+});
+
+searchBox.addEventListener("input", () => {
+  currentSearch = searchBox.value;
+  renderIssues();
+});
+
+logoutBtn.addEventListener("click", logout);
+
+// Resume from sessionStorage
+const saved = sessionStorage.getItem(STORAGE_KEY);
+if (saved) {
+  cachedPin = saved;
+  showMain();
+  loadAndRender(saved, "open");
+}
+</script>
+</body>
+</html>
